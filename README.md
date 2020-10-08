@@ -16,5 +16,5 @@ The application is written in pure JavaScript so no depencies are needed, except
 
 ## Settings
 
-There are some variables to set up in the main.js / min.js file :
+There are some variables to set up in the `main.js` / `min.js` file :
 - `language` : by default, the app is in french but you can put it in English too. Or you can create a new object (copy/paste the EN object for example) and change the values to your language.
