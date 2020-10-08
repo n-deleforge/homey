@@ -1,0 +1,466 @@
+/* ================================================= */
+/* ======================= MAIN */
+
+:root {
+    --lightBlack: #262931;
+    --light_yellow: #FFFF99;
+}
+
+@font-face {
+    font-family: 'montserrat';
+    src: url('../../ressources/fonts/montserrat.woff2') format('woff2'),
+           url('../../ressources/fonts/montserrat.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+html, body {
+    margin: 0;
+    padding : 0;
+    color: white;
+    font-family: montserrat, sans-serif !important;
+    background-color: var(--lightBlack);
+}
+
+
+#container {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+input,
+input:focus,
+input.active,
+button,
+button:focus,
+button:active,
+textarea,
+textarea:focus,
+textarea:active {
+    font-family: montserrat, sans-serif !important;
+    outline:none !important;
+}
+
+/* ================================================= */
+/* ======================= START DISPLAY */
+
+#start {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 1.4em;
+    width: 35vw;
+}
+
+#start input {
+    color: black;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 1.5vh;
+    font-size: 1.2em;
+    margin: 2vh;
+}
+
+#start button {
+    border: 0;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1vh;
+    font-size: 1.2em;
+    margin: 1vh auto;
+    width: 20vw;
+    cursor: pointer;
+}
+
+#start button:hover {
+    background-color: lightcoral;
+    color: white;
+}
+
+/* ================================================= */
+/* ======================= APP DISPLAY */
+
+#app {
+    display: none;
+    flex-direction: column;
+    font-size: 1.4em;
+    width: 70vw;
+    padding: 4vh 0 2vh 0;
+}
+
+footer {
+    padding-top: 1vh;
+    font-size: 0.7em;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: transparent;
+}
+
+footer a:hover {
+    color: lightcoral;
+}
+
+#time {
+    flex-grow: 1;
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1vh;
+}
+
+#displayWeather,
+#displayName,
+#displayTime,
+#displayDate,
+footer p {
+    margin: 0;
+}
+
+#displayTime {
+    text-align: center;
+    font-size: 2em;
+    padding-bottom: 1vh;
+    border-bottom: 3px solid white;
+}
+
+#displayDate {
+    padding: 2vh;
+    font-size: 1em;
+    text-align: center;
+}
+
+#displayWeather {
+    text-align: right;
+    font-size: 1.4em;
+}
+
+/* ======================= LIST */
+
+#listApps {
+    display: flex;
+    justify-content: flex-end;
+    transition: 0.3s;
+    margin-bottom: 1vh;
+}
+
+#listApps button {
+    border: 2px solid transparent;
+    background-color: white;
+    padding: 1vh;
+    border-radius: 10px;
+    margin: 0 1vh;
+    min-width: 3vw;
+    font-size: 0.9em;
+    transition: 0.3s;
+    transform: scale(1);
+}
+
+#listApps button:hover {
+    transition: 0.3s;
+    transform: scale(1.2);
+}
+
+#listSettings {
+    display: flex;
+    font-size: 1em;
+}
+
+#listSettings button {
+    border: 2px solid transparent;
+    background-color: var(--transparent);
+    padding: 1vh;
+    border-radius: 50px;
+    margin: 0 0.5vh;
+    min-width: 3vw;
+    font-size: 0.9em;
+    transition: 0.3s;
+    transform: scale(1);
+}
+
+#listSettings button:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+}
+
+/* ======================= FAVS */
+
+#listFavs {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 3vh;
+}
+
+#listFavs button {
+    border: 2px solid transparent;
+    background-color: var(--white);
+    padding: 1vh;
+    border-radius: 50px;
+    margin: 0 0.5vh;
+    min-width: 2vw;
+    font-size: 0.4em;
+}
+
+#listFavs a,
+#listFavs p {
+    color: var(--white);
+    text-decoration: transparent;
+    font-size: 0.8em;
+    margin: 0.5vh 1vh;
+    padding: 0.5vh 1vh;
+}
+
+#listFavs p {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#listFavs a:hover {
+    color: var(--light_red);
+}
+
+.favEdit {
+    cursor: pointer;
+}
+
+/* ================================================= */
+/* ======================= NOTE */
+
+#containerApps {
+    display: none;
+}
+
+#noteContainer {
+    visibility: hidden;
+    color: var(--black);
+    display: block;
+    background: var(--light_yellow);
+    border: 2px solid var(--white);
+    border-radius: 2px;
+    padding: 2vh;
+    width: 55vw;
+    height: 35vh;
+    margin: auto;
+}
+
+#noteContainer textarea {
+    background: transparent;
+    border: 0;
+    resize: none;
+    width: 100%;
+    height: 80%;
+    font-size: 1em;
+    text-align: justify;
+}
+
+#noteContainer h1 {
+    margin: 0;
+    padding-bottom: 1vh;
+}
+
+/* ================================================= */
+/* ======================= POPUP */
+
+#containerPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 5;
+}
+
+#containerPopup:target {
+    display: block;
+}
+
+#containerPopup div {
+    display: none;
+    background: var(--lightBlack);
+    color: white;
+    padding: 2vh;
+    position: relative;
+    width: 50vw;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto auto;
+}
+
+/* ======================= POPUP STYLE */
+
+#containerPopup h1 {
+    border-bottom: 2px solid white;
+    font-size: 3em;
+    margin: 0 0 2vh 0;
+}
+
+#containerPopup span {
+    display: block;
+    font-size: 1.4em;
+    margin: 0 0 2vh 0;
+}
+
+#containerPopup .biggerText  {
+    padding-top: 1vh;
+    font-size: 1.2em !important;
+}
+
+#containerPopup p {
+    font-size: 1em !important;
+}
+
+#containerPopup button {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    border-bottom: 2px solid white;
+    padding: 1vh;
+    font-size: 1.2em;
+    margin: 1vh;
+    width: auto;
+}
+
+#containerPopup label {
+    font-weight: bold;
+    padding-right: 1vw;
+}
+
+#containerPopup button:hover {
+    border-bottom: 2px solid red;
+}
+
+#containerPopup input[type=text], 
+#containerPopup input[type=url] {
+    display: block;
+}
+
+#containerPopup input {
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 1.5vh;
+    font-size: 1.2em;
+    margin: 0.5vh auto;
+}
+
+#containerPopup input[type=file] {
+    color: white;
+    border: 0;
+}
+
+/* ================================================= */
+/* ======================= MOBILE */
+
+@media(max-width: 1024px) {
+    #start {
+        width: 85vw;
+    }
+
+    #start button {
+        width: 50vw;
+    }
+
+    #content p {
+        text-align: center !important;
+    }
+
+    #app {
+        padding: 1vh;
+        width: 90vw;
+    }
+
+    #displayWeather {
+        font-size: 1em;
+    }
+
+    #containerPopup div {
+        left: 01vw;
+        width: 89vw;
+    }
+
+    #containerPopup input[type=text],
+    #containerPopup input[type=url] {
+        width: 50vw;
+    }
+
+    #listMenu {
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    #listApps button {
+        min-width: 10vw;
+        font-size: 0.7em;
+    }
+
+    #listSettings {
+        margin-left: 20vw;
+    }
+}
+
+/* ================================================= */
+/* ======================= ANIMATION from animate.style */
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes bounceOut {
+    20% {
+      transform: scale3d(0.9, 0.9, 0.9);
+    }
+  
+    50%,
+    55% {
+      opacity: 1;
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  
+    to {
+      opacity: 0;
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+  }
