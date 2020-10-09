@@ -101,7 +101,7 @@ const FR = {
         'closeUpdateMenu' : "Fermer"
     },
     'misc' : {
-        'footerContent' : "Bientôt disponible sur GitHub (v " + version + ") - Hébergé sur  <a href=\"https://nicolas-deleforge.fr\">nd</a>",
+        'footerContent' : "Disponible sur <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hébergé sur  <a href=\"https://nicolas-deleforge.fr\">nd</a>",
         'noteTitle' : "Mes notes",
         'favTitle' : "Favoris <span class=\"favEdit\">(mode édition)</span>"
     },
@@ -183,7 +183,7 @@ const EN = {
         'closeFavAddMenu' : "Cancel"
     },
     'misc' : {
-        'footerContent' : "Soon available on GitHub (v " + version + ") - Hosted on <a href=\"https://nicolas-deleforge.fr\">nd</a>",
+        'footerContent' : "Available on <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hosted on <a href=\"https://nicolas-deleforge.fr\">nd</a>",
         'noteTitle' : "My notes",
         'favTitle' : "Favoris <span class=\"favEdit\">(edit mode)</span>"
     },
