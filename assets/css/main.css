@@ -261,6 +261,7 @@ footer p {
 }
 
 #noteContainer h1 {
+    color: black;
     margin: 0;
     padding-bottom: 1vh;
 }
