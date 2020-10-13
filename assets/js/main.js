@@ -2,9 +2,10 @@
 // ==================================== INIT
 // ========================================
 
-const version = "1.1"; // the actual version of the app
+const version = 1.2; // the actual version of the app
+let favDisplayed = []; // will contain all the favs currently displayed to avoid the multilplication
 
-// ===> Create the settings or parse them if it already exists
+// ===> Create the settings data or parse them if it already exists
 if (storage("get", "HOMEY-settings")) settings = JSON.parse(storage("get", "HOMEY-settings"))
 else {
     settings = {
@@ -96,11 +97,6 @@ const FR = {
         'favMenuAddConfirm' : "Ajouter",
         'closeFavAddMenu' : "Annuler"
     },
-    'updateMenu' : {
-        'updateMenuTitle' : "Mise à jour 1.1",
-        'updateMenuText' : "L'application a été mise à jour le 23 septembre 2020.<br />&#10145  Peu de nouveautés côté utilisateur.<br />&#10145 Le code de l'application a été largement modifié et simplifié.",
-        'closeUpdateMenu' : "Fermer"
-    },
     'misc' : {
         'footerContent' : "Disponible sur <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hébergé sur  <a href=\"https://nicolas-deleforge.fr\">nd</a>",
         'noteTitle' : "Mes notes",
@@ -109,7 +105,8 @@ const FR = {
     'dynamic' : { // is not concerned by the function of displaying content
         'footerName' : "Connecté en tant que",
         'dateLanguage' : "fr-FR",
-        'weatherLanguage' : "FR"
+        'weatherLanguage' : "FR",
+        'errorImport' : "Le fichier est incorrect. Réessayer."
     }
 };
 
@@ -117,7 +114,7 @@ const FR = {
 const EN = {
     'start' : {
         'startTitle' : "Welcome to Homey !",
-        'startP1' : "Before anything else, you have to know that if you use this application, some of your data will be saved on your device (and ONLY on your device)<br />. In using Homey, your confirm that you understand and agree of that. No data is shared with a third party.",
+        'startP1' : "Before anything else, you have to know that if you use this application, some of your data will be saved on your device (and ONLY on your device).<br /> In using Homey, your confirm that you understand and agree of that. No data is shared with a third party.",
         'startP2' : "If it's your first visit then you need to configure the application. It will only take a few seconds.",
         'startP3' : "However, if you already have used the application, you can import your data.",
         'displayInitMenu' : "Configure",
@@ -192,29 +189,29 @@ const EN = {
     'dynamic' : { // is not concerned by the function of displaying content
         'footerName' : "Connected as",
         'dateLanguage' : "en-EN",
-        'weatherLanguage' : "EN"
+        'weatherLanguage' : "EN",
+        'errorImport' : "The file is incorrect. Try again."
     }
 };
 
-const language= FR; // determine the language of the app
-let favDisplayed = []; // will contain all the favs currently displayed to avoid the multilplication
+// ===> Will determine the language of the app
+if(navigator.language == "fr") {
+    display = FR;
+    tag = "fr";
+}
+else {
+    display = EN;
+    tag = "en";
+} 
 
 // =====================> FIRST : display content
 // ========================================
-for(let i = 0; i < Object.keys(language).length - 1; i++) {
-    let allData = language[Object.keys(language)[i]];
+get("#htmlTag").lang = tag;
+for(let i = 0; i < Object.keys(display).length - 1; i++) {
+    let allData = display[Object.keys(display)[i]];
     let idName = Object.keys(allData);
     let values = Object.values(allData);
     for (let j = 0; j < idName.length; j++) get("#" + idName[j]).innerHTML = values[j];
-}
-
-// =====================> FIRST : display update
-// ========================================
-if (settings.core.start == true && settings.core.version != version) {
-    openWindow("updateMenu");
-    get("#closeUpdateMenu").addEventListener("click", closeWindow);
-    settings.core.version = version;
-    updateJSON();
 }
 
 // ========================================
@@ -274,7 +271,7 @@ get("#displayImportMenu").addEventListener("click", function() {
             }
         }
         else {
-            get("#importMenuCheck").innerHTML =  "Le fichier est incorrect ou inexistant. Réessayer.";
+            get("#importMenuCheck").innerHTML =  display.dynamic.errorImport;
             get("#importMenuCheck").style.color =  "red";
         }
     })
@@ -607,7 +604,7 @@ function displayApp() {
     // Display of the name
     if (settings.profile.activated == true) {
         get('#activateName').checked = true;
-        get("#displayName").innerHTML = language.dynamic.footerName + " <strong>" + settings.profile.name + "</strong>";
+        get("#displayName").innerHTML = display.dynamic.footerName + " <strong>" + settings.profile.name + "</strong>";
     }
     else {
         get('#activateName').checked = false;
@@ -692,7 +689,7 @@ function displayApp() {
 // ========================================
 function displayTime() {
     let timestamp = new Date();
-    let date = timestamp.toLocaleString(language.dynamic.dateLanguage, {weekday: "long", month: "long", day: "numeric"});
+    let date = timestamp.toLocaleString(display.dynamic.dateLanguage, {weekday: "long", month: "long", day: "numeric"});
     let hours = timestamp.getHours();
     let minutes = timestamp.getMinutes(); 
     if (hours < 10) hours = '0' + hours;
@@ -733,11 +730,11 @@ function requestWeather() {
                 }
                 get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
             }  
-            else get('#displayWeather').innerHTML = "Erreur";
+            else get('#displayWeather').innerHTML = "❗";
         }
     };
 
-    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + language.misc.weatherLanguage +'&units=metric', true)
+    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.dynamic.weatherLanguage +'&units=metric', true)
     req.send(null);
 }
 // ========================================
