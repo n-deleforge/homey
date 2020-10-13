@@ -175,7 +175,7 @@ footer p {
 
 #listSettings button {
     border: 2px solid transparent;
-    background-color: var(--transparent);
+    background-color: black;
     padding: 1vh;
     border-radius: 50px;
     margin: 0 0.5vh;

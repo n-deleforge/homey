@@ -29,8 +29,9 @@ else {
 const FR = {
     'start' : {
         'startTitle' : "Bienvenue sur Homey !",
-        'startP1' : "Si c'est ta première visite alors il faut configurer l'appli. Cela ne prendra que quelques secondes.",
-        'startP2' : "Par contre, si tu as déjà utilisé l'application, tu peux importer tes données.",
+        'startP1' : "Avant tout, sache que si tu utilises cette application, certaines de tes données seront stockées sur ton appareil (et UNIQUEMENT sur ton appareil).<br />En utilisant Homey, tu confirmes avoir pris connaissance de ce fait. Aucune donnée n'est partagée avec un tiers.",
+        'startP2' : "Si c'est ta première visite alors il faut configurer l'appli. Cela ne prendra que quelques secondes.",
+        'startP3' : "Par contre, si tu as déjà utilisé l'application, tu peux importer tes données.",
         'displayInitMenu' : "Configuration",
         'displayImportMenu' : "Importation"
     },
@@ -116,8 +117,9 @@ const FR = {
 const EN = {
     'start' : {
         'startTitle' : "Welcome to Homey !",
-        'startP1' : "If it's your first visit then you need to configure the application. It will only take a few seconds.",
-        'startP2' : "However, if you already have used the application, you can import your data.",
+        'startP1' : "Before anything else, you have to know that if you use this application, some of your data will be saved on your device (and ONLY on your device)<br />. In using Homey, your confirm that you understand and agree of that. No data is shared with a third party.",
+        'startP2' : "If it's your first visit then you need to configure the application. It will only take a few seconds.",
+        'startP3' : "However, if you already have used the application, you can import your data.",
         'displayInitMenu' : "Configure",
         'displayImportMenu' : "Import"
     },
