@@ -195,18 +195,16 @@ const EN = {
 };
 
 // ===> Will determine the language of the app
-if(navigator.language == "fr") {
+if (navigator.language == "fr" || navigator.language == "fr-FR") {
     display = FR;
-    tag = "fr";
+    get("#htmlTag").lang = "fr";
 }
 else {
     display = EN;
-    tag = "en";
+    get("#htmlTag").lang = "en";
 } 
 
-// =====================> FIRST : display content
-// ========================================
-get("#htmlTag").lang = tag;
+// ===> Automatically fill all ID fields
 for(let i = 0; i < Object.keys(display).length - 1; i++) {
     let allData = display[Object.keys(display)[i]];
     let idName = Object.keys(allData);
