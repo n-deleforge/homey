@@ -1,5 +1,6 @@
-/* ================================================= */
-/* ======================= MAIN */
+/* ======================================== */
+/* ======================================== */
+/* ======== MAIN */
 
 :root {
     --lightBlack: #262931;
@@ -8,16 +9,17 @@
 
 @font-face {
     font-family: 'montserrat';
-    src: url('../../ressources/fonts/montserrat.woff2') format('woff2'),
-           url('../../ressources/fonts/montserrat.woff') format('woff');
+    src: url('fonts/montserrat.woff2') format('woff2'),
+        url('fonts/montserrat.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
-html, body {
+html,
+body {
     margin: 0;
-    padding : 0;
+    padding: 0;
     color: white;
     font-family: montserrat, sans-serif !important;
     background-color: var(--lightBlack);
@@ -39,11 +41,12 @@ textarea,
 textarea:focus,
 textarea:active {
     font-family: montserrat, sans-serif !important;
-    outline:none !important;
+    outline: none !important;
 }
 
-/* ================================================= */
-/* ======================= START DISPLAY */
+/* ======================================== */
+/* ======================================== */
+/* ======== APP START */
 
 #start {
     display: none;
@@ -79,8 +82,9 @@ textarea:active {
     color: white;
 }
 
-/* ================================================= */
-/* ======================= APP DISPLAY */
+/* ======================================== */
+/* ======================================== */
+/* ======== APP CONTENT */
 
 #app {
     display: none;
@@ -141,7 +145,9 @@ footer p {
     font-size: 1.4em;
 }
 
-/* ======================= LIST */
+/* ======================================== */
+/* ======================================== */
+/* ======== LISTS */
 
 #listApps {
     display: flex;
@@ -189,7 +195,9 @@ footer p {
     transform: scale(1.1);
 }
 
-/* ======================= FAVS */
+/* ======================================== */
+/* ======================================== */
+/* ======== FAVS */
 
 #listFavs {
     display: flex;
@@ -229,8 +237,9 @@ footer p {
     cursor: pointer;
 }
 
-/* ================================================= */
-/* ======================= NOTE */
+/* ======================================== */
+/* ======================================== */
+/* ======== NOTE */
 
 #containerApps {
     display: none;
@@ -265,8 +274,9 @@ footer p {
     padding-bottom: 1vh;
 }
 
-/* ================================================= */
-/* ======================= POPUP */
+/* ======================================== */
+/* ======================================== */
+/* ======== POPUP CONTAINER */
 
 #containerPopup {
     display: none;
@@ -295,7 +305,9 @@ footer p {
     margin: auto auto;
 }
 
-/* ======================= POPUP STYLE */
+/* ======================================== */
+/* ======================================== */
+/* ======== POPUP STYLE */
 
 #containerPopup h1 {
     border-bottom: 2px solid white;
@@ -309,7 +321,7 @@ footer p {
     margin: 0 0 2vh 0;
 }
 
-#containerPopup .biggerText  {
+#containerPopup .biggerText {
     padding-top: 1vh;
     font-size: 1.2em !important;
 }
@@ -338,7 +350,7 @@ footer p {
     border-bottom: 2px solid red;
 }
 
-#containerPopup input[type=text], 
+#containerPopup input[type=text],
 #containerPopup input[type=url] {
     display: block;
 }
@@ -357,8 +369,9 @@ footer p {
     border: 0;
 }
 
-/* ================================================= */
-/* ======================= MOBILE */
+/* ======================================== */
+/* ======================================== */
+/* ======== MOBILE */
 
 @media(max-width: 1024px) {
     #start {
@@ -407,60 +420,62 @@ footer p {
     }
 }
 
-/* ================================================= */
-/* ======================= ANIMATION from animate.style */
+/* ======================================== */
+/* ======================================== */
+/* ======== ANIMATION from animate.style */
 
 @keyframes bounceIn {
-  from,
-  20%,
-  40%,
-  60%,
-  80%,
-  to {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
 
-  0% {
-    opacity: 0;
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
+    from,
+    20%,
+    40%,
+    60%,
+    80%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
 
-  20% {
-    transform: scale3d(1.1, 1.1, 1.1);
-  }
+    0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
 
-  40% {
-    transform: scale3d(0.9, 0.9, 0.9);
-  }
+    20% {
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
 
-  60% {
-    opacity: 1;
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
+    40% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
 
-  80% {
-    transform: scale3d(0.97, 0.97, 0.97);
-  }
+    60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
 
-  to {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
+    80% {
+        transform: scale3d(0.97, 0.97, 0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
 }
 
 @keyframes bounceOut {
     20% {
-      transform: scale3d(0.9, 0.9, 0.9);
+        transform: scale3d(0.9, 0.9, 0.9);
     }
-  
+
     50%,
     55% {
-      opacity: 1;
-      transform: scale3d(1.1, 1.1, 1.1);
+        opacity: 1;
+        transform: scale3d(1.1, 1.1, 1.1);
     }
-  
+
     to {
-      opacity: 0;
-      transform: scale3d(0.3, 0.3, 0.3);
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
     }
-  }
+}

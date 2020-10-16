@@ -1,6 +1,6 @@
-// ========================================
-// ==================================== INIT
-// ========================================
+// =================================================
+// =================================================
+// ============ INIT
 
 const version = 1.2; // the actual version of the app
 let favDisplayed = []; // will contain all the favs currently displayed to avoid the multilplication
@@ -212,12 +212,11 @@ for(let i = 0; i < Object.keys(display).length - 1; i++) {
     for (let j = 0; j < idName.length; j++) get("#" + idName[j]).innerHTML = values[j];
 }
 
-// ========================================
-// ================================== START
-// ========================================
+// =================================================
+// =================================================
+// ============ START
 
-// ======================> START : init or import
-// ========================================
+// ===> Check if the app can be displayed or not
 if (settings.core.start == false) {
     get("#start").style.display = "flex";
     for(let i = 0; i < get("~input").length; i ++) get("~input")[i].value = "";
@@ -228,15 +227,14 @@ else {
     displayFavs();
 }
 
-// ==================> START : initialization menu
-// ========================================
+// ===> Initialization menu
 get("#displayInitMenu").addEventListener("click", function() {
-    get("#containerPopup").style.display = "flex";
-    get("#initMenu").style.display = "block";
-
+    openWindow("initMenu");
     get("#closeInitMenu").addEventListener("click", closeWindow);
+
     get("#confirmInitMenu").addEventListener("click", function() {
         if (get("#name").checkValidity() && get("#name").value != "") {
+            // Check of the regex and if it's correct, update of the object
             settings.core.start = true;
             settings.profile.activated = true; 
             settings.profile.name = get("#name").value;
@@ -249,21 +247,22 @@ get("#displayInitMenu").addEventListener("click", function() {
     })
 })
 
-// ======================> START : import menu
-// ========================================
+// ===> Import menu
 get("#displayImportMenu").addEventListener("click", function() {
-    get("#containerPopup").style.display = "flex";
-    get("#importMenu").style.display = "block";
-
+    openWindow("importMenu");
     get("#closeImportMenu").addEventListener("click", closeWindow);
+
     get("#importMenuConfirm").addEventListener("click", function() {
         if (get("#importData").files.length != 0) {
+            // Check if the file input is not empty
             let reader = new FileReader();
             reader.readAsText(get("#importData").files[0]);
             reader.onload = function (e) {
                 let importData = (atob(e.target.result));
+                // Cut the imported data into 2 JSON objects, one for the settings and one for the apps
                 settings = JSON.parse(importData.split('&&&')[0]);
                 apps = JSON.parse(importData.split('&&&')[1]);
+                // Then upload it locally and reload the app
                 updateJSON();
                 location.reload();
             }
@@ -275,16 +274,16 @@ get("#displayImportMenu").addEventListener("click", function() {
     })
 })
 
-// ========================================
-// ==================================== APP
-// ========================================
+// =================================================
+// =================================================
+// ============ APPS
 
-// =======================> APP : settings menu
-// ========================================
+// ===> Button - settings menu
 get("#displaySettings").addEventListener("click", function() {
     if (get('#listSettings').style.display == "none") {
         get('#listSettings').style.animation = "bounceIn";
         get('#listSettings').style.animationDuration = "0.5s"; 
+
         settings.core.menu = true;
         updateJSON();
         displayApp();
@@ -292,18 +291,41 @@ get("#displaySettings").addEventListener("click", function() {
     else {
         get('#listSettings').style.animation = "bounceOut";
         get('#listSettings').style.animationDuration = "0.5s";
+
         settings.core.menu = false;
         updateJSON();
         setTimeout(function(){ displayApp(); }, 500);
     }
 })
-// ========================================
 
-// =========================> APP : apps menu
-// ========================================
+// ===> Button - note app
+get("#displayNote").addEventListener("click", function() {
+    // If there is saved content, then display it into the note
+    if (apps.note.content != "") get('#note').value = apps.note.content;
+
+    // Add a listener into the textarea and save the content for any change
+    get('#note').addEventListener("change", function() { 
+        apps.note.content = get("#note").value; 
+        updateJSON();
+    });
+
+    if (get('#noteContainer').style.visibility == "hidden") {
+        changeDisplay("app"); // App mode
+        get('#noteContainer').style.visibility = "visible";
+        get('#note').focus(); // Focus on the textarea
+    } 
+    else {
+        changeDisplay("normal"); // Normal  mode
+        get('#noteContainer').style.visibility = "hidden";
+    } 
+});
+
+
+// ===> Apps menu
 get("#displayAppsMenu").addEventListener("click", function() {
     openWindow("appsMenu");
     get("#closeAppsMenu").addEventListener("click", closeWindow);
+
     get("#activateNote").addEventListener("click", function() {
         if (get('#activateNote').checked == true) apps.note.activated = true
         else apps.note.activated = false;
@@ -311,28 +333,12 @@ get("#displayAppsMenu").addEventListener("click", function() {
         displayApp();
      });
 })
-// ========================================
 
-// ==============================> APP : note
-// ========================================
-get("#displayNote").addEventListener("click", function() {
-    if (get('#noteContainer').style.visibility == "hidden") {
-        changeDisplay("app");
-        get('#noteContainer').style.visibility = "visible";
-        get('#note').focus();
-    }
-    else {
-        changeDisplay("normal");
-        get('#noteContainer').style.visibility = "hidden";
-    } 
-});
-// ========================================
-
-// =============================> APP : favoris
-// ========================================
+// ===> Favs menu
 get("#displayFavMenu").addEventListener("click", function() {
     openWindow("favMenu");
     get("#closeFavMenu").addEventListener("click", closeWindow);
+
     get('#activateFav').addEventListener("change", function() {
         if (get('#activateFav').checked == true) settings.favorite.activated = true
         else settings.favorite.activated = false;
@@ -348,16 +354,22 @@ get("#displayFavMenu").addEventListener("click", function() {
     });
 });
 
+// ===> AddFav menu
 get("#addFavAction").addEventListener("click", function() {
     openWindow("favMenuAdd");
     get("#closeFavAddMenu").addEventListener("click", closeWindow);
+
     get("#favMenuAddConfirm").addEventListener("click", function() {
+        // Check if the regex for fav name / link and if it's not empty
         if (get("#nameFav").checkValidity() && get("#nameFav").value != "" && get("#urlFav").checkValidity() && get("#urlFav").value != "") {
             let fav = get("#nameFav").value + "::" + get("#urlFav").value;
-            settings.favorite.content.push(fav);
+            settings.favorite.content.push(fav); // Add it in the local array
 
-            get("#nameFav").value = "";
+            // Reset the data
+            get("#nameFav").value = ""; 
             get("#urlFav").value = "https://";
+
+            // Update the display
             updateJSON();
             closeWindow();
             displayFavs();
@@ -365,47 +377,49 @@ get("#addFavAction").addEventListener("click", function() {
         else get("#favMenuAddCheck").style.color = "red";
     })
 });
-// ========================================
 
-// =============================> APP : logout
-// ========================================
+// ===> Logout menu
 get("#displayLogoutMenu").addEventListener("click", function() {
     openWindow("logoutMenu");
     get("#closeLogoutMenu").addEventListener("click", closeWindow);
+
     get("#logoutMenuConfirm").addEventListener("click", function() {
-        localStorage.clear();
+        storage("rem", "HOMEY-settings");
+        storage("rem", "HOMEY-apps");
         location.reload(); 
     });
 });
-// ========================================
 
-// =============================> APP : export
-// ========================================
+// ===> Export menu
 get("#displayExportMenu").addEventListener("click", function() {
     openWindow("exportMenu");
     get("#closeExportMenu").addEventListener("click", closeWindow);
+
     get("#exportMenuConfirm").addEventListener("click", function() {
+        // Stringify the two JSON objects and transform it with base64
         download(btoa(JSON.stringify(settings) + "&&&" + JSON.stringify(apps)), "homey.json");
         closeWindow();
     });
 });
-// ========================================
 
-// =============================> APP : profile
-// ========================================
+// ===> Profile menu
 get("#displayProfilMenu").addEventListener("click", function() {
     openWindow("profilMenu");
     get("#newName").value = settings.profile.name;
+
     get("#profilMenuConfirm").addEventListener("click", function() {
+        // Check the regex for the name
         if (get("#newName").checkValidity() && get("#newName").value != "") {
             get("#profilMenuCheck").style.color = "white";
             settings.profile.name = get("#newName").value;
+
             updateJSON();
             displayApp();
             closeWindow();
         }
         else get("#profilMenuCheck").style.color = "red";
     })
+
     get('#activateName').addEventListener("change", function() {
         if (get('#activateName').checked == true) settings.profile.activated = true
         else settings.profile.activated = false;
@@ -413,12 +427,11 @@ get("#displayProfilMenu").addEventListener("click", function() {
         displayApp();
     })
 });
-// ========================================
 
-// ===========================> APP : weather
-// ========================================
+// ===> Weather menu
 get("#displayWeatherMenu").addEventListener("click", function() {
     openWindow("weatherMenu");
+
     get('#weatherMenuAPIValue').addEventListener("input", function() { 
         settings.weather.api = get('#weatherMenuAPIValue').value;
         updateJSON();
@@ -431,6 +444,7 @@ get("#displayWeatherMenu").addEventListener("click", function() {
 
     get("#weatherMenuConfirm").addEventListener("click", function() {
         if (settings.weather.activated == true) {
+            // Check if the inputs are not empty before the try to request the weather
             if (settings.weather.api != "" && settings.weather.town != "") {
                 get("#weatherMenuCheck").style.color = "white";
                 displayWeatherInfo();
@@ -453,22 +467,18 @@ get("#displayWeatherMenu").addEventListener("click", function() {
         displayApp();
     })
 });
-// ========================================
 
-// ========================================
-// ============================= FUNCTIONS
-// ========================================
+// =================================================
+// =================================================
+// ============ ASIDE FUNCTIONS
 
-// ====================> Update the localStorage
-// ========================================
+// ===> Update the localStorage
 function updateJSON() {
     storage("set", "HOMEY-settings", JSON.stringify(settings))
     storage("set", "HOMEY-apps", JSON.stringify(apps))
 }
-// ========================================
 
-// =================> Keyboard shortcuts options
-// ========================================
+// ===> Keyboard shortcuts
 function shortcutKeyboard(event) {
     switch(event.key) {
         case "N":
@@ -512,30 +522,25 @@ function shortcutKeyboard(event) {
             break;
     }
 }
-// ========================================
 
-// =========================> Open one popup
-// ========================================
+// ===> Open one popup
 function openWindow(idWindow) {
-    document.removeEventListener('keydown', shortcutKeyboard);
+    document.removeEventListener('keydown', shortcutKeyboard); // Desactivate shortcuts into apps/popups
     get("#containerPopup").style.display = "flex";
     get("#" + idWindow).style.display = "block";
 }
-// ========================================
 
-// ========================> Close every popup
-// ========================================
+// ===> Close every popup
 function closeWindow() {
     get("#containerPopup").style.display = "none";
-    for(let i = 0; i < get("#containerPopup").children.length; i ++) get("#containerPopup").children[i].style.display = "none";
-    if (settings.core.start == true) document.addEventListener('keydown', shortcutKeyboard);
+    for(let i = 0; i < get("#containerPopup").children.length; i ++) get("#containerPopup").children[i].style.display = "none"; // Put style disply none on every children
+    if (settings.core.start == true) document.addEventListener('keydown', shortcutKeyboard); // Reactivate the shortcuts
 }
-// ========================================
 
-// ==================> Modify the display for apps
-// ========================================
+// ===> Modify the display
 function changeDisplay(mode) {
     if (mode == "app") {
+        // In app mode, time and date goes to the top with a smaller size
         document.removeEventListener('keydown', shortcutKeyboard);
         get("#time").style.justifyContent = "flex-start";
         get("#time").style.fontSize = "1em";
@@ -544,6 +549,7 @@ function changeDisplay(mode) {
         get("#containerApps"). style.flexGrow = "1";
     }
     else {
+    // In normal mode, time and date goes to the center of the page
         document.addEventListener('keydown', shortcutKeyboard);
         get("#time").style.justifyContent = "center";
         get("#time").style.fontSize = "2em";
@@ -552,50 +558,50 @@ function changeDisplay(mode) {
         get("#containerApps"). style.flexGrow = "0";
     }
 }
-// ========================================
 
-// ==========================> Display the favs
-// ========================================
+// ===> Display the favs
 function displayFavs() {
-    if (settings.favorite.content.length != 0) {
-        for (let i = 0; i < settings.favorite.content.length; i++) {
-            if (favDisplayed.indexOf(settings.favorite.content[i]) == -1) {
+    if (settings.favorite.content.length != 0) { // If there are favs in the array
+        for (let i = 0; i < settings.favorite.content.length; i++) { // Loop all the favs
+            if (favDisplayed.indexOf(settings.favorite.content[i]) == -1) { // Check if the fav is already displayed thanks to the global array "favDisplayed"
+
+                // Creation of the fav
                 let fav = document.createElement("a");
                     fav.target = "_blank";
-                    fav.innerHTML = settings.favorite.content[i].split("::")[0];
-                    fav.href = settings.favorite.content[i].split("::")[1];
-                    get("#listFavs").lastElementChild.before(fav);
-                    favDisplayed.push(settings.favorite.content[i]);
+                    fav.innerHTML = settings.favorite.content[i].split("::")[0]; // The name of the fav
+                    fav.href = settings.favorite.content[i].split("::")[1]; // The link of the fav
+                    get("#listFavs").lastElementChild.before(fav); // Add the a element just created at the end of the list of favs
+                    favDisplayed.push(settings.favorite.content[i]); // Add the fav to the global array
 
+                // Creation of the cross to delete the fav
                 let deleteFav = document.createElement("span");
                     deleteFav.classList.add("favEdit");
                     if (get('#editMode').checked == false) deleteFav.style.display = "none";
                     deleteFav.style.fontSize = "0.8em";
                     deleteFav.innerHTML = "x";
-                    fav.before(deleteFav);
+                    fav.before(deleteFav); // Add the cross before the fav element
 
+                // Add listener to the cross to delete the fav
                 deleteFav.addEventListener("click", function () {
-                    let value = this.nextElementSibling.innerHTML + "::" + this.nextElementSibling.href.slice(0, -1);
-                    let nbToDelete = favDisplayed.indexOf(value);
-                    favDisplayed.splice(nbToDelete, 1);
-                    settings.favorite.content.splice(nbToDelete, 1);
-                    updateJSON();
-                    this.nextElementSibling.remove();
-                    this.remove();
+                    let value = this.nextElementSibling.innerHTML + "::" + this.nextElementSibling.href.slice(0, -1); // Create the value of the fav (ex : name::link)
+                    let nbToDelete = favDisplayed.indexOf(value); // Search for the index of the fav
+                    favDisplayed.splice(nbToDelete, 1); // Delete the value of the global array
+                    settings.favorite.content.splice(nbToDelete, 1); // Delete the value in the local data
+                    updateJSON(); // Update the list favs
+                    this.nextElementSibling.remove(); // Delete the fav
+                    this.remove(); // Delete the cross of the fav
                 });
             }
         }
     }
 }
-// ========================================
 
-// =====================> Display the application
-// ========================================
+// ===> Display the application
 function displayApp() {
     // Main action
-    document.title = "HOMEY - " + settings.profile.name;
-    displayTime(); setInterval(displayTime, 10000); // 10 secondes
-    document.addEventListener('keydown', shortcutKeyboard);
+    document.title = "HOMEY - " + settings.profile.name; // Change the name of the app
+    displayTime(); setInterval(displayTime, 60000); // Update the hour and the date every 60 secondes
+    document.addEventListener('keydown', shortcutKeyboard); // Add shortcuts
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 
@@ -619,10 +625,11 @@ function displayApp() {
         get('#displaySettings').innerHTML = "🔧";
     }
 
-    // Display of the weather
+    // Display of the weather menu
     if (settings.weather.api != "") get('#weatherMenuAPIValue').value = settings.weather.api;
     if (settings.weather.town != "") get('#weatherMenuTownValue').value = settings.weather.town;
 
+    // Display of the weather app
     if (settings.weather.activated == true) {
         get('#activateWeather').checked = true;
         get('#weatherMenuAPI').style.display = "block";
@@ -638,7 +645,7 @@ function displayApp() {
         displayWeatherInfo();
     }
 
-    // Display of apps
+    // Display of apps menu
     if (apps.note.activated == true) {
         get('#activateNote').checked = true;
         get("#displayNote").style.display = "block";
@@ -648,7 +655,7 @@ function displayApp() {
         get("#displayNote").style.display = "none";
     }
 
-    // Favs -- display the favs
+    // Display of the favs
     if (settings.favorite.activated == true) {
         get('#activateFav').checked = true;
         get("#listFavs").style.display = "flex";
@@ -657,13 +664,11 @@ function displayApp() {
     else {
         get('#activateFav').checked = false;
         get("#listFavs").style.display = "none";
-        // settings.favorite.editMode = false;
-        // updateJSON();
         get('#editMode').checked = false;
         get('#editMenu').style.display = "none";
     }
 
-    // Favs -- edit mode for the favs
+    // Display of the edit mode for favs
     if (settings.favorite.editMode == true) {
         get('#editMode').checked = true;
         for (let i = 0; i < get('.favEdit').length; i++) get('.favEdit')[i].style.display = "inline";
@@ -673,49 +678,38 @@ function displayApp() {
         for (let i = 0; i < get('.favEdit').length; i++) get('.favEdit')[i].style.display = "none";
     }
 
-    // Apps - note
+    //  Display of the note app
     get('#noteContainer').style.visibility = "hidden";
-    if (apps.note.content != "") get('#note').value = apps.note.content;
-    get('#note').addEventListener("change", function() { 
-        apps.note.content = get("#note").value; 
-        updateJSON();
-    });
 }
-// ========================================
 
-// ===================> Display the hour and date
-// ========================================
+// ===> Display the hour and date
 function displayTime() {
-    let timestamp = new Date();
-    let date = timestamp.toLocaleString(display.dynamic.dateLanguage, {weekday: "long", month: "long", day: "numeric"});
+    let timestamp = new Date(); // Create a datetime object
+    let date = timestamp.toLocaleString(display.dynamic.dateLanguage, {weekday: "long", month: "long", day: "numeric"}); // Settings for the date
     let hours = timestamp.getHours();
     let minutes = timestamp.getMinutes(); 
-    if (hours < 10) hours = '0' + hours;
-    if (minutes < 10) minutes = '0' + minutes;
+    if (hours < 10) hours = '0' + hours; // Always two digits for hour
+    if (minutes < 10) minutes = '0' + minutes; // Always two digits for minutes
     get("#displayTime").innerHTML = hours + ":" + minutes;
     get("#displayDate").innerHTML = date;
 }
-// ========================================
 
-// ==============> Display the weather with refresh
-// ========================================
+// ===> Display the weather with refresh
 function displayWeatherInfo() {
     if (settings.weather.activated == true && settings.weather.api != "" && settings.weather.town != "") {
         requestWeather()
-        setInterval(requestWeather, 1800000); // 30 minutes
+        setInterval(displayWeatherInfo, 1800000); // Request the weather every 30 minutes
     }
     else get('#displayWeather').innerHTML = "";
 }
-// ========================================
 
-// ===================> Request to OpenWeather
-// ========================================
+// ===> Request to OpenWeather
 function requestWeather() {
     const req = new XMLHttpRequest();
     req.onreadystatechange = function () {
-
+        // If the request is correct and valid
         if (this.readyState === XMLHttpRequest.DONE) {
-            if (this.status === 200) {
+            if (this.status === 200) { 
                 data = JSON.parse(this.responseText);
                 switch(data.weather[0].main) {
                     case 'Thunderstorm' : var logo = "🌩";
@@ -728,43 +722,40 @@ function requestWeather() {
                 }
                 get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
             }  
-            else get('#displayWeather').innerHTML = "❗";
         }
+
+        // If there is an error
+        else get('#displayWeather').innerHTML = "❗"; 
     };
 
     req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.dynamic.weatherLanguage +'&units=metric', true)
     req.send(null);
 }
-// ========================================
 
-// ========================================
-// ================================ GENERIC
-// ========================================
+// =================================================
+// =================================================
+// ============ GENERIC
 
-// =========================> Select an element
-// ========================================
+// ====> Select an element
 function get(n) {
     if (n.search("#") != -1 && document.getElementById(n.split("#")[1]) != null) return document.getElementById(n.split("#")[1]);
     if (n.search("~") != -1 && document.querySelectorAll(n.split('~')[1]) != null) return document.querySelectorAll(n.split('~')[1]);
     if (n.search("\\.") != -1 && document.querySelectorAll(n).length != 0) return document.querySelectorAll(n);
 }
 
-// ================> Faster usage of localStorage
-// ========================================
+// ===> Faster usage of localStorage
 function storage(a, n, v) {
     if (a == "get") return localStorage.getItem(n);
     if (a == "set") return localStorage.setItem(n, v);
     if (a == "rem") return localStorage.removeItem(n);
 }
 
-// ========================> Add a a majuscule
-// ========================================
+// ===> Add a a majuscule
 function ucFirst(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-// ==============> Download selectionned content
-// ========================================
+// ===> Download selectionned content
 function download(c, n) {
     let file = new Blob([c], { type: 'text/plain' });
     let dl = document.createElement('a');
