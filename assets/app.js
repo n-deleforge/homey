@@ -102,7 +102,7 @@ const FR = {
         'noteTitle' : "Mes notes",
         'favTitle' : "Favoris <span class=\"favEdit\">(mode édition)</span>"
     },
-    'dynamic' : { // is not concerned by the function of displaying content
+    'etc' : { // is not concerned by the function of displaying content
         'footerName' : "Connecté en tant que",
         'dateLanguage' : "fr-FR",
         'weatherLanguage' : "FR",
@@ -186,7 +186,7 @@ const EN = {
         'noteTitle' : "My notes",
         'favTitle' : "Favoris <span class=\"favEdit\">(edit mode)</span>"
     },
-    'dynamic' : { // is not concerned by the function of displaying content
+    'etc' : { // is not concerned by the function of displaying content
         'footerName' : "Connected as",
         'dateLanguage' : "en-EN",
         'weatherLanguage' : "EN",
@@ -268,7 +268,7 @@ get("#displayImportMenu").addEventListener("click", function() {
             }
         }
         else {
-            get("#importMenuCheck").innerHTML =  display.dynamic.errorImport;
+            get("#importMenuCheck").innerHTML =  display.etc.errorImport;
             get("#importMenuCheck").style.color =  "red";
         }
     })
@@ -608,7 +608,7 @@ function displayApp() {
     // Display of the name
     if (settings.profile.activated == true) {
         get('#activateName').checked = true;
-        get("#displayName").innerHTML = display.dynamic.footerName + " <strong>" + settings.profile.name + "</strong>";
+        get("#displayName").innerHTML = display.etc.footerName + " <strong>" + settings.profile.name + "</strong>";
     }
     else {
         get('#activateName').checked = false;
@@ -685,7 +685,7 @@ function displayApp() {
 // ===> Display the hour and date
 function displayTime() {
     let timestamp = new Date(); // Create a datetime object
-    let date = timestamp.toLocaleString(display.dynamic.dateLanguage, {weekday: "long", month: "long", day: "numeric"}); // Settings for the date
+    let date = timestamp.toLocaleString(display.etc.dateLanguage, {weekday: "long", month: "long", day: "numeric"}); // Settings for the date
     let hours = timestamp.getHours();
     let minutes = timestamp.getMinutes(); 
     if (hours < 10) hours = '0' + hours; // Always two digits for hour
@@ -728,7 +728,7 @@ function requestWeather() {
         else get('#displayWeather').innerHTML = "❗"; 
     };
 
-    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.dynamic.weatherLanguage +'&units=metric', true)
+    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.etc.weatherLanguage +'&units=metric', true)
     req.send(null);
 }
 
