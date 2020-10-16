@@ -698,7 +698,7 @@ function displayTime() {
 function displayWeatherInfo() {
     if (settings.weather.activated == true && settings.weather.api != "" && settings.weather.town != "") {
         requestWeather()
-        setInterval(displayWeatherInfo, 1800000); // Request the weather every 30 minutes
+        // setInterval(displayWeatherInfo, 1800000); // Request the weather every 30 minutes
     }
     else get('#displayWeather').innerHTML = "";
 }
