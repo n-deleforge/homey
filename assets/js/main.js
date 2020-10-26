@@ -224,6 +224,7 @@ if (settings.core.start == false) {
 }
 else {
     displayApp();
+    displayWeatherInfo();
     displayFavs();
 }
 
@@ -240,6 +241,7 @@ get("#displayInitMenu").addEventListener("click", function() {
             settings.profile.name = get("#name").value;
             updateJSON();
             displayApp();
+            displayWeatherInfo();
             displayFavs();
             closeWindow();
         }
@@ -319,7 +321,6 @@ get("#displayNote").addEventListener("click", function() {
         get('#noteContainer').style.visibility = "hidden";
     } 
 });
-
 
 // ===> Apps menu
 get("#displayAppsMenu").addEventListener("click", function() {
@@ -478,54 +479,8 @@ function updateJSON() {
     storage("set", "HOMEY-apps", JSON.stringify(apps))
 }
 
-// ===> Keyboard shortcuts
-function shortcutKeyboard(event) {
-    switch(event.key) {
-        case "N":
-        case "n":
-            if (settings.profile.activated == true) settings.profile.activated = false
-            else settings.profile.activated = true;
-            updateJSON();
-            displayApp();
-            break;
-
-        case "S":
-        case "s":
-            if (settings.core.menu == true) settings.core.menu = false
-            else settings.core.menu = true;
-            updateJSON();
-            displayApp();
-            break;
-
-        case "F":
-        case "f":
-            if (settings.favorite.activated == true) settings.favorite.activated = false
-            else settings.favorite.activated = true;
-            updateJSON();
-            displayApp();
-            break;
-
-        case "E":
-        case "e":
-            if (settings.favorite.editMode == true) settings.favorite.editMode = false
-            else settings.favorite.editMode = true;
-            updateJSON();
-            displayApp();
-            break;
-
-        case "W":
-        case "w":
-            if (settings.weather.activated == true) settings.weather.activated = false
-            else settings.weather.activated = true;
-            updateJSON();
-            displayApp();
-            break;
-    }
-}
-
 // ===> Open one popup
 function openWindow(idWindow) {
-    document.removeEventListener('keydown', shortcutKeyboard); // Desactivate shortcuts into apps/popups
     get("#containerPopup").style.display = "flex";
     get("#" + idWindow).style.display = "block";
 }
@@ -534,14 +489,12 @@ function openWindow(idWindow) {
 function closeWindow() {
     get("#containerPopup").style.display = "none";
     for(let i = 0; i < get("#containerPopup").children.length; i ++) get("#containerPopup").children[i].style.display = "none"; // Put style disply none on every children
-    if (settings.core.start == true) document.addEventListener('keydown', shortcutKeyboard); // Reactivate the shortcuts
 }
 
 // ===> Modify the display
 function changeDisplay(mode) {
     if (mode == "app") {
         // In app mode, time and date goes to the top with a smaller size
-        document.removeEventListener('keydown', shortcutKeyboard);
         get("#time").style.justifyContent = "flex-start";
         get("#time").style.fontSize = "1em";
         get("#time").style.flexGrow = "0";
@@ -550,7 +503,6 @@ function changeDisplay(mode) {
     }
     else {
     // In normal mode, time and date goes to the center of the page
-        document.addEventListener('keydown', shortcutKeyboard);
         get("#time").style.justifyContent = "center";
         get("#time").style.fontSize = "2em";
         get("#time").style.flexGrow = "1";
@@ -601,7 +553,6 @@ function displayApp() {
     // Main action
     document.title = "HOMEY - " + settings.profile.name; // Change the name of the app
     displayTime(); setInterval(displayTime, 60000); // Update the hour and the date every 60 secondes
-    document.addEventListener('keydown', shortcutKeyboard); // Add shortcuts
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 
@@ -635,14 +586,12 @@ function displayApp() {
         get('#weatherMenuAPI').style.display = "block";
         get('#weatherMenuTown').style.display = "block";
         get('#weatherMenuCheck').style.display = "block";
-        displayWeatherInfo();
     }
     else {
         get('#activateWeather').checked = false;
         get('#weatherMenuAPI').style.display = "none";
         get('#weatherMenuTown').style.display = "none";
         get('#weatherMenuCheck').style.display = "none";
-        displayWeatherInfo();
     }
 
     // Display of apps menu
@@ -698,7 +647,7 @@ function displayTime() {
 function displayWeatherInfo() {
     if (settings.weather.activated == true && settings.weather.api != "" && settings.weather.town != "") {
         requestWeather()
-        // setInterval(displayWeatherInfo, 1800000); // Request the weather every 30 minutes
+        setInterval(requestWeather, 1800000); // Request the weather every 30 minutes
     }
     else get('#displayWeather').innerHTML = "";
 }
