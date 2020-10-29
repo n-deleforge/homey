@@ -11,4 +11,4 @@ Or clone the git : ```git clone https://github.com/n-deleforge/homey.git```
 
 ## How does it work ?
 
-Everything is stored localy on your device but you can export your data (name, weather, favs etc.) and then import it on another device. The application is written in pure JavaScript so no depencies are needed, except a modern browser.
+Everything is stored localy on your device but you can export your data (name, weather, favs etc.) and then import it on another device. The application is written in native JavaScript so no depencies are needed, except a modern browser.
