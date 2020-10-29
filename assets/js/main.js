@@ -685,26 +685,26 @@ function requestWeather() {
 // =================================================
 // ============ GENERIC
 
-// ====> Select an element
+// ===> Easy selector
 function get(n) {
-    if (n.search("#") != -1 && document.getElementById(n.split("#")[1]) != null) return document.getElementById(n.split("#")[1]);
-    if (n.search("~") != -1 && document.querySelectorAll(n.split('~')[1]) != null) return document.querySelectorAll(n.split('~')[1]);
-    if (n.search("\\.") != -1 && document.querySelectorAll(n).length != 0) return document.querySelectorAll(n);
+    if (n.search("#") == 0 && n.split("#")[1] != null && document.querySelector(n) != null) return document.querySelector(n);
+    if (n.search(".") == 0 && n.split(".")[1] != null && document.querySelectorAll(n) != null) return document.querySelectorAll(n);
+    if (n.search("~") == 0 && n.split("~")[1] != null && document.querySelectorAll(n.split("~")[1]) != null) return document.querySelectorAll(n.split("~")[1])[0];
 }
 
-// ===> Faster usage of localStorage
+// ===> Simplier usage of the local storage
 function storage(a, n, v) {
     if (a == "get") return localStorage.getItem(n);
     if (a == "set") return localStorage.setItem(n, v);
     if (a == "rem") return localStorage.removeItem(n);
 }
 
-// ===> Add a a majuscule
+// ===> First-letter majuscule
 function ucFirst(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-// ===> Download selectionned content
+// ===> Create a download
 function download(c, n) {
     let file = new Blob([c], { type: 'text/plain' });
     let dl = document.createElement('a');
