@@ -5,7 +5,7 @@
 
 ## What's up in the last version ?
 - New menu, much less intrusive and more comprehensive
-- A fez changes in the app's display
+- A few changes in the app's display
 
 ## How to use it ?
 
