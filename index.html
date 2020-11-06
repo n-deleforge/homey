@@ -6,157 +6,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <link rel="stylesheet" href="assets/css/main.min.css">
+    <link rel="stylesheet" href="assets/css/theme-dark.min.css" id="theme">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
 </head>
 
 <body>
-    <!-- MAIN -->
     <div id="container">
 
-        <!-- Start -->
+        <!-- START -->
         <div id="start">
             <h1 id="startTitle"></h1>
             <p id="startP1"></p>
-            <p id="startP2"></p><button id="displayInitMenu"></button>
-            <p id="startP3"></p><button id="displayImportMenu"></button>
+            <p id="startP2"></p>
+                <button id="displayInitMenu"></button>
+            <p id="startP3"></p>
+                <button id="displayImportMenu"></button>
         </div>
-        <!-- // Start -->
+        <!-- START -->
 
-        <!-- Application -->
+        <!-- APP -->
         <div id="app">
-            <header>
-                <p id="displayWeather"></p>
-            </header>
-
             <div id="time">
                 <p id="displayTime"></p>
                 <p id="displayDate"></p>
             </div>
 
+            <div id="listApps">
+                <button id="displayNote">📄</button>
+            </div>
+
             <div id="containerApps">
                 <div id="noteContainer">
                     <h1 id="noteTitle"></h1>
-                    <textarea id="note"></textarea>
+                    <textarea id="note" spellcheck="false"></textarea>
                 </div>
             </div>
 
-            <div id="listFavs">
-                <p id="favTitle"></p>
-                <button class="favEdit" id="addFavAction">➕</button>
+            <p id="displayWeather"></p>
+            <button id="displaySettings">🔧</button>
+
+            <div id="listSettings">
+                <button id="closeSettings">❌</button>
+
+                <h1 id="settingsTitle"></h1>
+                    <button id="displayProfilMenu"></button>
+                    <button id="displayWeatherMenu"></button>
+                    <button id="displayAppsMenu"></button>
+                    <button id="exportData"></button>
+                    <button id="switchTheme"></button>
+                    <button id="displayLogoutMenu"></button>
+
+                <div id="voidSettings"></div>
+                <p id="footer"></p>
             </div>
 
-            <div id="listApps">
-                <button id="displayNote">📄</button>
-                <span id="listSettings">
-                    <button id="displayProfilMenu">💬</button>
-                    <button id="displayWeatherMenu">⛅</button>
-                    <button id="displayFavMenu">⭐</button>
-                    <button id="displayAppsMenu">🧩</button>
-                    <button id="displayExportMenu">📲</button>
-                    <button id="displayLogoutMenu">❌</button>
-                </span>
-                <button id="displaySettings"></button>
-            </div>
-
-            <footer>
-                <p id="displayName"></p>
-                <p id="footerContent"></p>
-            </footer>
         </div>
-        <!-- // Application -->
+
     </div>
-    <!-- // MAIN -->
+    <!-- // APP -->
 
     <!-- POPUP -->
     <div id="containerPopup">
-
         <!-- Popup menu: initialisation -->
         <div id="initMenu">
             <h1 id="initMenuTitle"></h1>
-            <span><label id="initMenuLabel" for="name"></label><input type="text" id="name" pattern="([a-zA-ZÀ-Ý -]){2,15}" required></span>
+
+            <div class="formContainer">
+                <div class="formLine">
+                    <label id="initMenuLabel" for="name"></label>
+                    <input type="text" id="name" pattern="([a-zA-ZÀ-Ý -]){2,15}" required>
+                </div>
+            </div>
+
             <p id="initMenuCheck"></p>
-            <button id="confirmInitMenu"></button>
-            <button id="closeInitMenu"></button>
+
+            <div class="formButtons">
+                <button id="confirmInitMenu"></button>
+                <button id="closeInitMenu"></button>
+            </div>
         </div>
         <!-- // Popup menu: initialisation -->
 
         <!-- Popup menu : import -->
         <div id="importMenu">
             <h1 id="importMenuTitle"></h1>
-            <span><label id="importMenuLabel" for="importData"></label><input type="file" id="importData" required></span>
+            <div class="formContainer">
+                <div class="formLine">
+                    <label id="importMenuLabel" for="importData"></label>
+                    <input type="file" id="importData" accept="application/JSON" required>
+                </div>
+            </div>
+
             <p id="importMenuCheck"></p>
-            <button id="importMenuConfirm"></button>
-            <button id="closeImportMenu"></button>
+
+            <div class="formButtons">
+                <button id="importMenuConfirm"></button>
+                <button id="closeImportMenu"></button>
+            </div>
         </div>
         <!-- // Popup menu : import -->
-
-        <!-- Popup menu : deconnection -->
-        <div id="logoutMenu">
-            <h1 id="logoutMenuTitle"></h1>
-            <p id="logoutMenuText" class="biggerText"></p>
-            <button id="logoutMenuConfirm"></button>
-            <button id="closeLogoutMenu"></button>
-        </div>
-        <!-- // Popup menu : deconnection -->
 
         <!-- Popup menu : profile -->
         <div id="profilMenu">
             <h1 id="profilMenuTitle"></h1>
-            <span><label id="profilMenuActivate" for="activateName"></label><input type="checkbox" id="activateName" name="activateName" value="1"></span>
-            <span><label id="profilMenuLabel" for="newName"></label><input type="text" id="newName" pattern="([a-zA-ZÀ-Ý -]){2,15}" required></span>
+            
+            <div class="formContainer">
+                <div class="formLine">
+                    <label id="profilMenuLabel" for="newName"></label>
+                    <input type="text" id="newName"pattern="([a-zA-ZÀ-Ý -]){2,15}" required>
+                </div>
+            </div>
+
             <p id="profilMenuCheck"></p>
-            <button id="profilMenuConfirm"></button>
+
+            <div class="formButtons">
+               <button id="profilMenuConfirm"></button> 
+            </div>
         </div>
         <!--  // Popup menu : profile -->
 
         <!-- Popup menu : weather -->
         <div id="weatherMenu">
             <h1 id="weatherMenuTitle"></h1>
-            <span><label id="weatherMenuActivate" for="activateWeather"></label><input type="checkbox" id="activateWeather" name="activateWeather" value="1"></span>
-            <span id="weatherMenuAPI"><label id="weatherMenuAPILabel" for="weatherMenuAPIValue"></label><input type="text" id="weatherMenuAPIValue" required></span>
-            <span id="weatherMenuTown"><label id="weatherMenuTownLebel" for="weatherMenuTownValue"></label><input type="text" id="weatherMenuTownValue" required></span>
+
+            <div class="formContainer">
+                <div class="formLine">
+                    <label id="weatherMenuActivate" for="activateWeather"></label>
+                    <input type="checkbox" id="activateWeather" name="activateWeather" value="1">
+                </div>
+
+                <div class="formLine" id="weatherMenuAPI">
+                    <label id="weatherMenuAPILabel" for="weatherMenuAPIValue"></label>
+                    <input type="text" id="weatherMenuAPIValue" required>
+                </div>
+
+                <div class="formLine" id="weatherMenuTown">
+                    <label id="weatherMenuTownLebel" for="weatherMenuTownValue"></label>
+                    <input type="text" id="weatherMenuTownValue" required>
+                </div>
+            </div>
+
             <p id="weatherMenuCheck"></p>
-            <button id="weatherMenuConfirm"></button>
+
+            <div class="formButtons">
+                <button id="weatherMenuConfirm"></button>
+             </div>
         </div>
         <!-- // Popup menu : weather -->
-
-        <!-- Popup menu : export -->
-        <div id="exportMenu">
-            <h1 id="exportMenuTitle"></h1>
-            <p id="exportMenuContent" class="biggerText"></p>
-            <button id="exportMenuConfirm"></button>
-            <button id="closeExportMenu"></button>
-        </div>
-        <!-- // Popup menu : export -->
 
         <!-- Popup menu : apps list -->
         <div id="appsMenu">
             <h1 id="appsMenuTitle"></h1>
-            <p id="appsMenuContent" class="biggerText"></p>
-            <span><label id="appsMenuLabelNotes" for="activateNote"></label><input type="checkbox" id="activateNote" name="activateNote" value="1"></span>
-            <button id="closeAppsMenu"></button>
+            <p id="appsMenuContent"></p>
+
+            <div class="formContainer">
+                <div class="formLine">
+                    <label id="appsMenuLabelNotes" for="activateNote"></label>
+                    <input type="checkbox" id="activateNote" name="activateNote" value="1">
+                </div>
+            </div>
+
+            <div class="formButtons">
+                <button id="closeAppsMenu"></button>
+            </div>
         </div>
         <!-- // Popup menu : apps list -->
 
-        <!-- Popup menu : favs list -->
-        <div id="favMenu">
-            <h1 id="favMenuTitle"></h1>
-            <span><label id="favMenuLabel" for="activateFav"></label><input type="checkbox" id="activateFav" name="activateFav" value="1"></span>
-            <span id="editMenu"><label id="favMenuEditLabel" for="editMode"></label><input type="checkbox" id="editMode" name="editMode" value="1"></span>
-            <button id="closeFavMenu"></button>
-        </div>
-        <!-- // Popup menu : apps list -->
+        <!-- Popup menu : deconnection -->
+        <div id="logoutMenu">
+            <h1 id="logoutMenuTitle"></h1>
+            <p id="logoutMenuText"></p>
 
-        <!-- Popup menu : add fav -->
-        <div id="favMenuAdd">
-            <h1 id="favMenuAddTitle"></h1>
-            <p><label id="favMenuAddLabelName" for="nameFav"></label><input type="text" id="nameFav" pattern="([a-zA-ZÀ-Ý1-9 -.\(\)]){2,20}" required></p>
-            <p><label id="favMenuAddLabelURL" for="urlFav"></label><input type="url" id="urlFav" value="https://" required></p>
-            <p id="favMenuAddCheck"></p>
-            <button id="favMenuAddConfirm"></button>
-            <button id="closeFavAddMenu"></button>
+            <div class="formButtons">
+                <button id="logoutMenuConfirm"></button>
+                <button id="closeLogoutMenu"></button>
+            </div>
         </div>
-        <!-- // Popup menu : add fav -->
+        <!-- // Popup menu : deconnection -->
 
     </div>
     <!-- // POPUP -->

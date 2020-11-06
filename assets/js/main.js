@@ -2,28 +2,21 @@
 // =================================================
 // ============ INIT
 
-const version = 1.2; // the actual version of the app
-let favDisplayed = []; // will contain all the favs currently displayed to avoid the multilplication
+const version = 1.5; // the actual version of the app
+
+// ===> Correct the bug with viewport on mobile
+if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) get("#container").style.minHeight = window.outerHeight + 'px';
 
 // ===> Create the settings data or parse them if it already exists
 if (storage("get", "HOMEY-settings")) settings = JSON.parse(storage("get", "HOMEY-settings"))
 else {
     settings = {
-        'core' : {'start' : false,'menu' : false, 'version' : 1.0},
-        'profile' : {'activated' : '','name' : ''},
-        'favorite' : {'activated' : '','editMode' : '','content' : []},
-        'weather' : {'activated' : '','api' : '','town' : ''}
+        'core' : {'start' : false, 'version' : 1.2},
+        'profile' : {'name' : '', 'theme' : 'dark'},
+        'weather' : {'activated' : '','api' : '','town' : ''},
+        'note' : {'activated' : false, 'content' : ''}
     }
     storage("set", "HOMEY-settings", JSON.stringify(settings));
-}
-
-// ===> Same things for the apps
-if (storage("get", "HOMEY-apps")) apps = JSON.parse(storage("get", "HOMEY-apps"))
-else {
-    apps = {
-        'note' : {'activated' : '','content' : ''}
-    }
-    storage("set", "HOMEY-apps", JSON.stringify(apps));
 }
 
 // ===> French translation
@@ -38,17 +31,26 @@ const FR = {
     },
     'initMenu' : {
         'initMenuTitle' : "Initialisation",
-        'initMenuLabel' : "Prénom",
+        'initMenuLabel' : "Prénom / surnom",
         'initMenuCheck' : "Ton prénom doit être composé entre 2 à 15 caractères.",
         'confirmInitMenu' : "Confirmer",
         'closeInitMenu' : "Annuler"
     },
     'importMenu' : {
         'importMenuTitle' : "Importation",
-        'importMenuLabel' : "",
+        'importMenuLabel' : "Sauvegarde",
         'importMenuCheck' : "Le fichier de sauvegarde s'appellement normalement \"homey.json\".",
         'importMenuConfirm' : "Confirmer",
         'closeImportMenu' : "Annuler"
+    },
+    'listSettings' : {
+        'settingsTitle' : "Paramètres",
+        'displayProfilMenu' : "🙂 Profil",
+        'displayWeatherMenu' : "⛅ Météo",
+        'displayAppsMenu' : "🧩 Applications",
+        'switchTheme' : "🌈 Changer de thème",
+        'exportData' : "📲 Exportation des données",
+        'displayLogoutMenu' : "🚫 Déconnexion"
     },
     'logoutMenu' : {
         'logoutMenuTitle' : "Déconnexion",
@@ -58,52 +60,29 @@ const FR = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profil",
-        'profilMenuActivate' : "Afficher le prénom",
-        'profilMenuLabel' : "Prénom",
+        'profilMenuLabel' : "Prénom / surnom",
         'profilMenuCheck' : "Ton prénom doit être composé entre 2 à 15 caractères.",
         'profilMenuConfirm' : "Appliquer et fermer"
     },
     'weatherMenu' : {
         'weatherMenuTitle' : "Météo",
-        'weatherMenuActivate' : "Activer la météo",
-        'weatherMenuAPILabel' : "API OpenWeather",
+        'weatherMenuActivate' : "Activer météo",
+        'weatherMenuAPILabel' : "Clé API",
         'weatherMenuTownLebel' : "Ville",
-        'weatherMenuCheck' : "Les deux champs sont nécessaires.",
+        'weatherMenuCheck' : "Les deux champs sont nécessaires. OpenWeather fournit une clé API gratuitement.",
         'weatherMenuConfirm' : "Appliquer et fermer"
     },
-    'exportMenu' : {
-        'exportMenuTitle' : "Exportation",
-        'exportMenuContent' : "Vous pouvez exporter les données de l'application afin d'avoir les même paramètres sur un autre appareil. Attention, ce fichier contient des données privées !",
-        'exportMenuConfirm' : "Exporter",
-        'closeExportMenu' : "Fermer"
-    },
     'appsMenu' : {
-        'appsMenuTitle' : "Mes applications",
+        'appsMenuTitle' : "Applications",
         'appsMenuContent' : "Vous pouvez activer ou désactiver les applications.",
         'appsMenuLabelNotes' : "Notes",
         'closeAppsMenu' : "Appliquer et fermer"
     },
-    'favMenu' : {
-        'favMenuTitle' : "Gestion des favoris",
-        'favMenuLabel' : "Activer les favoris",
-        'favMenuEditLabel' : "Mode édition",
-        'closeFavMenu' : "Appliquer et fermer"
-    },
-    'favMenuAdd' : {
-        'favMenuAddTitle' : "Ajouter un favori",
-        'favMenuAddLabelName' : "Nom",
-        'favMenuAddLabelURL' : "Adresse",
-        'favMenuAddCheck' : "Les deux champs sont nécessaires et doivent respecter un format correct.",
-        'favMenuAddConfirm' : "Ajouter",
-        'closeFavAddMenu' : "Annuler"
-    },
     'misc' : {
-        'footerContent' : "Disponible sur <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hébergé sur  <a href=\"https://nicolas-deleforge.fr\">nd</a>",
-        'noteTitle' : "Mes notes",
-        'favTitle' : "Favoris <span class=\"favEdit\">(mode édition)</span>"
+        'footer' : "Disponible sur <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hébergé sur  <a href=\"https://nicolas-deleforge.fr\">nd</a>",
+        'noteTitle' : "Mes notes"
     },
     'etc' : { // is not concerned by the function of displaying content
-        'footerName' : "Connecté en tant que",
         'dateLanguage' : "fr-FR",
         'weatherLanguage' : "FR",
         'errorImport' : "Le fichier est incorrect. Réessayer."
@@ -134,6 +113,15 @@ const EN = {
         'importMenuConfirm' : "Confirm",
         'closeImportMenu' : "Cancel"
     },
+    'listSettings' : {
+        'settingsTitle' : "Settings",
+        'displayProfilMenu' : "🙂 Profile",
+        'displayWeatherMenu' : "⛅ Weather",
+        'displayAppsMenu' : "🧩 Applications",
+        'switchTheme' : "🌈 Switch theme",
+        'exportData' : "📲 Export data",
+        'displayLogoutMenu' : "🚫 Logout"
+    },
     'logoutMenu' : {
         'logoutMenuTitle' : "Deconnection",
         'logoutMenuText' : "This action will delete all the data of the application.",
@@ -142,52 +130,29 @@ const EN = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profile",
-        'profilMenuActivate' : "Display the name",
         'profilMenuLabel' : "Name",
         'profilMenuCheck' : "Your name must be composed between 2 to 15 characters.",
         'profilMenuConfirm' : "Confirm and close"
     },
     'weatherMenu' : {
         'weatherMenuTitle' : "Weather",
-        'weatherMenuActivate' : "Activate the weather",
+        'weatherMenuActivate' : "Activate weather",
         'weatherMenuAPILabel' : "API OpenWeather",
         'weatherMenuTownLebel' : "Town",
         'weatherMenuCheck' : "The two fields are required.",
         'weatherMenuConfirm' : "Confirm and close"
     },
-    'exportMenu' : {
-        'exportMenuTitle' : "Export your data",
-        'exportMenuContent' : "You can export the data of the application to import it on anoter device and keep your settings.Be careful, this file contains private data!",
-        'exportMenuConfirm' : "Export",
-        'closeExportMenu' : "Cancel"
-    },
     'appsMenu' : {
-        'appsMenuTitle' : "My applications",
+        'appsMenuTitle' : "Applications",
         'appsMenuContent' : "You can activate or desactive apps here.",
         'appsMenuLabelNotes' : "Notes",
         'closeAppsMenu' : "Confirm and close"
     },
-    'favMenu' : {
-        'favMenuTitle' : "Favorite management",
-        'favMenuLabel' : "Activate favorite",
-        'favMenuEditLabel' : "Edit mode",
-        'closeFavMenu' : "Confirm and close"
-    },
-    'favMenuAdd' : {
-        'favMenuAddTitle' : "Add a favorite",
-        'favMenuAddLabelName' : "Name",
-        'favMenuAddLabelURL' : "Adress",
-        'favMenuAddCheck' : "The two fields are required and must respect the correct format.",
-        'favMenuAddConfirm' : "Add",
-        'closeFavAddMenu' : "Cancel"
-    },
     'misc' : {
-        'footerContent' : "Available on <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hosted on <a href=\"https://nicolas-deleforge.fr\">nd</a>",
-        'noteTitle' : "My notes",
-        'favTitle' : "Favoris <span class=\"favEdit\">(edit mode)</span>"
+        'footer' : "Available on <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hosted on <a href=\"https://nicolas-deleforge.fr\">nd</a>",
+        'noteTitle' : "My notes"
     },
     'etc' : { // is not concerned by the function of displaying content
-        'footerName' : "Connected as",
         'dateLanguage' : "en-EN",
         'weatherLanguage' : "EN",
         'errorImport' : "The file is incorrect. Try again."
@@ -225,7 +190,6 @@ if (settings.core.start == false) {
 else {
     displayApp();
     displayWeatherInfo();
-    displayFavs();
 }
 
 // ===> Initialization menu
@@ -242,7 +206,6 @@ get("#displayInitMenu").addEventListener("click", function() {
             updateJSON();
             displayApp();
             displayWeatherInfo();
-            displayFavs();
             closeWindow();
         }
         else get("#initMenuCheck").style.color = "red";
@@ -260,10 +223,10 @@ get("#displayImportMenu").addEventListener("click", function() {
             let reader = new FileReader();
             reader.readAsText(get("#importData").files[0]);
             reader.onload = function (e) {
+                // Get the data of the save
                 let importData = (atob(e.target.result));
-                // Cut the imported data into 2 JSON objects, one for the settings and one for the apps
-                settings = JSON.parse(importData.split('&&&')[0]);
-                apps = JSON.parse(importData.split('&&&')[1]);
+                settings = JSON.parse(importData);
+
                 // Then upload it locally and reload the app
                 updateJSON();
                 location.reload();
@@ -278,49 +241,34 @@ get("#displayImportMenu").addEventListener("click", function() {
 
 // =================================================
 // =================================================
-// ============ APPS
+// ============ BUTTONS
 
-// ===> Button - settings menu
+// ===> Button - open settings menu
 get("#displaySettings").addEventListener("click", function() {
-    if (get('#listSettings').style.display == "none") {
-        get('#listSettings').style.animation = "bounceIn";
-        get('#listSettings').style.animationDuration = "0.5s"; 
+    closeWindow();
+    displayNoteApp("forceClose");
+    get("#listSettings").style.display = "flex";
+}) 
 
-        settings.core.menu = true;
-        updateJSON();
-        displayApp();
-    }
-    else {
-        get('#listSettings').style.animation = "bounceOut";
-        get('#listSettings').style.animationDuration = "0.5s";
-
-        settings.core.menu = false;
-        updateJSON();
-        setTimeout(function(){ displayApp(); }, 500);
-    }
+// ===> Button - close settings menu
+get("#closeSettings").addEventListener("click", function() {
+    get("#listSettings").style.display = "none";
 })
 
 // ===> Button - note app
-get("#displayNote").addEventListener("click", function() {
-    // If there is saved content, then display it into the note
-    if (apps.note.content != "") get('#note').value = apps.note.content;
+get("#displayNote").addEventListener("click", displayNoteApp);
 
-    // Add a listener into the textarea and save the content for any change
-    get('#note').addEventListener("change", function() { 
-        apps.note.content = get("#note").value; 
-        updateJSON();
-    });
-
-    if (get('#noteContainer').style.visibility == "hidden") {
-        changeDisplay("app"); // App mode
-        get('#noteContainer').style.visibility = "visible";
-        get('#note').focus(); // Focus on the textarea
-    } 
-    else {
-        changeDisplay("normal"); // Normal  mode
-        get('#noteContainer').style.visibility = "hidden";
-    } 
+// ===> Button - export data
+get("#exportData").addEventListener("click", function() {
+    download(btoa(JSON.stringify(settings)), "homey.json");
 });
+
+// ===> Button - theme switch
+get("#switchTheme").addEventListener("click", switchTheme);
+
+// =================================================
+// =================================================
+// ============ APPS
 
 // ===> Apps menu
 get("#displayAppsMenu").addEventListener("click", function() {
@@ -328,56 +276,19 @@ get("#displayAppsMenu").addEventListener("click", function() {
     get("#closeAppsMenu").addEventListener("click", closeWindow);
 
     get("#activateNote").addEventListener("click", function() {
-        if (get('#activateNote').checked == true) apps.note.activated = true
-        else apps.note.activated = false;
+        if (get('#activateNote').checked == true) settings.note.activated = true
+        else settings.note.activated = false;
+        updateJSON();
+        displayApp();
+     });
+
+     get("#activateTheme").addEventListener("click", function() {
+        if (get('#activateTheme').checked == true) settings.theme.activated = true
+        else settings.theme.activated = false;
         updateJSON();
         displayApp();
      });
 })
-
-// ===> Favs menu
-get("#displayFavMenu").addEventListener("click", function() {
-    openWindow("favMenu");
-    get("#closeFavMenu").addEventListener("click", closeWindow);
-
-    get('#activateFav').addEventListener("change", function() {
-        if (get('#activateFav').checked == true) settings.favorite.activated = true
-        else settings.favorite.activated = false;
-        updateJSON();
-        displayApp();
-    });
-
-    get('#editMode').addEventListener("change", function() {
-        if (get('#editMode').checked == true) settings.favorite.editMode = true
-        else settings.favorite.editMode = false;
-        updateJSON();
-        displayApp();
-    });
-});
-
-// ===> AddFav menu
-get("#addFavAction").addEventListener("click", function() {
-    openWindow("favMenuAdd");
-    get("#closeFavAddMenu").addEventListener("click", closeWindow);
-
-    get("#favMenuAddConfirm").addEventListener("click", function() {
-        // Check if the regex for fav name / link and if it's not empty
-        if (get("#nameFav").checkValidity() && get("#nameFav").value != "" && get("#urlFav").checkValidity() && get("#urlFav").value != "") {
-            let fav = get("#nameFav").value + "::" + get("#urlFav").value;
-            settings.favorite.content.push(fav); // Add it in the local array
-
-            // Reset the data
-            get("#nameFav").value = ""; 
-            get("#urlFav").value = "https://";
-
-            // Update the display
-            updateJSON();
-            closeWindow();
-            displayFavs();
-        }
-        else get("#favMenuAddCheck").style.color = "red";
-    })
-});
 
 // ===> Logout menu
 get("#displayLogoutMenu").addEventListener("click", function() {
@@ -386,20 +297,7 @@ get("#displayLogoutMenu").addEventListener("click", function() {
 
     get("#logoutMenuConfirm").addEventListener("click", function() {
         storage("rem", "HOMEY-settings");
-        storage("rem", "HOMEY-apps");
         location.reload(); 
-    });
-});
-
-// ===> Export menu
-get("#displayExportMenu").addEventListener("click", function() {
-    openWindow("exportMenu");
-    get("#closeExportMenu").addEventListener("click", closeWindow);
-
-    get("#exportMenuConfirm").addEventListener("click", function() {
-        // Stringify the two JSON objects and transform it with base64
-        download(btoa(JSON.stringify(settings) + "&&&" + JSON.stringify(apps)), "homey.json");
-        closeWindow();
     });
 });
 
@@ -419,13 +317,6 @@ get("#displayProfilMenu").addEventListener("click", function() {
             closeWindow();
         }
         else get("#profilMenuCheck").style.color = "red";
-    })
-
-    get('#activateName').addEventListener("change", function() {
-        if (get('#activateName').checked == true) settings.profile.activated = true
-        else settings.profile.activated = false;
-        updateJSON();
-        displayApp();
     })
 });
 
@@ -471,82 +362,7 @@ get("#displayWeatherMenu").addEventListener("click", function() {
 
 // =================================================
 // =================================================
-// ============ ASIDE FUNCTIONS
-
-// ===> Update the localStorage
-function updateJSON() {
-    storage("set", "HOMEY-settings", JSON.stringify(settings))
-    storage("set", "HOMEY-apps", JSON.stringify(apps))
-}
-
-// ===> Open one popup
-function openWindow(idWindow) {
-    get("#containerPopup").style.display = "flex";
-    get("#" + idWindow).style.display = "block";
-}
-
-// ===> Close every popup
-function closeWindow() {
-    get("#containerPopup").style.display = "none";
-    for(let i = 0; i < get("#containerPopup").children.length; i ++) get("#containerPopup").children[i].style.display = "none"; // Put style disply none on every children
-}
-
-// ===> Modify the display
-function changeDisplay(mode) {
-    if (mode == "app") {
-        // In app mode, time and date goes to the top with a smaller size
-        get("#time").style.justifyContent = "flex-start";
-        get("#time").style.fontSize = "1em";
-        get("#time").style.flexGrow = "0";
-        get("#containerApps"). style.display = "flex";
-        get("#containerApps"). style.flexGrow = "1";
-    }
-    else {
-    // In normal mode, time and date goes to the center of the page
-        get("#time").style.justifyContent = "center";
-        get("#time").style.fontSize = "2em";
-        get("#time").style.flexGrow = "1";
-        get("#containerApps"). style.display = "none";
-        get("#containerApps"). style.flexGrow = "0";
-    }
-}
-
-// ===> Display the favs
-function displayFavs() {
-    if (settings.favorite.content.length != 0) { // If there are favs in the array
-        for (let i = 0; i < settings.favorite.content.length; i++) { // Loop all the favs
-            if (favDisplayed.indexOf(settings.favorite.content[i]) == -1) { // Check if the fav is already displayed thanks to the global array "favDisplayed"
-
-                // Creation of the fav
-                let fav = document.createElement("a");
-                    fav.target = "_blank";
-                    fav.innerHTML = settings.favorite.content[i].split("::")[0]; // The name of the fav
-                    fav.href = settings.favorite.content[i].split("::")[1]; // The link of the fav
-                    get("#listFavs").lastElementChild.before(fav); // Add the a element just created at the end of the list of favs
-                    favDisplayed.push(settings.favorite.content[i]); // Add the fav to the global array
-
-                // Creation of the cross to delete the fav
-                let deleteFav = document.createElement("span");
-                    deleteFav.classList.add("favEdit");
-                    if (get('#editMode').checked == false) deleteFav.style.display = "none";
-                    deleteFav.style.fontSize = "0.8em";
-                    deleteFav.innerHTML = "x";
-                    fav.before(deleteFav); // Add the cross before the fav element
-
-                // Add listener to the cross to delete the fav
-                deleteFav.addEventListener("click", function () {
-                    let value = this.nextElementSibling.innerHTML + "::" + this.nextElementSibling.href.slice(0, -1); // Create the value of the fav (ex : name::link)
-                    let nbToDelete = favDisplayed.indexOf(value); // Search for the index of the fav
-                    favDisplayed.splice(nbToDelete, 1); // Delete the value of the global array
-                    settings.favorite.content.splice(nbToDelete, 1); // Delete the value in the local data
-                    updateJSON(); // Update the list favs
-                    this.nextElementSibling.remove(); // Delete the fav
-                    this.remove(); // Delete the cross of the fav
-                });
-            }
-        }
-    }
-}
+// ============ MAIN FUNCTIONS
 
 // ===> Display the application
 function displayApp() {
@@ -556,25 +372,9 @@ function displayApp() {
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 
-    // Display of the name
-    if (settings.profile.activated == true) {
-        get('#activateName').checked = true;
-        get("#displayName").innerHTML = display.etc.footerName + " <strong>" + settings.profile.name + "</strong>";
-    }
-    else {
-        get('#activateName').checked = false;
-        get("#displayName").innerHTML = "";
-    } 
-
-    // Display of the settings
-    if (settings.core.menu == true) {
-        get('#listSettings').style.display = "flex";
-        get('#displaySettings').innerHTML = "➖";
-    }
-    else {
-        get('#listSettings').style.display = "none";
-        get('#displaySettings').innerHTML = "🔧";
-    }
+    // Display of the theme
+    if (settings.profile.theme == "dark") displayTheme("dark");
+    else if (settings.profile.theme == "light") displayTheme("light");
 
     // Display of the weather menu
     if (settings.weather.api != "") get('#weatherMenuAPIValue').value = settings.weather.api;
@@ -583,8 +383,8 @@ function displayApp() {
     // Display of the weather app
     if (settings.weather.activated == true) {
         get('#activateWeather').checked = true;
-        get('#weatherMenuAPI').style.display = "block";
-        get('#weatherMenuTown').style.display = "block";
+        get('#weatherMenuAPI').style.display = "flex";
+        get('#weatherMenuTown').style.display = "flex";
         get('#weatherMenuCheck').style.display = "block";
     }
     else {
@@ -595,36 +395,14 @@ function displayApp() {
     }
 
     // Display of apps menu
-    if (apps.note.activated == true) {
+    // => Notes
+    if (settings.note.activated == true) {
         get('#activateNote').checked = true;
         get("#displayNote").style.display = "block";
     }
     else {
         get('#activateNote').checked = false;
         get("#displayNote").style.display = "none";
-    }
-
-    // Display of the favs
-    if (settings.favorite.activated == true) {
-        get('#activateFav').checked = true;
-        get("#listFavs").style.display = "flex";
-        get('#editMenu').style.display = "block";
-    }
-    else {
-        get('#activateFav').checked = false;
-        get("#listFavs").style.display = "none";
-        get('#editMode').checked = false;
-        get('#editMenu').style.display = "none";
-    }
-
-    // Display of the edit mode for favs
-    if (settings.favorite.editMode == true) {
-        get('#editMode').checked = true;
-        for (let i = 0; i < get('.favEdit').length; i++) get('.favEdit')[i].style.display = "inline";
-    }
-    else {
-        get('#editMode').checked = false;
-        for (let i = 0; i < get('.favEdit').length; i++) get('.favEdit')[i].style.display = "none";
     }
 
     //  Display of the note app
@@ -643,10 +421,14 @@ function displayTime() {
     get("#displayDate").innerHTML = date;
 }
 
+// =================================================
+// =================================================
+// ============ WEATHER
+
 // ===> Display the weather with refresh
 function displayWeatherInfo() {
     if (settings.weather.activated == true && settings.weather.api != "" && settings.weather.town != "") {
-        requestWeather()
+        requestWeather();
         setInterval(requestWeather, 1800000); // Request the weather every 30 minutes
     }
     else get('#displayWeather').innerHTML = "";
@@ -656,19 +438,28 @@ function displayWeatherInfo() {
 function requestWeather() {
     const req = new XMLHttpRequest();
     req.onreadystatechange = function () {
+
         // If the request is correct and valid
         if (this.readyState === XMLHttpRequest.DONE) {
             if (this.status === 200) { 
-                data = JSON.parse(this.responseText);
-                switch(data.weather[0].main) {
-                    case 'Thunderstorm' : var logo = "🌩";
-                    case 'Drizzle' : var logo = "🌨";
-                    case 'Rain' : var logo = "🌧";
-                    case 'Snow' : var logo = "🌨";
-                    case 'Atmosphere' : var logo = "🌪";
-                    case 'Clear' : var logo = "☀";
-                    case 'Clouds' : var logo = "⛅";
+                let data = JSON.parse(this.responseText);
+                console.log("Weather requested")
+                let timestamp = new Date();
+                let logo;
+
+                if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
+                else {
+                    switch(data.weather[0].main) {
+                        case 'Thunderstorm' : logo = "🌩";
+                        case 'Drizzle' : logo = "🌨";
+                        case 'Rain' : logo = "🌧";
+                        case 'Snow' : logo = "🌨";
+                        case 'Atmosphere' : logo = "🌪";
+                        case 'Clear' : logo = "☀";
+                        case 'Clouds' : logo = "⛅";
+                    }
                 }
+
                 get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
             }  
         }
@@ -679,6 +470,117 @@ function requestWeather() {
 
     req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.etc.weatherLanguage +'&units=metric', true)
     req.send(null);
+}
+
+// =================================================
+// =================================================
+// ============ APPS DISPLAY
+
+// ===> Modify the display
+function changeDisplay(mode) {
+    if (mode == "app") {
+        // In app mode, time and date goes to the top with a smaller size
+        get("#time").style.justifyContent = "flex-start";
+        get("#time").style.fontSize = "1em";
+        get("#time").style.flexGrow = "0";
+        get("#containerApps"). style.display = "flex";
+        get("#containerApps"). style.flexGrow = "1";
+
+        // If on mobile and weather activated, hide it for the noteapp
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && settings.weather.activated == true) get("#displayWeather").style.display = "none";
+    }
+    else {
+        // In normal mode, time and date goes to the center of the page
+        get("#time").style.justifyContent = "center";
+        get("#time").style.fontSize = "2em";
+        get("#time").style.flexGrow = "1";
+        get("#containerApps"). style.display = "none";
+        get("#containerApps"). style.flexGrow = "0";
+
+        // If on mobile and weather activated, hide it for the noteapp
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && settings.weather.activated == true) get("#displayWeather").style.display = "block";
+    }
+}
+
+// ===> Display or hide the app note
+function displayNoteApp(mode) {
+    // If there is saved content, then display it into the note
+    if (settings.note.content != "") get('#note').value = settings.note.content;
+
+    // Add a listener into the textarea and save the content for any change
+    get('#note').addEventListener("change", function() { 
+        settings.note.content = get("#note").value; 
+        updateJSON();
+    });
+
+    // Normal behaviour or force close the app
+    if (mode == "forceClose") {
+        changeDisplay("normal"); // Normal  mode
+        get('#noteContainer').style.visibility = "hidden";
+    }
+    else {
+        if (get('#noteContainer').style.visibility == "hidden") {
+            changeDisplay("app"); // App mode
+            get('#noteContainer').style.visibility = "visible";
+            get('#note').focus(); // Focus on the textarea
+        } 
+        else {
+            changeDisplay("normal"); // Normal  mode
+            get('#noteContainer').style.visibility = "hidden";
+        }   
+    }
+}
+
+// =================================================
+// =================================================
+// ============ THEME
+
+// ===> Switch the app theme
+function switchTheme() {
+    switch(settings.profile.theme) {
+        case "dark" :
+            displayTheme("light");
+            settings.profile.theme = "light";
+            updateJSON();
+            break;
+
+        case "light" :
+            displayTheme("dark");
+            settings.profile.theme = "dark";
+            updateJSON();
+            break;
+    }
+}
+
+// ===> Change the CSS file
+function displayTheme(theme) {
+    if (theme == "dark") get("#theme").href = "assets/css/theme-dark.min.css";
+    if (theme == "light") get("#theme").href = "assets/css/theme-light.min.css";
+}
+
+// =================================================
+// =================================================
+// ============ ASIDE FUNCTIONS
+
+// ===> Update the localStorage
+function updateJSON() {
+    storage("set", "HOMEY-settings", JSON.stringify(settings))
+}
+
+// =================================================
+// =================================================
+// ============ POPUP
+
+// ===> Open one popup
+function openWindow(idWindow) {
+    get("#containerPopup").style.display = "flex";
+    get("#" + idWindow).style.display = "block";
+}
+
+// ===> Close every popup
+function closeWindow() {
+    get("#containerPopup").style.display = "none";
+    for(let i = 0; i < get("#containerPopup").children.length; i ++) get("#containerPopup").children[i].style.display = "none"; // Put style disply none on every children
 }
 
 // =================================================

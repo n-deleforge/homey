@@ -1,0 +1,121 @@
+/* ======================================== */
+/* ======================================== */
+/* ======== MAIN */
+
+html,
+body {
+    color: white;
+    background-color: var(--light_black);
+}
+
+/* ======================================== */
+/* ======================================== */
+/* ======== APP START */
+
+#start input {
+    color: black;
+    border: 2px solid white;
+}
+
+#start button {
+    color: black;
+    background-color: white;
+}
+
+#start button:hover {
+    background-color: lightcoral;
+    color: white;
+}
+
+/* ======================================== */
+/* ======================================== */
+/* ======== APP CONTENT */
+
+#footer {
+    color: white;
+}
+
+#footer a {
+    color: lightcoral;
+}
+
+#displayTime {
+    border-bottom: 3px solid lightcoral;
+}
+
+#displaySettings {
+    color: white;
+}
+
+#listSettings {
+    background-color: black;
+}
+
+#listSettings h1 {
+    color: white;
+}
+
+#listSettings button {
+    background-color: white;
+}
+
+#listSettings button:hover {
+    background-color: lightcoral;
+}
+
+#closeSettings,
+#closeSettings:hover {
+    background-color: transparent !important;
+}
+
+/* ======================================== */
+/* ======================================== */
+/* ======== NOTE */
+
+#noteContainer {
+    color: black;
+    background-color: var(--light_yellow);
+    border: 2px solid white;
+}
+
+#noteContainer h1 {
+    color: black;
+}
+
+/* ======================================== */
+/* ======================================== */
+/* ======== POPUP CONTAINER */
+
+#containerPopup {
+    background-color: rgba(0,0,0,0.85);
+}
+#containerPopup div {
+    background: var(--light_black);
+    color: white;
+}
+
+/* ======================================== */
+/* ======================================== */
+/* ======== POPUP STYLE */
+
+#containerPopup h1 {
+    border-bottom: 2px solid white;
+}
+
+#containerPopup button {
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+#containerPopup button:hover {
+    border-bottom: 2px solid red;
+}
+
+#containerPopup input {
+    color: black;
+    border: 2px solid black;
+}
+
+#containerPopup input[type=file] {
+    color: white;
+}
