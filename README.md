@@ -1,7 +1,11 @@
 # Homey
 
-> Version 1.2 :memo:  
-> A personal start page for your browser with date, weather and favs.
+> Version 1.5 :memo:  
+> A personal start page for your browser with date and weather.
+
+## What's up in the last version ?
+- New menu, much less intrusive and more comprehensive
+- A few changes in the app's display
 
 ## How to use it ?
 
@@ -11,4 +15,4 @@ Or clone the git : ```git clone https://github.com/n-deleforge/homey.git```
 
 ## How does it work ?
 
-Everything is stored localy on your device but you can export your data (name, weather, favs etc.) and then import it on another device. The application is written in native JavaScript so no depencies are needed, except a modern browser.
+Everything is stored localy on your device but you can export your data (name, weather etc.) and then import it on another device. The application is written in native JavaScript so no depencies are needed, except a modern browser.
