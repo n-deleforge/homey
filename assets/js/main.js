@@ -3,6 +3,8 @@
 // ============ INIT
 
 const version = 1.5; // the actual version of the app
+const GithubLink = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
+const ndLink = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
 
 // ===> Correct the bug with viewport on mobile
 if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) get("#container").style.minHeight = window.outerHeight + 'px';
@@ -66,7 +68,7 @@ const FR = {
     },
     'weatherMenu' : {
         'weatherMenuTitle' : "Météo",
-        'weatherMenuActivate' : "Activer météo",
+        'weatherMenuActivate' : "Activer",
         'weatherMenuAPILabel' : "Clé API",
         'weatherMenuTownLebel' : "Ville",
         'weatherMenuCheck' : "Les deux champs sont nécessaires. OpenWeather fournit une clé API gratuitement.",
@@ -79,7 +81,7 @@ const FR = {
         'closeAppsMenu' : "Appliquer et fermer"
     },
     'misc' : {
-        'footer' : "Disponible sur <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hébergé sur  <a href=\"https://nicolas-deleforge.fr\">nd</a>",
+        'footer' : "Disponible sur " + GithubLink + " (v " + version + ") - Hébergé sur  " + ndLink,
         'noteTitle' : "Mes notes"
     },
     'etc' : { // is not concerned by the function of displaying content
@@ -101,14 +103,14 @@ const EN = {
     },
     'initMenu' : {
         'initMenuTitle' : "Start",
-        'initMenuLabel' : "Name",
+        'initMenuLabel' : "Name / nickname",
         'initMenuCheck' : "Your name must be composed between 2 to 15 characters.",
         'confirmInitMenu' : "Confirm",
         'closeInitMenu' : "Cancel"
     },
     'importMenu' : {
         'importMenuTitle' : "Import",
-        'importMenuLabel' : "",
+        'importMenuLabel' : "Filesave",
         'importMenuCheck' : "The file is normally called \"homey.json\".",
         'importMenuConfirm' : "Confirm",
         'closeImportMenu' : "Cancel"
@@ -130,13 +132,13 @@ const EN = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profile",
-        'profilMenuLabel' : "Name",
+        'profilMenuLabel' : "Name / nickname",
         'profilMenuCheck' : "Your name must be composed between 2 to 15 characters.",
         'profilMenuConfirm' : "Confirm and close"
     },
     'weatherMenu' : {
         'weatherMenuTitle' : "Weather",
-        'weatherMenuActivate' : "Activate weather",
+        'weatherMenuActivate' : "Activate",
         'weatherMenuAPILabel' : "API OpenWeather",
         'weatherMenuTownLebel' : "Town",
         'weatherMenuCheck' : "The two fields are required.",
@@ -149,7 +151,7 @@ const EN = {
         'closeAppsMenu' : "Confirm and close"
     },
     'misc' : {
-        'footer' : "Available on <a href=\"https://github.com/n-deleforge/homey\">GitHub</a> (v " + version + ") - Hosted on <a href=\"https://nicolas-deleforge.fr\">nd</a>",
+        'footer' : "Available on " + GithubLink + " (v " + version + ") - Hosted on " + ndLink,
         'noteTitle' : "My notes"
     },
     'etc' : { // is not concerned by the function of displaying content
@@ -247,11 +249,15 @@ get("#displayImportMenu").addEventListener("click", function() {
 get("#displaySettings").addEventListener("click", function() {
     closeWindow();
     displayNoteApp("forceClose");
+    get("#displaySettings").style.display = "none";
+    get('#listSettings').style.animation = "fadeInRight";
+    get('#listSettings').style.animationDuration = "0.5s";
     get("#listSettings").style.display = "flex";
 }) 
 
 // ===> Button - close settings menu
 get("#closeSettings").addEventListener("click", function() {
+    get("#displaySettings").style.display = "block";
     get("#listSettings").style.display = "none";
 })
 
