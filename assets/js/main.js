@@ -81,8 +81,7 @@ const FR = {
         'closeAppsMenu' : "Appliquer et fermer"
     },
     'misc' : {
-        'footer' : "Disponible sur " + GithubLink + " (v " + version + ") - Hébergé sur  " + ndLink,
-        'noteTitle' : "Mes notes"
+        'footer' : "Disponible sur " + GithubLink + " (v " + version + ") - Hébergé sur  " + ndLink
     },
     'etc' : { // is not concerned by the function of displaying content
         'dateLanguage' : "fr-FR",
