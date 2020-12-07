@@ -150,6 +150,7 @@ textarea:active {
     border: 0;
     margin: 0 !important;
     font-size: 1.5em;
+    cursor: pointer;
 }
 
 #displaySettings,

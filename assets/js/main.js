@@ -354,7 +354,7 @@ get("#displayWeatherMenu").addEventListener("click", function() {
             updateJSON();
             displayWeatherInfo();
             closeWindow();
-        } 
+        }
     });
 
     get('#activateWeather').addEventListener("change", function() {
@@ -373,7 +373,7 @@ get("#displayWeatherMenu").addEventListener("click", function() {
 function displayApp() {
     // Main action
     document.title = "HOMEY - " + settings.profile.name; // Change the name of the app
-    displayTime(); setInterval(displayTime, 60000); // Update the hour and the date every 60 secondes
+    displayTime(); setInterval(displayTime, 30000); // Update the hour and the date every 60 secondes
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 
