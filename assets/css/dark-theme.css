@@ -4,8 +4,8 @@
 
 html,
 body {
-    color: black;
-    background-color: #F8F8F8;
+    color: white;
+    background-color: var(--light_black);
 }
 
 /* ======================================== */
@@ -23,7 +23,7 @@ body {
 }
 
 #start button:hover {
-    background-color: lightblue;
+    background-color: lightcoral;
     color: white;
 }
 
@@ -36,11 +36,11 @@ body {
 }
 
 #footer a {
-    color: var(--dark_blue);
+    color: lightcoral;
 }
 
 #displayTime {
-    border-bottom: 3px solid var(--dark_blue);
+    border-bottom: 3px solid lightcoral;
 }
 
 #displaySettings {
@@ -48,7 +48,7 @@ body {
 }
 
 #listSettings {
-    background-color: var(--light_black);
+    background-color: black;
 }
 
 #listSettings h1 {
@@ -60,7 +60,7 @@ body {
 }
 
 #listSettings button:hover {
-    background-color: var(--dark_blue);
+    background-color: lightcoral;
 }
 
 #closeSettings,
@@ -70,21 +70,12 @@ body {
 
 /* ======================================== */
 /* ======================================== */
-/* ======== NOTE */
-
-#noteContainer {
-    color: black;
-    background: var(--light_yellow);
-    border: 2px solid black;
-}
-
-/* ======================================== */
-/* ======================================== */
 /* ======== POPUP CONTAINER */
 
 #containerPopup {
     background-color: rgba(0,0,0,0.85);
 }
+
 #containerPopup div {
     background: var(--light_black);
     color: white;
@@ -104,7 +95,7 @@ body {
 }
 
 #containerPopup button:hover {
-    border-bottom: 2px solid var(--dark_blue);
+    border-bottom: 2px solid red;
 }
 
 #containerPopup input {

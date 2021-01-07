@@ -4,8 +4,8 @@
 
 html,
 body {
-    color: white;
-    background-color: var(--light_black);
+    color: black;
+    background-color: #F8F8F8;
 }
 
 /* ======================================== */
@@ -23,7 +23,7 @@ body {
 }
 
 #start button:hover {
-    background-color: lightcoral;
+    background-color: lightblue;
     color: white;
 }
 
@@ -36,11 +36,11 @@ body {
 }
 
 #footer a {
-    color: lightcoral;
+    color: var(--dark_blue);
 }
 
 #displayTime {
-    border-bottom: 3px solid lightcoral;
+    border-bottom: 3px solid var(--dark_blue);
 }
 
 #displaySettings {
@@ -48,7 +48,7 @@ body {
 }
 
 #listSettings {
-    background-color: black;
+    background-color: var(--light_black);
 }
 
 #listSettings h1 {
@@ -60,22 +60,12 @@ body {
 }
 
 #listSettings button:hover {
-    background-color: lightcoral;
+    background-color: var(--dark_blue);
 }
 
 #closeSettings,
 #closeSettings:hover {
     background-color: transparent !important;
-}
-
-/* ======================================== */
-/* ======================================== */
-/* ======== NOTE */
-
-#noteContainer {
-    color: black;
-    background-color: var(--light_yellow);
-    border: 2px solid white;
 }
 
 /* ======================================== */
@@ -104,7 +94,7 @@ body {
 }
 
 #containerPopup button:hover {
-    border-bottom: 2px solid red;
+    border-bottom: 2px solid var(--dark_blue);
 }
 
 #containerPopup input {

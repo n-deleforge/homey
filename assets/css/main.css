@@ -7,7 +7,6 @@
     --middle_black: #030303;
     --blue: #8AABCC;
     --dark_blue: #5585b5;
-    --light_yellow: #FFFF99;
 }
 
 @font-face {
@@ -153,24 +152,12 @@ textarea:active {
     cursor: pointer;
 }
 
-#displaySettings,
-#listApps button {
+#displaySettings {
     opacity: 0.2;
 }
 
-#displaySettings:hover ,
-#listApps button:hover {
+#displaySettings:hover {
     opacity: 1;
-}
-
-#listApps {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    position: absolute;
-    bottom: 1.5vh;
-    right: 1vw;
-    font-size: 2em;
 }
 
 #listSettings {
@@ -191,8 +178,7 @@ textarea:active {
     text-align: center;
 }
 
-#listSettings button,
-#listApps button {
+#listSettings button {
     cursor: pointer;
     border: 2px solid transparent;
     background-color: transparent;
@@ -210,34 +196,6 @@ textarea:active {
 
 #voidSettings {
     flex-grow: 1;
-}
-
-/* ======================================== */
-/* ======================================== */
-/* ======== NOTE */
-
-#containerApps {
-    display: none;
-}
-
-#noteContainer {
-    visibility: hidden;
-    display: block;
-    border-radius: 2px;
-    padding: 2vh;
-    width: 55vw;
-    height: 35vh;
-    margin: auto;
-}
-
-#noteContainer textarea {
-    background: transparent;
-    border: 0;
-    resize: none;
-    width: 100%;
-    height: 100%;
-    font-size: 1em;
-    text-align: justify;
 }
 
 /* ======================================== */
@@ -263,8 +221,7 @@ textarea:active {
 #logoutMenu,
 #profilMenu,
 #weatherMenu,
-#exportMenu,
-#appsMenu {
+#exportMenu {
     display: none;
     padding: 2vh;
     position: relative;
@@ -330,8 +287,7 @@ textarea:active {
 #initMenuCheck,
 #importMenuCheck,
 #profilMenuCheck,
-#weatherMenuCheck,
-#appsMenuContent {
+#weatherMenuCheck {
     text-align: center;
 }
 
@@ -377,8 +333,7 @@ textarea:active {
     #logoutMenu,
     #profilMenu,
     #weatherMenu,
-    #exportMenu,
-    #appsMenu {
+    #exportMenu {
         padding: 2vh;
         width: 96vw;
         border-radius: 0px;
@@ -393,11 +348,6 @@ textarea:active {
     #containerPopup input[type=url],
     #containerPopup input[type=file] {
         width: 50vw;
-    }
-
-    #noteContainer {
-        width: 80vw;
-        height: 50vh;
     }
 }
 

@@ -1,9 +1,9 @@
 // General variables
+let settings;
 const version = 1.5;
 const GithubLink = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const ndLink = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
 const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-let settings;
 
 // ===> Correct the bug with viewport on mobile
 if (mobile) get("#container").style.minHeight = window.innerHeight + 'px';
@@ -14,8 +14,7 @@ else {
     settings = {
         'core' : {'start' : false, 'version' : 1.2},
         'profile' : {'name' : '', 'theme' : 'dark'},
-        'weather' : {'activated' : '','api' : '','town' : ''},
-        'note' : {'activated' : false, 'content' : ''}
+        'weather' : {'activated' : '','api' : '','town' : ''}
     }
 
     storage("set", "HOMEY-settings", JSON.stringify(settings));
@@ -49,9 +48,8 @@ const FR = {
         'settingsTitle' : "Paramètres",
         'displayProfilMenu' : "🙂 Profil",
         'displayWeatherMenu' : "⛅ Météo",
-        'displayAppsMenu' : "🧩 Applications",
         'switchTheme' : "🌈 Changer de thème",
-        'exportData' : "📲 Exportation des données",
+        'exportData' : "📲 Sauvegarde des paramètres",
         'displayLogoutMenu' : "🚫 Déconnexion",
         'footer' : "Disponible sur " + GithubLink + " (v " + version + ") - Hébergé sur  " + ndLink,
     },
@@ -74,12 +72,6 @@ const FR = {
         'weatherMenuTownLebel' : "Ville",
         'weatherMenuCheck' : "Les deux champs sont nécessaires. OpenWeather fournit une clé API gratuitement.",
         'weatherMenuConfirm' : "Appliquer et fermer"
-    },
-    'appsMenu' : {
-        'appsMenuTitle' : "Applications",
-        'appsMenuContent' : "Vous pouvez activer ou désactiver les applications.",
-        'appsMenuLabelNotes' : "Notes",
-        'closeAppsMenu' : "Appliquer et fermer"
     },
     'misc' : {
         'dateLanguage' : "fr-FR",
@@ -116,9 +108,8 @@ const EN = {
         'settingsTitle' : "Settings",
         'displayProfilMenu' : "🙂 Profile",
         'displayWeatherMenu' : "⛅ Weather",
-        'displayAppsMenu' : "🧩 Applications",
         'switchTheme' : "🌈 Switch theme",
-        'exportData' : "📲 Export data",
+        'exportData' : "📲 Backup settings",
         'displayLogoutMenu' : "🚫 Logout",
         'footer' : "Available on " + GithubLink + " (v " + version + ") - Hosted on " + ndLink,
     },
@@ -141,12 +132,6 @@ const EN = {
         'weatherMenuTownLebel' : "Town",
         'weatherMenuCheck' : "The two fields are required.",
         'weatherMenuConfirm' : "Confirm and close"
-    },
-    'appsMenu' : {
-        'appsMenuTitle' : "Applications",
-        'appsMenuContent' : "You can activate or desactive apps here.",
-        'appsMenuLabelNotes' : "Notes",
-        'closeAppsMenu' : "Confirm and close"
     },
     'misc' : {
         'dateLanguage' : "en-EN",

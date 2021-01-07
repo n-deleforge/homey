@@ -5,8 +5,7 @@
 // At first start
 if (settings.core.start == false) {
     get("#start").style.display = "flex";
-    for (let i = 0; i < get("~input").length; i++) get("~input")[i].value = "";
-    for (let i = 0; i < get("~textarea").length; i++) get("~textarea")[i].value = "";
+    get("#name").value = "";
 
     // Initialization menu
     get("#displayInitMenu").addEventListener("click", function () {
@@ -16,7 +15,6 @@ if (settings.core.start == false) {
         get("#confirmInitMenu").addEventListener("click", function () {
             if (get("#name").checkValidity() && get("#name").value != "") {
                 settings.core.start = true;
-                settings.profile.activated = true;
                 settings.profile.name = get("#name").value;
 
                 updateJSON();
@@ -37,7 +35,7 @@ if (settings.core.start == false) {
                 let reader = new FileReader();
                 reader.readAsText(get("#importData").files[0]);
                 reader.onload = function (e) {
-                    let importData = (atob(e.target.result));
+                    let importData = e.target.result;
                     settings = JSON.parse(importData);
 
                     updateJSON();
@@ -59,7 +57,6 @@ else {
     // Button : open settings menu
     get("#displaySettings").addEventListener("click", function () {
         closeWindow();
-        displayNoteApp("forceClose");
 
         get("#displaySettings").style.display = "none";
         get('#listSettings').style.animation = "fadeInRight";
@@ -73,32 +70,13 @@ else {
         get("#listSettings").style.display = "none";
     })
 
-    // Button : note app
-    get("#displayNote").addEventListener("click", displayNoteApp);
-
     // Button : export data
     get("#exportData").addEventListener("click", function () {
-        download(btoa(JSON.stringify(settings)), "homey.json");
+        download(JSON.stringify(settings), "homey.json");
     });
 
     // Button : theme switch
     get("#switchTheme").addEventListener("click", switchTheme);
-
-    // Button : apps list
-    get("#displayAppsMenu").addEventListener("click", function () {
-        openWindow("appsMenu");
-        get("#closeAppsMenu").addEventListener("click", closeWindow);
-
-        get("#activateNote").addEventListener("click", function () {
-            if (get('#activateNote').checked == true) 
-                settings.note.activated = true
-            else 
-                settings.note.activated = false;
-            
-            updateJSON();
-            displayApp();
-        });
-    })
 
     // Logout menu
     get("#displayLogoutMenu").addEventListener("click", function () {
@@ -211,16 +189,6 @@ function displayApp() {
         get('#weatherMenuTown').style.display = "none";
         get('#weatherMenuCheck').style.display = "none";
     }
-
-    // Display of the note app
-    get('#noteContainer').style.visibility = "hidden";
-    if (settings.note.activated == true) {
-        get('#activateNote').checked = true;
-        get("#displayNote").style.display = "block";
-    } else {
-        get('#activateNote').checked = false;
-        get("#displayNote").style.display = "none";
-    } 
 }
 
 // ===> Display the hour and date
@@ -287,62 +255,6 @@ function requestWeather() {
 
     req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.misc.weatherLanguage + '&units=metric', true)
     req.send(null);
-}
-
-// =================================================
-// =================================================
-// ============ APPS DISPLAY
-
-// ===> Modify the display
-function changeDisplay(mode) {
-    if (mode == "app") {
-        get("#time").style.justifyContent = "flex-start";
-        get("#time").style.fontSize = "1em";
-        get("#time").style.flexGrow = "0";
-        get("#containerApps").style.display = "flex";
-        get("#containerApps").style.flexGrow = "1";
-
-        if (mobile && settings.weather.activated == true) 
-            get("#displayWeather").style.display = "none";
-    } 
-    
-    else {
-        get("#time").style.justifyContent = "center";
-        get("#time").style.fontSize = "2em";
-        get("#time").style.flexGrow = "1";
-        get("#containerApps").style.display = "none";
-        get("#containerApps").style.flexGrow = "0";
-
-        if (mobile && settings.weather.activated == true) 
-            get("#displayWeather").style.display = "block";
-    }
-}
-
-// ===> Display or hide the app note
-function displayNoteApp(mode) {
-    // Display and save any content
-    if (settings.note.content != "") get('#note').value = settings.note.content;
-    get('#note').addEventListener("change", function () {
-        settings.note.content = get("#note").value;
-        updateJSON();
-    });
-
-    // Behaviour of the app
-    if (mode == "forceClose") {
-        changeDisplay("normal");
-        get('#noteContainer').style.visibility = "hidden";
-    }
-    else {
-        if (get('#noteContainer').style.visibility == "hidden") {
-            changeDisplay("app"); 
-            get('#noteContainer').style.visibility = "visible";
-            get('#note').focus(); 
-        } 
-        else {
-            changeDisplay("normal"); 
-            get('#noteContainer').style.visibility = "hidden";
-        }
-    }
 }
 
 // =================================================

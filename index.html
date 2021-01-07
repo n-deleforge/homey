@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <link rel="stylesheet" href="assets/css/main.min.css">
-    <link rel="stylesheet" href="assets/css/theme-dark.min.css" id="theme">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
+    <link rel="stylesheet" href="assets/css/dark-theme.css" id="theme">
+    <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
 <body>
@@ -31,16 +31,6 @@
                 <p id="displayDate"></p>
             </div>
 
-            <div id="listApps">
-                <button id="displayNote">📄</button>
-            </div>
-
-            <div id="containerApps">
-                <div id="noteContainer">
-                    <textarea id="note" spellcheck="false"></textarea>
-                </div>
-            </div>
-
             <p id="displayWeather"></p>
             <button id="displaySettings">🔧</button>
 
@@ -50,7 +40,6 @@
                 <h1 id="settingsTitle"></h1>
                     <button id="displayProfilMenu"></button>
                     <button id="displayWeatherMenu"></button>
-                    <button id="displayAppsMenu"></button>
                     <button id="exportData"></button>
                     <button id="switchTheme"></button>
                     <button id="displayLogoutMenu"></button>
@@ -73,7 +62,7 @@
             <div class="formContainer">
                 <div class="formLine">
                     <label id="initMenuLabel" for="name"></label>
-                    <input type="text" id="name" pattern="([a-zA-ZÀ-Ý -]){2,15}" required>
+                    <input type="text" id="name" pattern="([a-zA-ZÀ-Ý -]){2,15}">
                 </div>
             </div>
 
@@ -92,7 +81,7 @@
             <div class="formContainer">
                 <div class="formLine">
                     <label id="importMenuLabel" for="importData"></label>
-                    <input type="file" id="importData" accept="application/JSON" required>
+                    <input type="file" id="importData" accept="application/JSON">
                 </div>
             </div>
 
@@ -112,7 +101,7 @@
             <div class="formContainer">
                 <div class="formLine">
                     <label id="profilMenuLabel" for="newName"></label>
-                    <input type="text" id="newName"pattern="([a-zA-ZÀ-Ý -]){2,15}" required>
+                    <input type="text" id="newName" pattern="([a-zA-ZÀ-Ý -]){2,15}">
                 </div>
             </div>
 
@@ -136,12 +125,12 @@
 
                 <div class="formLine" id="weatherMenuAPI">
                     <label id="weatherMenuAPILabel" for="weatherMenuAPIValue"></label>
-                    <input type="text" id="weatherMenuAPIValue" required>
+                    <input type="text" id="weatherMenuAPIValue">
                 </div>
 
                 <div class="formLine" id="weatherMenuTown">
                     <label id="weatherMenuTownLebel" for="weatherMenuTownValue"></label>
-                    <input type="text" id="weatherMenuTownValue" required>
+                    <input type="text" id="weatherMenuTownValue">
                 </div>
             </div>
 
@@ -152,24 +141,6 @@
              </div>
         </div>
         <!-- // Popup menu : weather -->
-
-        <!-- Popup menu : apps list -->
-        <div id="appsMenu">
-            <h1 id="appsMenuTitle"></h1>
-            <p id="appsMenuContent"></p>
-
-            <div class="formContainer">
-                <div class="formLine">
-                    <label id="appsMenuLabelNotes" for="activateNote"></label>
-                    <input type="checkbox" id="activateNote" name="activateNote" value="1">
-                </div>
-            </div>
-
-            <div class="formButtons">
-                <button id="closeAppsMenu"></button>
-            </div>
-        </div>
-        <!-- // Popup menu : apps list -->
 
         <!-- Popup menu : deconnection -->
         <div id="logoutMenu">
@@ -186,7 +157,7 @@
     </div>
     <!-- // POPUP -->
 
-    <!-- ADD LITTLE JS HERE -->
+    <script src="../../libraries/littleJS.min.js"></script>
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/main.min.js"></script>
 </body>
