@@ -2,6 +2,12 @@
 // =================================================
 // ============ INITIALISATION
 
+// ===> Check version
+if (settings.core.version != version) {
+    settings.core.version = version;
+    updateJSON();
+}
+
 // At first start
 if (settings.core.start == false) {
     get("#start").style.display = "flex";

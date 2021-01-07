@@ -12,7 +12,7 @@ if (mobile) get("#container").style.minHeight = window.innerHeight + 'px';
 if (storage("get", "HOMEY-settings")) settings = JSON.parse(storage("get", "HOMEY-settings"))
 else {
     settings = {
-        'core' : {'start' : false, 'version' : 1.2},
+        'core' : {'start' : false, 'version' : version},
         'profile' : {'name' : '', 'theme' : 'dark'},
         'weather' : {'activated' : '','api' : '','town' : ''}
     }
