@@ -1,6 +1,6 @@
 # Homey
 
-> Version 1.5 :memo:  
+> Version 1.6 :memo:  
 > A personal start page for your browser with date and weather.
 
 ## How to use it ?
