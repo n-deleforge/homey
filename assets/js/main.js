@@ -2,12 +2,6 @@
 // =================================================
 // ============ INITIALISATION
 
-// ===> Check version
-if (settings.core.version != version) {
-    settings.core.version = version;
-    updateJSON();
-}
-
 // At first start
 if (settings.core.start == false) {
     get("#start").style.display = "flex";
@@ -59,6 +53,7 @@ if (settings.core.start == false) {
 else {
     displayApp();
     displayWeatherInfo();
+    checkVersion();
 
     // Button : open settings menu
     get("#displaySettings").addEventListener("click", function () {
@@ -233,30 +228,29 @@ function requestWeather() {
     const req = new XMLHttpRequest();
     req.onreadystatechange = function () {
 
-        if (this.readyState === XMLHttpRequest.DONE) {
-            if (this.status === 200) {
-                let data = JSON.parse(this.responseText);
-                let timestamp = new Date();
-                let logo;
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+            let timestamp = new Date();
+            let logo;
 
-                if (timestamp.getHours() < 7 || timestamp.getHours() > 19) 
-                    logo = "🌙";
-                else {
-                    switch (data.weather[0].main) {
-                        case 'Thunderstorm': logo = "🌩";
-                        case 'Drizzle': logo = "🌨";
-                        case 'Rain': logo = "🌧";
-                        case 'Snow': logo = "🌨";
-                        case 'Atmosphere': logo = "🌪";
-                        case 'Clear': logo = "☀";
-                        case 'Clouds': logo = "⛅";
-                    }
+            if (timestamp.getHours() < 7 || timestamp.getHours() > 19) 
+                logo = "🌙";
+            
+            else {
+                switch (data.weather[0].main) {
+                    case 'Clear': logo = "☀";
+                    case 'Clouds': logo = "⛅";
+                    case 'Drizzle': logo = "🌨";
+                    case 'Rain': logo = "🌧";
+                    case 'Snow': logo = "🌨";
+                    case 'Thunderstorm': logo = "🌩";
+                    case 'Atmosphere': logo = "🌪";
+                    case 'Fog': logo = "🌫";
                 }
-                get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
             }
+            get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
         }
-        else 
-            get('#displayWeather').innerHTML = "❗";
+        else get('#displayWeather').innerHTML = "❗";
     };
 
     req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.misc.weatherLanguage + '&units=metric', true)
@@ -300,6 +294,14 @@ function displayTheme(theme) {
 // ===> Update the localStorage
 function updateJSON() {
     storage("set", "HOMEY-settings", JSON.stringify(settings))
+}
+
+// Check the version of the app
+function checkVersion() {
+    if (settings.core.version != version) {
+        settings.core.version = version;
+        updateJSON();
+    }    
 }
 
 // ===> Open one popup
