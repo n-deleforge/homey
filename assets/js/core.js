@@ -1,6 +1,6 @@
 // General variables
 let settings;
-const version = 1.5;
+const version = 1.6;
 const GithubLink = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const ndLink = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
 const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
@@ -14,7 +14,7 @@ else {
     settings = {
         'core' : {'start' : false, 'version' : version},
         'profile' : {'name' : '', 'theme' : 'dark'},
-        'weather' : {'activated' : '','api' : '','town' : ''}
+        'weather' : {'api' : '','town' : ''}
     }
 
     storage("set", "HOMEY-settings", JSON.stringify(settings));
@@ -24,18 +24,11 @@ else {
 const FR = {
     'start' : {
         'startTitle' : "Bienvenue sur Homey !",
-        'startP1' : "Avant tout, sache que si tu utilises cette application, certaines de tes données seront stockées sur ton appareil (et UNIQUEMENT sur ton appareil).<br />En utilisant Homey, tu confirmes avoir pris connaissance de ce fait. Aucune donnée n'est partagée avec un tiers.",
-        'startP2' : "Si c'est ta première visite alors il faut configurer l'appli. Cela ne prendra que quelques secondes.",
-        'startP3' : "Par contre, si tu as déjà utilisé l'application, tu peux importer tes données.",
-        'displayInitMenu' : "Configuration",
+        'startP1' : "En utilisant Homey, tu confirmes avoir pris connaissance que des données seront stockées sur ton appareil. Cependant, aucune donnée n'est partagée avec un tiers.",
+        'startP2' : "Si c'est ta première visite alors tu peux démarrer l'application.",
+        'startP3' : "Mais si tu as déjà utilisé l'application, tu peux importer tes paramètres.",
+        'startApp' : "Démarrer",
         'displayImportMenu' : "Importation"
-    },
-    'initMenu' : {
-        'initMenuTitle' : "Initialisation",
-        'initMenuLabel' : "Prénom / surnom",
-        'initMenuCheck' : "Ton prénom doit être composé entre 2 à 15 caractères.",
-        'confirmInitMenu' : "Confirmer",
-        'closeInitMenu' : "Annuler"
     },
     'importMenu' : {
         'importMenuTitle' : "Importation",
@@ -62,17 +55,18 @@ const FR = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profil",
-        'profilMenuLabel' : "Prénom / surnom",
+        'profilMenuLabel' : "Prénom ou surnom",
         'profilMenuCheck' : "Ton prénom doit être composé entre 2 à 15 caractères.",
-        'profilMenuConfirm' : "Appliquer et fermer"
+        'profilMenuConfirm' : "Appliquer",
+        'closeProfileMenu' : "Annuler"
     },
     'weatherMenu' : {
         'weatherMenuTitle' : "Météo",
-        'weatherMenuActivate' : "Activer",
         'weatherMenuAPILabel' : "Clé API",
         'weatherMenuTownLebel' : "Ville",
         'weatherMenuCheck' : "Les deux champs sont nécessaires. OpenWeather fournit une clé API gratuitement.",
-        'weatherMenuConfirm' : "Appliquer et fermer"
+        'weatherMenuConfirm' : "Appliquer",
+        'closeWeatherMenu' : "Annuler"
     },
     'misc' : {
         'dateLanguage' : "fr-FR",
@@ -85,18 +79,11 @@ const FR = {
 const EN = {
     'start' : {
         'startTitle' : "Welcome to Homey !",
-        'startP1' : "Before anything else, you have to know that if you use this application, some of your data will be saved on your device (and ONLY on your device).<br /> In using Homey, your confirm that you understand and agree of that. No data is shared with a third party.",
-        'startP2' : "If it's your first visit then you need to configure the application. It will only take a few seconds.",
-        'startP3' : "However, if you already have used the application, you can import your data.",
-        'displayInitMenu' : "Configure",
+        'startP1' : "By using Homey, you confirm that you are aware that data will be stored on your device. However, no data is shared with a third party.",
+        'startP2' : "If it's your first visit then you start the application.",
+        'startP3' : "But if you already have used the application, you can import your settings.",
+        'startApp' : "Start",
         'displayImportMenu' : "Import"
-    },
-    'initMenu' : {
-        'initMenuTitle' : "Start",
-        'initMenuLabel' : "Name / nickname",
-        'initMenuCheck' : "Your name must be composed between 2 to 15 characters.",
-        'confirmInitMenu' : "Confirm",
-        'closeInitMenu' : "Cancel"
     },
     'importMenu' : {
         'importMenuTitle' : "Import",
@@ -123,17 +110,18 @@ const EN = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profile",
-        'profilMenuLabel' : "Name / nickname",
+        'profilMenuLabel' : "Name or nickname",
         'profilMenuCheck' : "Your name must be composed between 2 to 15 characters.",
-        'profilMenuConfirm' : "Confirm and close"
+        'profilMenuConfirm' : "Confirm",
+        'closeProfileMenu' : "Cancel"
     },
     'weatherMenu' : {
         'weatherMenuTitle' : "Weather",
-        'weatherMenuActivate' : "Activate",
         'weatherMenuAPILabel' : "API OpenWeather",
         'weatherMenuTownLebel' : "Town",
         'weatherMenuCheck' : "The two fields are required.",
-        'weatherMenuConfirm' : "Confirm and close"
+        'weatherMenuConfirm' : "Confirm",
+        'closeWeatherMenu' : "Cancel"
     },
     'misc' : {
         'dateLanguage' : "en-EN",

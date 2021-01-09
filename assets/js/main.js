@@ -5,153 +5,17 @@
 // At first start
 if (settings.core.start == false) {
     get("#start").style.display = "flex";
-    get("#name").value = "";
-
-    // Initialization menu
-    get("#displayInitMenu").addEventListener("click", function () {
-        openWindow("initMenu");
-        get("#closeInitMenu").addEventListener("click", closeWindow);
-
-        get("#confirmInitMenu").addEventListener("click", function () {
-            if (get("#name").checkValidity() && get("#name").value != "") {
-                settings.core.start = true;
-                settings.profile.name = get("#name").value;
-
-                updateJSON();
-                location.reload();
-            } 
-            else 
-                get("#initMenuCheck").style.color = "red";
-        })
-    })
-
-    // Import menu
-    get("#displayImportMenu").addEventListener("click", function () {
-        openWindow("importMenu");
-        get("#closeImportMenu").addEventListener("click", closeWindow);
-
-        get("#importMenuConfirm").addEventListener("click", function () {
-            if (get("#importData").files.length != 0) {
-                let reader = new FileReader();
-                reader.readAsText(get("#importData").files[0]);
-                reader.onload = function (e) {
-                    let importData = e.target.result;
-                    settings = JSON.parse(importData);
-
-                    updateJSON();
-                    location.reload();
-                }
-            } 
-            else {
-                get("#importMenuCheck").innerHTML = display.misc.errorImport;
-                get("#importMenuCheck").style.color = "red";
-            }
-        })
-    })
+    createMenu("start");
+    createButtons("start");
 }
-// In any other case
+// When the app is already loaded
 else {
+    displayTheme("auto");
     displayApp();
     displayWeatherInfo();
     checkVersion();
-
-    // Button : open settings menu
-    get("#displaySettings").addEventListener("click", function () {
-        closeWindow();
-
-        get("#displaySettings").style.display = "none";
-        get('#listSettings').style.animation = "fadeInRight";
-        get('#listSettings').style.animationDuration = "0.5s";
-        get("#listSettings").style.display = "flex";
-    })
-
-    // Button : close settings menu
-    get("#closeSettings").addEventListener("click", function () {
-        get("#displaySettings").style.display = "block";
-        get("#listSettings").style.display = "none";
-    })
-
-    // Button : export data
-    get("#exportData").addEventListener("click", function () {
-        download(JSON.stringify(settings), "homey.json");
-    });
-
-    // Button : theme switch
-    get("#switchTheme").addEventListener("click", switchTheme);
-
-    // Logout menu
-    get("#displayLogoutMenu").addEventListener("click", function () {
-        openWindow("logoutMenu");
-        get("#closeLogoutMenu").addEventListener("click", closeWindow);
-
-        get("#logoutMenuConfirm").addEventListener("click", function () {
-            storage("rem", "HOMEY-settings");
-            location.reload();
-        });
-    });
-
-    // Profile menu
-    get("#displayProfilMenu").addEventListener("click", function () {
-        openWindow("profilMenu");
-        get("#newName").value = settings.profile.name;
-
-        get("#profilMenuConfirm").addEventListener("click", function () {
-            // Check the regex for the name
-            if (get("#newName").checkValidity() && get("#newName").value != "") {
-                get("#profilMenuCheck").style.color = "white";
-                settings.profile.name = get("#newName").value;
-
-                updateJSON();
-                displayApp();
-                closeWindow();
-            } 
-            else
-                get("#profilMenuCheck").style.color = "red";
-        })
-    });
-
-    // Weather menu
-    get("#displayWeatherMenu").addEventListener("click", function () {
-        openWindow("weatherMenu");
-
-        get('#weatherMenuAPIValue').addEventListener("input", function () {
-            settings.weather.api = get('#weatherMenuAPIValue').value;
-            updateJSON();
-        })
-
-        get('#weatherMenuTownValue').addEventListener("input", function () {
-            settings.weather.town = get('#weatherMenuTownValue').value;
-            updateJSON();
-        })
-
-        get("#weatherMenuConfirm").addEventListener("click", function () {
-            if (settings.weather.activated == true) {
-                if (settings.weather.api != "" && settings.weather.town != "") {
-                    get("#weatherMenuCheck").style.color = "white";
-                    displayWeatherInfo();
-                    closeWindow();
-                } 
-                else 
-                    get("#weatherMenuCheck").style.color = "red";
-            }
-            else {
-                settings.weather.activated = false;
-                updateJSON();
-                displayWeatherInfo();
-                closeWindow();
-            }
-        });
-
-        get('#activateWeather').addEventListener("change", function () {
-            if (get('#activateWeather').checked == true)
-                settings.weather.activated = true
-            else
-                settings.weather.activated = false;
-
-            updateJSON();
-            displayApp();
-        })
-    });
+    createMenu();
+    createButtons();
 }
 
 // =================================================
@@ -165,31 +29,6 @@ function displayApp() {
     setInterval(displayTime, 1000); // Update the hour and the date every second
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
-
-    // Display of the theme
-    if (settings.profile.theme == "dark") 
-        displayTheme("dark");
-    else if (settings.profile.theme == "light") 
-        displayTheme("light");
-
-    // Display of the weather informations
-    if (settings.weather.api != "") 
-        get('#weatherMenuAPIValue').value = settings.weather.api;
-    if (settings.weather.town != "") 
-        get('#weatherMenuTownValue').value = settings.weather.town;
-
-    // Display of the weather app
-    if (settings.weather.activated == true) {
-        get('#activateWeather').checked = true;
-        get('#weatherMenuAPI').style.display = "flex";
-        get('#weatherMenuTown').style.display = "flex";
-        get('#weatherMenuCheck').style.display = "block";
-    } else {
-        get('#activateWeather').checked = false;
-        get('#weatherMenuAPI').style.display = "none";
-        get('#weatherMenuTown').style.display = "none";
-        get('#weatherMenuCheck').style.display = "none";
-    }
 }
 
 // ===> Display the hour and date
@@ -200,6 +39,7 @@ function displayTime() {
         month: "long",
         day: "numeric"
     }); 
+
     let hours = timestamp.getHours();
     let minutes = timestamp.getMinutes();
     if (hours < 10) hours = '0' + hours; 
@@ -215,7 +55,7 @@ function displayTime() {
 
 // ===> Display the weather with refresh
 function displayWeatherInfo() {
-    if (settings.weather.activated == true && settings.weather.api != "" && settings.weather.town != "") {
+    if (settings.weather.api != "" && settings.weather.town != "") {
         requestWeather();
         setInterval(requestWeather, 1800000); // Request the weather every 30 minutes
     } 
@@ -248,9 +88,11 @@ function requestWeather() {
                     case 'Fog': logo = "🌫";
                 }
             }
+
             get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
         }
-        else get('#displayWeather').innerHTML = "❗";
+        else 
+            get('#displayWeather').innerHTML = "❗";
     };
 
     req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.misc.weatherLanguage + '&units=metric', true)
@@ -263,28 +105,162 @@ function requestWeather() {
 
 // ===> Switch the app theme
 function switchTheme() {
-    switch (settings.profile.theme) {
-        case "dark":
-            displayTheme("light");
-            settings.profile.theme = "light";
-            updateJSON();
-            break;
-
-        case "light":
-            displayTheme("dark");
-            settings.profile.theme = "dark";
-            updateJSON();
-            break;
+    if (settings.profile.theme == "dark") {
+        displayTheme("misc", "light");
+        settings.profile.theme = "light";    
     }
+    else if (settings.profile.theme == "light") {
+        displayTheme("misc", "dark");
+        settings.profile.theme = "dark";
+    }
+
+    updateJSON();
 }
 
 // ===> Change the CSS file
-function displayTheme(theme) {
-    if (theme == "dark")
-        get("#theme").href = "assets/css/theme-dark.min.css";
+function displayTheme(mode, theme) {
+    if (mode == "auto")
+        displayTheme("misc", settings.profile.theme);
 
-    if (theme == "light")
-        get("#theme").href = "assets/css/theme-light.min.css";
+    else {
+        if (theme == "dark")
+            get("#theme").href = "assets/css/theme-dark.min.css";
+        if (theme == "light")
+            get("#theme").href = "assets/css/theme-light.min.css";
+    }
+}
+
+// =================================================
+// =================================================
+// ============ MENU & BUTTONS EVENTS
+
+// ===> Create events for the menus
+function createMenu(mode) {
+    if (mode == "start") {
+        // Import menu
+        get("#displayImportMenu").addEventListener("click", function () {
+            openWindow("importMenu");
+            get("#closeImportMenu").addEventListener("click", closeWindow);
+
+            get("#importMenuConfirm").addEventListener("click", function () {
+                if (get("#importData").files.length != 0) {
+                    let reader = new FileReader();
+                    reader.readAsText(get("#importData").files[0]);
+                    reader.onload = function (e) {
+                        let importData = e.target.result;
+                        settings = JSON.parse(importData);
+
+                        updateJSON();
+                        location.reload();
+                    }
+                } 
+                else {
+                    get("#importMenuCheck").innerHTML = display.misc.errorImport;
+                    get("#importMenuCheck").style.color = "red";
+                }
+            })
+        });
+    }
+
+    else {
+        // Profile menu
+        get("#displayProfilMenu").addEventListener("click", function () {
+            openWindow("profilMenu");
+            get("#newName").value = settings.profile.name;
+
+            get("#profilMenuConfirm").addEventListener("click", function () {
+                if (get("#newName").checkValidity() && get("#newName").value != "") {
+                    get("#profilMenuCheck").style.color = "white";
+                    settings.profile.name = get("#newName").value;
+                    updateJSON();
+                    closeWindow();
+                } 
+                else
+                    get("#profilMenuCheck").style.color = "red";
+            });
+
+            get("#closeProfileMenu").addEventListener("click", function () {
+                    get("#profilMenuCheck").style.color = "white";
+                    closeWindow();
+            });
+        });
+
+        // Weather menu
+        get("#displayWeatherMenu").addEventListener("click", function () {
+            openWindow("weatherMenu");
+            if (settings.weather.api != "") get('#weatherMenuAPIValue').value = settings.weather.api;
+            if (settings.weather.town != "") get('#weatherMenuTownValue').value = settings.weather.town;
+
+            get("#weatherMenuConfirm").addEventListener("click", function () {
+                if (get('#weatherMenuAPIValue').value != "" && get('#weatherMenuTownValue').value != "") {
+                        settings.weather.api = get('#weatherMenuAPIValue').value;
+                        settings.weather.town = get('#weatherMenuTownValue').value;
+                        get("#weatherMenuCheck").style.color = "white";
+                        displayWeatherInfo();
+                        closeWindow();
+                    } 
+                    else 
+                        get("#weatherMenuCheck").style.color = "red";
+            });
+
+            get("#closeWeatherMenu").addEventListener("click", function () {
+                get("#weatherMenuCheck").style.color = "white";
+                updateJSON();
+                displayWeatherInfo();
+                closeWindow();
+            });
+        
+        });  
+
+        // Logout menu
+        get("#displayLogoutMenu").addEventListener("click", function () {
+            openWindow("logoutMenu");
+            get("#closeLogoutMenu").addEventListener("click", closeWindow);
+
+            get("#logoutMenuConfirm").addEventListener("click", function () {
+                storage("rem", "HOMEY-settings");
+                location.reload();
+            });
+        });
+    }
+}
+
+// ===> Create events for the buttons
+function createButtons(mode) {
+    if (mode == "start") {
+        // Button : start the app
+        get("#startApp").addEventListener("click", function () {
+            settings.core.start = true;
+            updateJSON();
+            location.reload();
+        })      
+    }
+
+    else {
+        // Button : open settings menu
+        get("#displaySettings").addEventListener("click", function () {
+            closeWindow();
+
+            get("#displaySettings").style.display = "none";
+            get('#listSettings').style.animation = "fadeInRight";
+            get('#listSettings').style.animationDuration = "0.5s";
+            get("#listSettings").style.display = "flex";
+        })
+
+        // Button : close settings menu
+        get("#closeSettings").addEventListener("click", function () {
+            get("#displaySettings").style.display = "block";
+            get("#listSettings").style.display = "none";
+        })
+
+        // Button : export data
+        get("#exportData").addEventListener("click", function () {
+            download(JSON.stringify(settings), "homey.json");
+        });
+
+        // Button : theme switch
+        get("#switchTheme").addEventListener("click", switchTheme);        
+    }
 }
 
 // =================================================
@@ -305,9 +281,9 @@ function checkVersion() {
 }
 
 // ===> Open one popup
-function openWindow(idWindow) {
+function openWindow(window) {
     get("#containerPopup").style.display = "flex";
-    get("#" + idWindow).style.display = "block";
+    get("#" + window).style.display = "block";
 }
 
 // ===> Close every popup

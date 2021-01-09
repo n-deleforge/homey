@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <link rel="stylesheet" href="assets/css/main.min.css">
-    <link rel="stylesheet" href="assets/css/dark-theme.min.css" id="theme">
+    <link rel="stylesheet" href="assets/css/theme-dark.min.css" id="theme">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
@@ -18,7 +18,7 @@
             <h1 id="startTitle"></h1>
                 <p id="startP1"></p>
                 <p id="startP2"></p>
-                    <button id="displayInitMenu"></button>
+                    <button id="startApp"></button>
                 <p id="startP3"></p>
                     <button id="displayImportMenu"></button>
         </div>
@@ -57,26 +57,7 @@
 
     <!-- POPUP -->
     <div id="containerPopup">
-        <!-- Popup menu: initialisation -->
-        <div id="initMenu">
-            <h1 id="initMenuTitle"></h1>
-
-            <div class="formContainer">
-                <div class="formLine">
-                    <label id="initMenuLabel" for="name"></label>
-                    <input type="text" id="name" pattern="([a-zA-ZÀ-Ý -]){2,15}">
-                </div>
-            </div>
-
-            <p id="initMenuCheck"></p>
-
-            <div class="formButtons">
-                <button id="confirmInitMenu"></button>
-                <button id="closeInitMenu"></button>
-            </div>
-        </div>
-        <!-- // Popup menu: initialisation -->
-
+        
         <!-- Popup menu : import -->
         <div id="importMenu">
             <h1 id="importMenuTitle"></h1>
@@ -111,6 +92,7 @@
 
             <div class="formButtons">
                <button id="profilMenuConfirm"></button> 
+               <button id="closeProfileMenu"></button> 
             </div>
         </div>
         <!--  // Popup menu : profile -->
@@ -120,11 +102,6 @@
             <h1 id="weatherMenuTitle"></h1>
 
             <div class="formContainer">
-                <div class="formLine">
-                    <label id="weatherMenuActivate" for="activateWeather"></label>
-                    <input type="checkbox" id="activateWeather" name="activateWeather" value="1">
-                </div>
-
                 <div class="formLine" id="weatherMenuAPI">
                     <label id="weatherMenuAPILabel" for="weatherMenuAPIValue"></label>
                     <input type="text" id="weatherMenuAPIValue">
@@ -140,6 +117,7 @@
 
             <div class="formButtons">
                 <button id="weatherMenuConfirm"></button>
+                <button id="closeWeatherMenu"></button>
              </div>
         </div>
         <!-- // Popup menu : weather -->
