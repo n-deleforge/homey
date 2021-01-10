@@ -2,16 +2,32 @@
 // =================================================
 // ============ INITIALISATION
 
-// At first start
-if (settings.core.start == false) {
+if (settings.core.start == false)
+    firstStart();
+else
+    loadApp();
+
+// =================================================
+// =================================================
+// ============ MAIN FUNCTIONS
+
+// ===> Display the first start
+function firstStart() {
     get("#start").style.display = "flex";
+
     createMenu("start");
     createButtons("start");
 }
-// When the app is already loaded
-else {
+
+// ===> Display the loaded app
+function loadApp() {
+    document.title = "HOMEY - " + settings.profile.name;
+    get("#start").style.display = "none";
+    get("#app").style.display = "flex";
+
+    displayTime();
+    setInterval(displayTime, 1000); // Update the hour and the date every second
     displayTheme("auto");
-    displayApp();
     displayWeatherInfo();
     checkVersion();
     createMenu();
@@ -20,16 +36,7 @@ else {
 
 // =================================================
 // =================================================
-// ============ MAIN FUNCTIONS
-
-// ===> Display the application
-function displayApp() {
-    document.title = "HOMEY - " + settings.profile.name; // Change the name of the window
-    displayTime();
-    setInterval(displayTime, 1000); // Update the hour and the date every second
-    get("#start").style.display = "none";
-    get("#app").style.display = "flex";
-}
+// ============ TIME & WEATHER
 
 // ===> Display the hour and date
 function displayTime() {
@@ -48,10 +55,6 @@ function displayTime() {
     get("#displayTime").innerHTML = hours + ":" + minutes;
     get("#displayDate").innerHTML = date;
 }
-
-// =================================================
-// =================================================
-// ============ WEATHER
 
 // ===> Display the weather with refresh
 function displayWeatherInfo() {
@@ -78,14 +81,14 @@ function requestWeather() {
             
             else {
                 switch (data.weather[0].main) {
-                    case 'Clear': logo = "☀";
+                    case 'Clear': logo = "☀️";
                     case 'Clouds': logo = "⛅";
-                    case 'Drizzle': logo = "🌨";
-                    case 'Rain': logo = "🌧";
-                    case 'Snow': logo = "🌨";
-                    case 'Thunderstorm': logo = "🌩";
-                    case 'Atmosphere': logo = "🌪";
-                    case 'Fog': logo = "🌫";
+                    case 'Drizzle': logo = "🌧️";
+                    case 'Rain': logo = "🌧️";
+                    case 'Snow': logo = "❄️";
+                    case 'Thunderstorm': logo = "🌩️";
+                    case 'Atmosphere': logo = "🌩️";
+                    case 'Fog': logo = "🌫️";
                 }
             }
 
@@ -105,29 +108,36 @@ function requestWeather() {
 
 // ===> Switch the app theme
 function switchTheme() {
-    if (settings.profile.theme == "dark") {
-        displayTheme("misc", "light");
-        settings.profile.theme = "light";    
-    }
-    else if (settings.profile.theme == "light") {
-        displayTheme("misc", "dark");
-        settings.profile.theme = "dark";
-    }
+    switch(settings.profile.theme) {
+        case "dark" : // Dark theme to light theme
+            displayTheme("load", "light");
+            settings.profile.theme = "light";
+            updateJSON();
+            break;
 
-    updateJSON();
+        case "light" : // Light theme to dark theme
+            displayTheme("load", "dark");
+            settings.profile.theme = "dark";
+            updateJSON();
+            break;
+    }
 }
 
 // ===> Change the CSS file
 function displayTheme(mode, theme) {
     if (mode == "auto")
-        displayTheme("misc", settings.profile.theme);
+        displayTheme("load", settings.profile.theme);
 
-    else {
-        if (theme == "dark")
-            get("#theme").href = "assets/css/theme-dark.min.css";
-        if (theme == "light")
-            get("#theme").href = "assets/css/theme-light.min.css";
-    }
+    else
+        switch(theme) {
+            case "dark" : // Dark theme
+                get("#theme").href = "assets/css/theme-dark.min.css"; 
+                break;
+
+            case "light" : // Light theme
+                get("#theme").href = "assets/css/theme-light.min.css";
+                break;
+        }
 }
 
 // =================================================
@@ -180,8 +190,8 @@ function createMenu(mode) {
             });
 
             get("#closeProfileMenu").addEventListener("click", function () {
-                    get("#profilMenuCheck").style.color = "white";
-                    closeWindow();
+                get("#profilMenuCheck").style.color = "white";
+                closeWindow();
             });
         });
 
@@ -193,20 +203,19 @@ function createMenu(mode) {
 
             get("#weatherMenuConfirm").addEventListener("click", function () {
                 if (get('#weatherMenuAPIValue').value != "" && get('#weatherMenuTownValue').value != "") {
-                        settings.weather.api = get('#weatherMenuAPIValue').value;
-                        settings.weather.town = get('#weatherMenuTownValue').value;
-                        get("#weatherMenuCheck").style.color = "white";
-                        displayWeatherInfo();
-                        closeWindow();
-                    } 
-                    else 
-                        get("#weatherMenuCheck").style.color = "red";
+                    get("#weatherMenuCheck").style.color = "white";
+                    settings.weather.api = get('#weatherMenuAPIValue').value;
+                    settings.weather.town = get('#weatherMenuTownValue').value;
+                    updateJSON();
+                    displayWeatherInfo();
+                    closeWindow();
+                } 
+                else 
+                    get("#weatherMenuCheck").style.color = "red";
             });
 
             get("#closeWeatherMenu").addEventListener("click", function () {
                 get("#weatherMenuCheck").style.color = "white";
-                updateJSON();
-                displayWeatherInfo();
                 closeWindow();
             });
         
@@ -254,9 +263,7 @@ function createButtons(mode) {
         })
 
         // Button : export data
-        get("#exportData").addEventListener("click", function () {
-            download(JSON.stringify(settings), "homey.json");
-        });
+        get("#exportData").addEventListener("click", backupSettings);
 
         // Button : theme switch
         get("#switchTheme").addEventListener("click", switchTheme);        
@@ -270,6 +277,11 @@ function createButtons(mode) {
 // ===> Update the localStorage
 function updateJSON() {
     storage("set", "HOMEY-settings", JSON.stringify(settings))
+}
+
+// ===> Download settings written in a JSON file
+function backupSettings() {
+    download(JSON.stringify(settings), "homey.json");
 }
 
 // Check the version of the app
