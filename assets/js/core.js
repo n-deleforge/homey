@@ -55,7 +55,7 @@ const FR = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profil",
-        'profilMenuLabel' : "Prénom ou surnom",
+        'profilMenuLabel' : "Prénom",
         'profilMenuCheck' : "Ton prénom doit être composé entre 2 à 15 caractères.",
         'profilMenuConfirm' : "Appliquer",
         'closeProfileMenu' : "Annuler"
@@ -110,7 +110,7 @@ const EN = {
     },
     'profileMenu' : {
         'profilMenuTitle' : "Profile",
-        'profilMenuLabel' : "Name or nickname",
+        'profilMenuLabel' : "Name",
         'profilMenuCheck' : "Your name must be composed between 2 to 15 characters.",
         'profilMenuConfirm' : "Confirm",
         'closeProfileMenu' : "Cancel"

@@ -21,7 +21,7 @@ function firstStart() {
 
 // ===> Display the loaded app
 function loadApp() {
-    document.title = "HOMEY - " + settings.profile.name;
+    if (settings.profile.name != "") document.title = "HOMEY - " + settings.profile.name;
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 
@@ -250,6 +250,7 @@ function createButtons(mode) {
         get("#displaySettings").addEventListener("click", function () {
             closeWindow();
 
+            get("#voidList").style.display = "flex";
             get("#displaySettings").style.display = "none";
             get('#listSettings').style.animation = "fadeInRight";
             get('#listSettings').style.animationDuration = "0.5s";
@@ -260,6 +261,14 @@ function createButtons(mode) {
         get("#closeSettings").addEventListener("click", function () {
             get("#displaySettings").style.display = "block";
             get("#listSettings").style.display = "none";
+            get("#voidList").style.display = "none";
+        })
+
+        // Same function for the void aside the menu
+        get("#voidList").addEventListener("click", function () {
+            get("#displaySettings").style.display = "block";
+            get("#listSettings").style.display = "none";
+            get("#voidList").style.display = "none";
         })
 
         // Button : export data

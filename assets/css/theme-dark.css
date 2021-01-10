@@ -72,10 +72,6 @@ body {
 /* ======================================== */
 /* ======== POPUP CONTAINER */
 
-#containerPopup {
-    background-color: rgba(0,0,0,0.95);
-}
-
 #containerPopup div {
     background: var(--light_black);
     color: white;
