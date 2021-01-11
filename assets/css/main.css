@@ -4,16 +4,15 @@
 
 :root {
     --notTransparent: black;
-    --semiTransparent : rgba(0,0,0,0.4);
-    --almostTransparent : rgba(0,0,0,.7);
+    --semiTransparent: rgba(0,0,0,0.4);
+    --almostTransparent: rgba(0,0,0,.7);
 }
 
 @font-face {
     font-family: 'montserrat';
-    src: url('../fonts/montserrat.woff2') format('woff2'),
-           url('../fonts/montserrat.woff') format('woff');
-    font-weight: normal;
     font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/montserrat.woff2') format('woff2'), url('../fonts/montserrat.woff') format('woff');
     font-display: swap;
 }
 
@@ -22,14 +21,14 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: montserrat, sans-serif !important;
+    font-family: montserrat,sans-serif !important;
     color: var(--mainTextColor);
     background-color: var(--background);
 }
 
 button,
 textarea {
-    font-family: montserrat, sans-serif !important;
+    font-family: montserrat,sans-serif !important;
 }
 
 #container {
@@ -44,31 +43,31 @@ textarea {
 
 #start {
     display: none;
-    justify-content: center;
     flex-direction: column;
-    font-size: 1.4em;
+    justify-content: center;
     width: 40vw;
+    font-size: 1.4em;
 }
 
 #start input {
-    border-radius: 10px;
-    padding: 1.5vh;
-    font-size: 1.2em;
     margin: 2vh;
-    color: var(--startInputColor);
+    padding: 1.5vh;
     border: 2px solid var(--startInputBorder);
+    border-radius: 10px;
+    font-size: 1.2em;
+    color: var(--startInputColor);
 }
 
 #start button {
+    width: 20vw;
+    margin: 1vh auto;
+    padding: 1vh;
     border: 0;
     border-radius: 5px;
-    padding: 1vh;
     font-size: 1.2em;
-    margin: 1vh auto;
-    width: 20vw;
-    cursor: pointer;
     color: var(--startButtonColor1);
     background-color: var(--startButtonColor2);
+    cursor: pointer;
 }
 
 #start button:hover {
@@ -83,15 +82,15 @@ textarea {
 #app {
     display: none;
     flex-direction: column;
-    font-size: 1.4em;
     width: 100vw;
     padding: 5vh;
+    font-size: 1.4em;
 }
 
 #footer {
     padding-top: 1vh;
-    font-size: 0.6em;
     text-align: center;
+    font-size: 0.6em;
     color: var(--footerTextColor);
 }
 
@@ -105,20 +104,20 @@ textarea {
 }
 
 #time {
-    flex-grow: 1;
-    font-size: 2em;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    flex-grow: 1;
     align-items: center;
+    justify-content: center;
     padding-top: 1vh;
+    font-size: 2em;
 }
 
 #displayWeather {
-    margin: 0;
     position: absolute;
     top: 1.5vh;
     left: 1vw;
+    margin: 0;
     font-size: 1.5em;
 }
 
@@ -129,16 +128,16 @@ textarea {
 }
 
 #displayTime {
-    text-align: center;
-    font-size: 2em;
     padding-bottom: 1vh;
     border-bottom: 3px solid var(--timeBorder);
+    text-align: center;
+    font-size: 2em;
 }
 
 #displayDate {
     padding: 2vh;
-    font-size: 1em;
     text-align: center;
+    font-size: 1em;
 }
 
 /* ======================================== */
@@ -150,16 +149,16 @@ textarea {
     position: absolute;
     top: 1.5vh;
     right: 1vw;
-    background-color: transparent;
-    border: 0;
     margin: 0 !important;
+    border: 0;
     font-size: 1.5em;
+    background-color: transparent;
     cursor: pointer;
 }
 
 #displaySettings {
-    opacity: 0.2;
     color: var(--settingsTextColor);
+    opacity: 0.2;
 }
 
 #displaySettings:hover {
@@ -169,25 +168,25 @@ textarea {
 #voidList {
     display: none;
     position: absolute;
-    background: var(--semiTransparent);
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background: var(--semiTransparent);
 }
 
 #listSettings {
     display: none;
-    flex-direction: column;
-    transition: 0.3s;
+    z-index: 2;
     position: absolute;
     top: 0;
     right: 0;
+    flex-direction: column;
+    padding: 2vh;
     min-height: 96vh;
     min-width: 20vw;
-    padding: 2vh;
-    z-index: 2;
     background-color: var(--settingsBackground);
+    transition: 0.3s;
 }
 
 #listSettings h1 {
@@ -197,20 +196,20 @@ textarea {
 }
 
 #listSettings button {
-    cursor: pointer;
-    border: 2px solid transparent;
-    padding: 1vh;
-    border-radius: 10px;
     margin: 1vh;
-    font-size: 0.9em;
+    padding: 1vh;
+    border: 2px solid transparent;
+    border-radius: 10px;
     text-align: left;
-    transition: 0.3s;
+    font-size: 0.9em;
     background-color: var(--settingsButtonColor1);
+    transition: 0.3s;
+    cursor: pointer;
 }
 
 #listSettings button:hover {
-    transition: 0.3s;
     background-color: var(--settingsButtonColor2);
+    transition: 0.3s;
 }
 
 #closeSettings,
@@ -228,13 +227,13 @@ textarea {
 
 #containerPopup {
     display: none;
-    background-color: var(--almostTransparent);
+    z-index: 3;
     position: fixed;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    z-index: 3;
+    background-color: var(--almostTransparent);
 }
 
 #containerPopup:target {
@@ -242,8 +241,8 @@ textarea {
 }
 
 #containerPopup div {
-    background: var(--popupBackground);
     color: var(--popupTextColor);
+    background: var(--popupBackground);
 }
 
 #importMenu,
@@ -252,11 +251,11 @@ textarea {
 #weatherMenu,
 #exportMenu {
     display: none;
-    padding: 2vh;
     position: relative;
     width: 40vw;
-    border-radius: 3px;
     margin: auto auto;
+    padding: 2vh;
+    border-radius: 3px;
 }
 
 /* ======================================== */
@@ -264,10 +263,10 @@ textarea {
 /* ======== POPUP STYLE */
 
 #containerPopup h1 {
-    font-size: 3em;
-    text-align: center;
     margin: 0 0 2vh 0;
     border-bottom: 2px solid var(--popupTitleBorder);
+    text-align: center;
+    font-size: 3em;
 }
 
 #containerPopup .formContainer {
@@ -277,23 +276,23 @@ textarea {
 
 #containerPopup .formLine {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 }
 
 #containerPopup label {
-    font-weight: bold;
     padding: 1.5vh;
     font-size: 1.5em;
+    font-weight: bold;
 }
 
 #containerPopup input {
-    border-radius: 10px;
     padding: 1.5vh;
-    font-size: 1.1em;
     min-width: 25vw;
-    color: var(--popupInputColor);
     border: 2px solid var(--popupInputBorder);
+    border-radius: 10px;
+    font-size: 1.1em;
+    color: var(--popupInputColor);
 }
 
 #containerPopup input[type=file] {
@@ -307,14 +306,14 @@ textarea {
 }
 
 #containerPopup button {
-    background-color: transparent;
-    border: 0;
-    padding: 1vh;
-    font-size: 1.2em;
-    margin: 1vh;
     width: auto;
-    color: var(--popupButtonColor1);
+    margin: 1vh;
+    padding: 1vh;
+    border: 0;
     border-bottom: 2px solid var(--popupButtonColor2);
+    font-size: 1.2em;
+    color: var(--popupButtonColor1);
+    background-color: transparent;
 }
 
 #containerPopup button:hover {
@@ -336,7 +335,7 @@ textarea {
 /* ======================================== */
 /* ======== MOBILE */
 
-@media(max-width: 1024px) {
+@media(max-width:1024px) {
     input:focus,
     input.active,
     button:focus,
@@ -384,10 +383,10 @@ textarea {
     #profilMenu,
     #weatherMenu,
     #exportMenu {
-        padding: 2vh;
         width: 96vw;
-        border-radius: 0px;
         margin: auto auto;
+        padding: 2vh;
+        border-radius: 0;
     }
 
     #containerPopup {
@@ -411,12 +410,12 @@ textarea {
 
 @keyframes fadeInRight {
     from {
-      opacity: 0;
-      transform: translate3d(100%, 0, 0);
+        opacity: 0;
+        transform: translate3d(100%,0,0);
     }
-  
+
     to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transform: translate3d(0,0,0);
     }
 }
