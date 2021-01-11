@@ -62,8 +62,7 @@ function displayWeatherInfo() {
         requestWeather();
         setInterval(requestWeather, 1800000); // Request the weather every 30 minutes
     } 
-    else 
-        get('#displayWeather').innerHTML = "";
+    else get('#displayWeather').innerHTML = "";
 }
 
 // ===> Request to OpenWeather
@@ -76,9 +75,7 @@ function requestWeather() {
             let timestamp = new Date();
             let logo;
 
-            if (timestamp.getHours() < 7 || timestamp.getHours() > 19) 
-                logo = "🌙";
-            
+            if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
             else {
                 switch (data.weather[0].main) {
                     case 'Clear': logo = "☀️";
@@ -94,8 +91,7 @@ function requestWeather() {
 
             get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
         }
-        else 
-            get('#displayWeather').innerHTML = "❗";
+        else get('#displayWeather').innerHTML = "❗";
     };
 
     req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.misc.weatherLanguage + '&units=metric', true)
@@ -125,9 +121,7 @@ function switchTheme() {
 
 // ===> Change the CSS file
 function displayTheme(mode, theme) {
-    if (mode == "auto")
-        displayTheme("load", settings.profile.theme);
-
+    if (mode == "auto") displayTheme("load", settings.profile.theme);
     else
         switch(theme) {
             case "dark" : // Dark theme
@@ -166,7 +160,7 @@ function createMenu(mode) {
                 } 
                 else {
                     get("#importMenuCheck").innerHTML = display.misc.errorImport;
-                    get("#importMenuCheck").style.color = "red";
+                    get("#importMenuCheck").style.color = getVariableCSS("--popupErrorColor");
                 }
             })
         });
@@ -180,17 +174,16 @@ function createMenu(mode) {
 
             get("#profilMenuConfirm").addEventListener("click", function () {
                 if (get("#newName").checkValidity() && get("#newName").value != "") {
-                    get("#profilMenuCheck").style.color = "white";
+                    get("#profilMenuCheck").style.color = getVariableCSS("--popupTextColor");
                     settings.profile.name = get("#newName").value;
                     updateJSON();
                     closeWindow();
                 } 
-                else
-                    get("#profilMenuCheck").style.color = "red";
+                else get("#profilMenuCheck").style.color = getVariableCSS("--popupErrorColor");
             });
 
             get("#closeProfileMenu").addEventListener("click", function () {
-                get("#profilMenuCheck").style.color = "white";
+                get("#profilMenuCheck").style.color = getVariableCSS("--popupTextColor");
                 closeWindow();
             });
         });
@@ -203,19 +196,18 @@ function createMenu(mode) {
 
             get("#weatherMenuConfirm").addEventListener("click", function () {
                 if (get('#weatherMenuAPIValue').value != "" && get('#weatherMenuTownValue').value != "") {
-                    get("#weatherMenuCheck").style.color = "white";
+                    get("#weatherMenuCheck").style.color = getVariableCSS("--popupTextColor");
                     settings.weather.api = get('#weatherMenuAPIValue').value;
                     settings.weather.town = get('#weatherMenuTownValue').value;
                     updateJSON();
                     displayWeatherInfo();
                     closeWindow();
-                } 
-                else 
-                    get("#weatherMenuCheck").style.color = "red";
+                }
+                else get("#weatherMenuCheck").style.color = getVariableCSS("--popupErrorColor");
             });
 
             get("#closeWeatherMenu").addEventListener("click", function () {
-                get("#weatherMenuCheck").style.color = "white";
+                get("#weatherMenuCheck").style.color = getVariableCSS("--popupTextColor");
                 closeWindow();
             });
         
@@ -311,6 +303,7 @@ function openWindow(window) {
 function closeWindow() {
     get("#containerPopup").style.display = "none";
 
-    for (let i = 0; i < get("#containerPopup").children.length; i++) 
+    for (let i = 0; i < get("#containerPopup").children.length; i++) {
         get("#containerPopup").children[i].style.display = "none";
+    }
 }

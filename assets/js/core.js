@@ -1,9 +1,16 @@
-// General variables
-let settings;
+// =================================================
+// =================================================
+// ============ CORE VARIABLES
+
 const version = 1.6;
-const GithubLink = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const ndLink = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
-const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+const githubLink = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
+const homeLink = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
+const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+let settings; let display;
+
+// =================================================
+// =================================================
+// ============ CORE INITIALISATION
 
 // ===> Correct the bug with viewport on mobile
 if (mobile) get("#container").style.minHeight = window.innerHeight + 'px';
@@ -21,7 +28,7 @@ else {
 }
 
 // ===> French translation
-const FR = {
+const french = {
     'start' : {
         'startTitle' : "Bienvenue sur Homey !",
         'startP1' : "En utilisant Homey, tu confirmes avoir pris connaissance que des données seront stockées sur ton appareil. Cependant, aucune donnée n'est partagée avec un tiers.",
@@ -45,7 +52,7 @@ const FR = {
         'switchTheme' : "🌈 Changer de thème",
         'exportData' : "📲 Faire une sauvegarde",
         'displayLogoutMenu' : "🚫 Déconnexion",
-        'footer' : "Disponible sur " + GithubLink + " (v " + version + ") - Hébergé sur  " + ndLink,
+        'footer' : "Disponible sur " + githubLink + " (v " + version + ") - Hébergé sur  " + homeLink,
     },
     'logoutMenu' : {
         'logoutMenuTitle' : "Déconnexion",
@@ -76,7 +83,7 @@ const FR = {
 };
 
 // ===> English translation
-const EN = {
+const english = {
     'start' : {
         'startTitle' : "Welcome to Homey !",
         'startP1' : "By using Homey, you confirm that you are aware that data will be stored on your device. However, no data is shared with a third party.",
@@ -100,7 +107,7 @@ const EN = {
         'switchTheme' : "🌈 Switch theme",
         'exportData' : "📲 Make a backup",
         'displayLogoutMenu' : "🚫 Logout",
-        'footer' : "Available on " + GithubLink + " (v " + version + ") - Hosted on " + ndLink,
+        'footer' : "Available on " + githubLink + " (v " + version + ") - Hosted on " + homeLink,
     },
     'logoutMenu' : {
         'logoutMenuTitle' : "Deconnection",
@@ -132,20 +139,21 @@ const EN = {
 
 // ===> Determine the language of the app
 if (navigator.language == "fr" || navigator.language == "fr-FR") {
-    display = FR;
+    display = french;
     get("#htmlTag").lang = "fr";
 }
 else {
-    display = EN;
+    display = english;
     get("#htmlTag").lang = "en";
 } 
 
 // ===> Automatically fill all ID fields
 for(let i = 0; i < Object.keys(display).length - 1; i++) {
-    let allData = display[Object.keys(display)[i]];
-        let idName = Object.keys(allData);
-        let values = Object.values(allData);
+    let data = display[Object.keys(display)[i]];
+    let names = Object.keys(data);
+    let values = Object.values(data);
 
-        for (let j = 0; j < idName.length; j++) 
-            get("#" + idName[j]).innerHTML = values[j];
+    for (let j = 0; j < names.length; j++) {
+        get("#" + names[j]).innerHTML = values[j];
+    }
 }

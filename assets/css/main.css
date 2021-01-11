@@ -3,10 +3,9 @@
 /* ======== MAIN */
 
 :root {
-    --light_black: #262931;
-    --middle_black: #030303;
-    --blue: #8AABCC;
-    --dark_blue: #5585b5;
+    --notTransparent: black;
+    --semiTransparent : rgba(0,0,0,0.4);
+    --almostTransparent : rgba(0,0,0,.7);
 }
 
 @font-face {
@@ -24,25 +23,19 @@ body {
     padding: 0;
     overflow: hidden;
     font-family: montserrat, sans-serif !important;
+    color: var(--mainTextColor);
+    background-color: var(--background);
+}
+
+button,
+textarea {
+    font-family: montserrat, sans-serif !important;
 }
 
 #container {
     display: flex;
     justify-content: center;
     min-height: 100vh;
-}
-
-input,
-input:focus,
-input.active,
-button,
-button:focus,
-button:active,
-textarea,
-textarea:focus,
-textarea:active {
-    font-family: montserrat, sans-serif !important;
-    outline: none !important;
 }
 
 /* ======================================== */
@@ -62,6 +55,8 @@ textarea:active {
     padding: 1.5vh;
     font-size: 1.2em;
     margin: 2vh;
+    color: var(--startInputColor);
+    border: 2px solid var(--startInputBorder);
 }
 
 #start button {
@@ -72,6 +67,13 @@ textarea:active {
     margin: 1vh auto;
     width: 20vw;
     cursor: pointer;
+    color: var(--startButtonColor1);
+    background-color: var(--startButtonColor2);
+}
+
+#start button:hover {
+    color: var(--startButtonColor2);
+    background-color: var(--startButtonColor3);
 }
 
 /* ======================================== */
@@ -90,10 +92,12 @@ textarea:active {
     padding-top: 1vh;
     font-size: 0.6em;
     text-align: center;
+    color: var(--footerTextColor);
 }
 
 #footer a {
     text-decoration: transparent;
+    color: var(--footerLinkColor);
 }
 
 #footer a:hover {
@@ -128,6 +132,7 @@ textarea:active {
     text-align: center;
     font-size: 2em;
     padding-bottom: 1vh;
+    border-bottom: 3px solid var(--timeBorder);
 }
 
 #displayDate {
@@ -154,6 +159,7 @@ textarea:active {
 
 #displaySettings {
     opacity: 0.2;
+    color: var(--settingsTextColor);
 }
 
 #displaySettings:hover {
@@ -163,7 +169,7 @@ textarea:active {
 #voidList {
     display: none;
     position: absolute;
-    background: rgba(0,0,0,0.4);
+    background: var(--semiTransparent);
     top: 0;
     left: 0;
     width: 100%;
@@ -181,27 +187,35 @@ textarea:active {
     min-width: 20vw;
     padding: 2vh;
     z-index: 2;
+    background-color: var(--settingsBackground);
 }
 
 #listSettings h1 {
     margin-top: 6vh;
     text-align: center;
+    color: var(--settingsTitleColor);
 }
 
 #listSettings button {
     cursor: pointer;
     border: 2px solid transparent;
-    background-color: transparent;
     padding: 1vh;
     border-radius: 10px;
     margin: 1vh;
     font-size: 0.9em;
     text-align: left;
     transition: 0.3s;
+    background-color: var(--settingsButtonColor1);
 }
 
 #listSettings button:hover {
     transition: 0.3s;
+    background-color: var(--settingsButtonColor2);
+}
+
+#closeSettings,
+#closeSettings:hover {
+    background-color: transparent !important;
 }
 
 #voidSettings {
@@ -214,7 +228,7 @@ textarea:active {
 
 #containerPopup {
     display: none;
-    background-color: rgba(0,0,0,.7);
+    background-color: var(--almostTransparent);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -227,7 +241,11 @@ textarea:active {
     display: block;
 }
 
-#initMenu,
+#containerPopup div {
+    background: var(--popupBackground);
+    color: var(--popupTextColor);
+}
+
 #importMenu,
 #logoutMenu,
 #profilMenu,
@@ -249,6 +267,7 @@ textarea:active {
     font-size: 3em;
     text-align: center;
     margin: 0 0 2vh 0;
+    border-bottom: 2px solid var(--popupTitleBorder);
 }
 
 #containerPopup .formContainer {
@@ -273,10 +292,13 @@ textarea:active {
     padding: 1.5vh;
     font-size: 1.1em;
     min-width: 25vw;
+    color: var(--popupInputColor);
+    border: 2px solid var(--popupInputBorder);
 }
 
 #containerPopup input[type=file] {
     border: 0;
+    color: var(--popupInputFile);
 }
 
 #containerPopup .formButtons {
@@ -291,9 +313,14 @@ textarea:active {
     font-size: 1.2em;
     margin: 1vh;
     width: auto;
+    color: var(--popupButtonColor1);
+    border-bottom: 2px solid var(--popupButtonColor2);
 }
 
-#initMenuCheck,
+#containerPopup button:hover {
+    border-bottom: 2px solid var(--popupButtonColor3);
+}
+
 #importMenuCheck,
 #profilMenuCheck,
 #weatherMenuCheck {
@@ -310,6 +337,15 @@ textarea:active {
 /* ======== MOBILE */
 
 @media(max-width: 1024px) {
+    input:focus,
+    input.active,
+    button:focus,
+    button:active,
+    textarea:focus,
+    textarea:active {
+        outline: none !important;
+    }
+
     #start {
         width: 85vw;
         padding-bottom: 4vh;
@@ -334,7 +370,12 @@ textarea:active {
     }
 
     #listSettings {
-        min-width: 92vw;
+        width: 92vw;
+    }
+
+    #voidSettings {
+        flex-grow: 0;
+        height: 5vh;
     }
 
     #initMenu,
@@ -347,6 +388,10 @@ textarea:active {
         width: 96vw;
         border-radius: 0px;
         margin: auto auto;
+    }
+
+    #containerPopup {
+        background-color: var(--notTransparent);
     }
 
     #containerPopup .formLine {
