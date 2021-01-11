@@ -1,15 +1,9 @@
 // =================================================
 // =================================================
-// ============ INITIALISATION
+// ============ MAIN
 
-if (settings.core.start == false)
-    firstStart();
-else
-    loadApp();
-
-// =================================================
-// =================================================
-// ============ MAIN FUNCTIONS
+// ===> Check if the app is already started
+settings.core.start == false ? firstStart() : loadApp();
 
 // ===> Display the first start
 function firstStart() {
