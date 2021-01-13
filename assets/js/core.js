@@ -3,7 +3,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const VERSION = 1.61;
+const VERSION = 1.6;
 const GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
 const MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
