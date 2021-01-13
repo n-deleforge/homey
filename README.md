@@ -16,7 +16,7 @@ If you download or clone the project to host it yourself, then you'll need [**Li
 ## Changelog
 
 - 1.61 : little fix in the display of the icon weather
-- **1.6 : internal applications system removed, better readability in JS with new functions and also much lighter, CSS variables added, new theme system with only CSS variables, CSS cleaning**
+- 1.6 : internal applications system removed, better readability in JS with new functions and also much lighter, CSS variables added, new theme system with only CSS variables, CSS cleaning
 - 1.5 : big JS rewriting, noteapp removed, less JS, less CSS, new favicon, checkVersion function added, new menu display with categories, dark and light themes
 - 1.4 : some rewriting and fix in the open weather API request causing overload
 - 1.3 : code cleaning and more comments in the JS code
