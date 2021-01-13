@@ -2,33 +2,12 @@
 // =================================================
 // ============ CORE VARIABLES
 
-const version = 1.6;
-const githubLink = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const homeLink = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
-const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-let settings; let display;
-
-// =================================================
-// =================================================
-// ============ CORE INITIALISATION
-
-// ===> Correct the bug with viewport on mobile
-if (mobile) get("#container").style.minHeight = window.innerHeight + 'px';
-
-// ===> Create the settings data or parse them if it already exists
-if (storage("get", "HOMEY-settings")) settings = JSON.parse(storage("get", "HOMEY-settings"))
-else {
-    settings = {
-        'core' : {'start' : false, 'version' : version},
-        'profile' : {'name' : '', 'theme' : 'dark'},
-        'weather' : {'api' : '','town' : ''}
-    }
-
-    storage("set", "HOMEY-settings", JSON.stringify(settings));
-}
-
-// ===> French translation
-const french = {
+let settings;
+const VERSION = 1.61;
+const GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
+const HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
+const MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const FRENCH = {
     'start' : {
         'startTitle' : "Bienvenue sur Homey !",
         'startP1' : "En utilisant Homey, tu confirmes avoir pris connaissance que des données seront stockées sur ton appareil. Cependant, aucune donnée n'est partagée avec un tiers.",
@@ -52,7 +31,7 @@ const french = {
         'switchTheme' : "🌈 Changer de thème",
         'exportData' : "📲 Faire une sauvegarde",
         'displayLogoutMenu' : "🚫 Déconnexion",
-        'footer' : "Disponible sur " + githubLink + " (v " + version + ") - Hébergé sur  " + homeLink,
+        'footer' : "Disponible sur " + GITHUB + " (v " + VERSION + ") - Hébergé sur  " + HOME,
     },
     'logoutMenu' : {
         'logoutMenuTitle' : "Déconnexion",
@@ -81,9 +60,7 @@ const french = {
         'errorImport' : "Le fichier est incorrect. Réessayer."
     }
 };
-
-// ===> English translation
-const english = {
+const ENGLISH = {
     'start' : {
         'startTitle' : "Welcome to Homey !",
         'startP1' : "By using Homey, you confirm that you are aware that data will be stored on your device. However, no data is shared with a third party.",
@@ -107,7 +84,7 @@ const english = {
         'switchTheme' : "🌈 Switch theme",
         'exportData' : "📲 Make a backup",
         'displayLogoutMenu' : "🚫 Logout",
-        'footer' : "Available on " + githubLink + " (v " + version + ") - Hosted on " + homeLink,
+        'footer' : "Available on " + GITHUB + " (v " + VERSION + ") - Hosted on " + HOME,
     },
     'logoutMenu' : {
         'logoutMenuTitle' : "Deconnection",
@@ -137,19 +114,31 @@ const english = {
     }
 };
 
-// ===> Determine the language of the app
-if (navigator.language == "fr" || navigator.language == "fr-FR") {
-    display = french;
-    get("#htmlTag").lang = "fr";
-}
-else {
-    display = english;
-    get("#htmlTag").lang = "en";
-} 
+// =================================================
+// =================================================
+// ============ CORE INITIALISATION
 
-// ===> Automatically fill all ID fields
-for(let i = 0; i < Object.keys(display).length - 1; i++) {
-    let data = display[Object.keys(display)[i]];
+// ===> Correct the bug with viewport on mobile
+if (MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
+
+// ===> Create the settings data or parse them if it already exists
+if (storage("get", "HOMEY-settings")) 
+    settings = JSON.parse(storage("get", "HOMEY-settings"))
+else {
+    settings = {
+        'core' : {'start' : false, 'version' : VERSION},
+        'profile' : {'name' : '', 'theme' : 'dark'},
+        'weather' : {'api' : '','town' : ''}
+    }
+
+    storage("set", "HOMEY-settings", JSON.stringify(settings));
+}
+
+// ===> Determine the language of the application
+const CONTENT = navigator.language == "fr" || navigator.language == "fr-FR" ? FRENCH : ENGLISH;
+
+for(let i = 0; i < Object.keys(CONTENT).length - 1; i++) {
+    let data = CONTENT[Object.keys(CONTENT)[i]];
     let names = Object.keys(data);
     let values = Object.values(data);
 

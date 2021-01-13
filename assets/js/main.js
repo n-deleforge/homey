@@ -35,7 +35,7 @@ function loadApp() {
 // ===> Display the hour and date
 function displayTime() {
     let timestamp = new Date();
-    let date = timestamp.toLocaleString(display.misc.dateLanguage, {
+    let date = timestamp.toLocaleString(CONTENT.misc.dateLanguage, {
         weekday: "long",
         month: "long",
         day: "numeric"
@@ -65,21 +65,20 @@ function requestWeather() {
     req.onreadystatechange = function () {
 
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            let data = JSON.parse(this.responseText);
-            let timestamp = new Date();
-            let logo;
+            let data = JSON.parse(this.responseText); let timestamp = new Date(); let logo;
 
             if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
             else {
                 switch (data.weather[0].main) {
-                    case 'Clear': logo = "☀️";
-                    case 'Clouds': logo = "⛅";
-                    case 'Drizzle': logo = "🌧️";
-                    case 'Rain': logo = "🌧️";
-                    case 'Snow': logo = "❄️";
-                    case 'Thunderstorm': logo = "🌩️";
-                    case 'Atmosphere': logo = "🌩️";
-                    case 'Fog': logo = "🌫️";
+                    case 'Clear': logo = "☀️"; break;
+                    case 'Clouds': logo = "⛅"; break;
+                    case 'Drizzle': logo = "🌧️"; break;
+                    case 'Rain': logo = "🌧️"; break;
+                    case 'Snow': logo = "❄️"; break;
+                    case 'Thunderstorm': logo = "🌩️"; break;
+                    case 'Atmosphere': logo = "🌩️"; break;
+                    case 'Fog': logo = "🌫️"; break;
+                    default : logo = "❓";
                 }
             }
 
@@ -88,7 +87,7 @@ function requestWeather() {
         else get('#displayWeather').innerHTML = "❗";
     };
 
-    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + display.misc.weatherLanguage + '&units=metric', true)
+    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + CONTENT.misc.weatherLanguage + '&units=metric', true)
     req.send(null);
 }
 
@@ -153,7 +152,7 @@ function createMenu(mode) {
                     }
                 } 
                 else {
-                    get("#importMenuCheck").innerHTML = display.misc.errorImport;
+                    get("#importMenuCheck").innerHTML = CONTENT.misc.errorImport;
                     get("#importMenuCheck").style.color = getVariableCSS("--popupErrorColor");
                 }
             })
@@ -281,8 +280,8 @@ function backupSettings() {
 
 // Check the version of the app
 function checkVersion() {
-    if (settings.core.version != version) {
-        settings.core.version = version;
+    if (settings.core.version != VERSION) {
+        settings.core.version = VERSION;
         updateJSON();
     }    
 }
