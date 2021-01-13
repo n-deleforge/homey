@@ -13,7 +13,7 @@ Or clone the git : ```git clone https://github.com/n-deleforge/homey.git```
 
 If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS).
 
-# Changelog
+## Changelog
 
 - 1.61 : little fix in the display of the icon weather
 - 1.6 : internal applications system removed, better readability in JS with new functions and also much lighter, CSS variables added, new theme system with only CSS variables, CSS cleaning
