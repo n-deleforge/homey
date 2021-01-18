@@ -4,35 +4,31 @@
 
 :root {
     /* MAIN */
-    --background : #262931;
-    --mainTextColor : white;
+    --transparent: rgba(0,0,0,0.4);
+    --background: #262931;
+    --mainText: white;
+    --errorText: red;
 
-    /* APP START */
-    --startInputColor : black;
-    --startInputBorder : white;
-    --startButtonColor1 : black;
-    --startButtonColor2 : white;
-    --startButtonColor3 : lightcoral;
-
-    /* APP CONTENT */
-    --footerTextColor : white;
-    --footerLinkColor : lightcoral;
-    --timeBorder : lightcoral;
-    --settingsTextColor : white;
+    /* APP */
+    --startTitle: lightcoral;
+    --footerText: white;
+    --footerLink: lightcoral;
+    --timeText: lightcoral;
+    --nameText: lightcoral;
+    
+    /* SETTINGS */
+    --settingsText: white;
     --settingsBackground: black;
-    --settingsTitleColor : white;
-    --settingsButtonColor1 : white;
-    --settingsButtonColor2 : lightcoral;
+    --settingsTitle: white;
+    --settingsTitleBorder: lightcoral;
 
-    /* POPUP */
-    --popupBackground : #262931;
-    --popupTextColor : white;
-    --popupTitleBorder : white;
-    --popupButtonColor1 : white;
-    --popupButtonColor2 : white;
-    --popupButtonColor3 : red;
-    --popupInputColor : black;
-    --popupInputBorder : black;
-    --popupInputFile : white;
-    --popupErrorColor : red;
+    /*  BUTTONS */
+    --button1: white;
+    --button2: lightcoral;
+
+    /* INPUT */
+    --labelText: white;
+    --inputText: black;
+    --inputBorder: black;
+    --inputFileText: white;
 }

@@ -3,7 +3,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const VERSION = 1.6;
+const VERSION = 1.7;
 const GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
 const MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -14,50 +14,35 @@ const FRENCH = {
         'startP2' : "Si c'est ta première visite alors tu peux démarrer l'application.",
         'startP3' : "Mais si tu as déjà utilisé l'application, tu peux importer tes paramètres.",
         'startApp' : "Démarrer",
-        'displayImportMenu' : "Importation"
-    },
-    'importMenu' : {
-        'importMenuTitle' : "Importation",
-        'importMenuLabel' : "Sauvegarde",
-        'importMenuCheck' : "Le fichier de sauvegarde s'appellement normalement \"homey.json\".",
-        'importMenuConfirm' : "Confirmer",
-        'closeImportMenu' : "Annuler"
+        'importConfirm' : "Importer",
     },
     'listSettings' : {
-        'settingsTitle' : "Paramètres",
         'setupTitle' : "Configuration",
         'displayProfilMenu' : "🙂 Profil",
         'displayWeatherMenu' : "⛅ Météo",
         'switchTheme' : "🌈 Changer de thème",
         'exportData' : "📲 Faire une sauvegarde",
-        'displayLogoutMenu' : "🚫 Déconnexion",
+        'logout' : "🚫 Déconnexion",
         'footer' : "Disponible sur " + GITHUB + " (v " + VERSION + ") - Hébergé sur  " + HOME,
     },
-    'logoutMenu' : {
-        'logoutMenuTitle' : "Déconnexion",
-        'logoutMenuText' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
-        'logoutMenuConfirm' : "Confirmer",
-        'closeLogoutMenu' : "Annuler"
-    },
     'profileMenu' : {
-        'profilMenuTitle' : "Profil",
-        'profilMenuLabel' : "Prénom",
-        'profilMenuCheck' : "Ton prénom doit être composé entre 2 à 15 caractères.",
-        'profilMenuConfirm' : "Appliquer",
-        'closeProfileMenu' : "Annuler"
+        'profilTitle' : "Profil",
+        'profilLabel' : "Prénom",
+        'profilConfirm' : "Appliquer",
     },
     'weatherMenu' : {
-        'weatherMenuTitle' : "Météo",
-        'weatherMenuAPILabel' : "Clé API",
-        'weatherMenuTownLebel' : "Ville",
-        'weatherMenuCheck' : "Les deux champs sont nécessaires. OpenWeather fournit une clé API gratuitement.",
-        'weatherMenuConfirm' : "Appliquer",
-        'closeWeatherMenu' : "Annuler"
+        'weatherTitle' : "Météo",
+        'weatherAPILabel' : "Clé API",
+        'weatherTownLabel' : "Ville",
+        'weatherConfirm' : "Appliquer",
     },
     'misc' : {
         'dateLanguage' : "fr-FR",
         'weatherLanguage' : "FR",
-        'errorImport' : "Le fichier est incorrect. Réessayer."
+        'errorImport' : "Le fichier est incorrect. Réessayer.",
+        'logoutText' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
+        'welcomeDay' : "Bonjour",
+        'welcomeNight' : "Bonsoir"
     }
 };
 const ENGLISH = {
@@ -83,34 +68,27 @@ const ENGLISH = {
         'displayWeatherMenu' : "⛅ Weather",
         'switchTheme' : "🌈 Switch theme",
         'exportData' : "📲 Make a backup",
-        'displayLogoutMenu' : "🚫 Logout",
+        'logout' : "🚫 Logout",
         'footer' : "Available on " + GITHUB + " (v " + VERSION + ") - Hosted on " + HOME,
     },
-    'logoutMenu' : {
-        'logoutMenuTitle' : "Deconnection",
-        'logoutMenuText' : "This action will delete all the data of the application.",
-        'logoutMenuConfirm' : "Confirm",
-        'closeLogoutMenu' : "Cancel"
-    },
     'profileMenu' : {
-        'profilMenuTitle' : "Profile",
-        'profilMenuLabel' : "Name",
-        'profilMenuCheck' : "Your name must be composed between 2 to 15 characters.",
-        'profilMenuConfirm' : "Confirm",
-        'closeProfileMenu' : "Cancel"
+        'profilTitle' : "Profile",
+        'profilLabel' : "Name",
+        'profilMenuConfirm' : "Confirm"
     },
     'weatherMenu' : {
-        'weatherMenuTitle' : "Weather",
-        'weatherMenuAPILabel' : "API OpenWeather",
-        'weatherMenuTownLebel' : "Town",
-        'weatherMenuCheck' : "The two fields are required.",
-        'weatherMenuConfirm' : "Confirm",
-        'closeWeatherMenu' : "Cancel"
+        'weatherTitle' : "Weather",
+        'weatherAPILabel' : "API OpenWeather",
+        'weatherTownLabel' : "Town",
+        'weatherConfirm' : "Confirm"
     },
     'misc' : {
         'dateLanguage' : "en-EN",
         'weatherLanguage' : "EN",
-        'errorImport' : "The file is incorrect. Try again."
+        'errorImport' : "The file is incorrect. Try again.",
+        'logoutText' : "This action will delete all the data of the application.",
+        'welcomeDay' : "Good morning",
+        'welcomeNight' : "Good evening"
     }
 };
 
@@ -143,6 +121,8 @@ for(let i = 0; i < Object.keys(CONTENT).length - 1; i++) {
     let values = Object.values(data);
 
     for (let j = 0; j < names.length; j++) {
-        get("#" + names[j]).innerHTML = values[j];
+        if (get("#" + names[j])) {
+            get("#" + names[j]).innerHTML = values[j];  
+        }
     }
 }

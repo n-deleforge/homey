@@ -18,125 +18,87 @@
             <h1 id="startTitle"></h1>
                 <p id="startP1"></p>
                 <p id="startP2"></p>
-                    <button id="startApp"></button>
+                    <button class="button buttonSpecial" id="startApp"></button>
                 <p id="startP3"></p>
-                    <button id="displayImportMenu"></button>
+                    <input class="buttonSpecial" type="file" id="importData" accept="application/JSON">
+                    <button class="button buttonSpecial" id="importConfirm"></button>
         </div>
         <!-- START -->
 
         <!-- APP -->
         <div id="app">
-            <div id="time">
-                <p id="displayTime"></p>
-                <p id="displayDate"></p>
+
+            <!-- CONTENT -->
+            <div id="topTaskbar">
+                <div id="leftTaskbar">
+                    <p id="displayWeather"></p>
+                    <p id="displayTime"></p>
+                    <p id="displayDate"></p>
+                </div>
+                <div id="blankTaskbar"></div>
+                <div id="rightTaskbar">
+                    <button id="displaySettings">🔧</button>
+                </div>
             </div>
 
-            <p id="displayWeather"></p>
-            <button id="displaySettings">🔧</button>
+            <div id="content">
+                <p id="displayWelcome"></p>
+            </div>
+            <!-- // CONTENT -->
 
-            <div id="voidList"></div>
+            <!-- MENU -->
+            <div id="blankPage"></div>
             <div id="listSettings">
                 <button id="closeSettings">❌</button>
 
-                <h1 id="settingsTitle"></h1>
-                    <button id="displayProfilMenu"></button>
-                    <button id="displayWeatherMenu"></button>
+                <!-- PROFIL -->
+                <h1 id="profilTitle"></h1>
+                <div class="formContainer">
+                    <div class="formLine">
+                        <label id="profilLabel" for="newName"></label>
+                        <input type="text" id="newName" pattern="([a-zA-ZÀ-Ý -]){2,15}">
+                    </div>
+                </div>
+                <div class="formButtons">
+                    <button class="buttonLine" id="profilConfirm"></button> 
+                 </div>
+                <!-- // PROFIL -->
 
+                <!-- WEATHER -->
+                <h1 id="weatherTitle"></h1>
+                <div class="formContainer">
+                    <div class="formLine" id="weatherAPI">
+                        <label id="weatherAPILabel" for="weatherAPIValue"></label>
+                        <input type="text" id="weatherAPIValue">
+                    </div>
+    
+                    <div class="formLine" id="weatherTown">
+                        <label id="weatherTownLabel" for="weatherTownValue"></label>
+                        <input type="text" id="weatherTownValue">
+                    </div>
+                </div>
+
+                <div class="formButtons">
+                    <button class="buttonLine" id="weatherConfirm"></button>
+                </div>
+                <!-- // WEATHER -->
+
+                <!-- BUTTONS -->
                 <h1 id="setupTitle"></h1>
-                    <button id="exportData"></button>
-                    <button id="switchTheme"></button>
-                    <button id="displayLogoutMenu"></button>
-
-                <div id="voidSettings"></div>
+                    <button class="button" id="exportData"></button>
+                    <button class="button" id="switchTheme"></button>
+                    <button class="button" id="logout"></button>
+                <!-- // BUTTONS -->
+                
+                <div id="blankSettings"></div>
                 <p id="footer"></p>
             </div>
+            <!-- // MENU -->
 
         </div>
+        <!-- // APP -->
 
     </div>
-    <!-- // APP -->
-
-    <!-- POPUP -->
-    <div id="containerPopup">
-        
-        <!-- Popup menu : import -->
-        <div id="importMenu">
-            <h1 id="importMenuTitle"></h1>
-            <div class="formContainer">
-                <div class="formLine">
-                    <label id="importMenuLabel" for="importData"></label>
-                    <input type="file" id="importData" accept="application/JSON">
-                </div>
-            </div>
-
-            <p id="importMenuCheck"></p>
-
-            <div class="formButtons">
-                <button id="importMenuConfirm"></button>
-                <button id="closeImportMenu"></button>
-            </div>
-        </div>
-        <!-- // Popup menu : import -->
-
-        <!-- Popup menu : profile -->
-        <div id="profilMenu">
-            <h1 id="profilMenuTitle"></h1>
-            
-            <div class="formContainer">
-                <div class="formLine">
-                    <label id="profilMenuLabel" for="newName"></label>
-                    <input type="text" id="newName" pattern="([a-zA-ZÀ-Ý -]){2,15}">
-                </div>
-            </div>
-
-            <p id="profilMenuCheck"></p>
-
-            <div class="formButtons">
-               <button id="profilMenuConfirm"></button> 
-               <button id="closeProfileMenu"></button> 
-            </div>
-        </div>
-        <!--  // Popup menu : profile -->
-
-        <!-- Popup menu : weather -->
-        <div id="weatherMenu">
-            <h1 id="weatherMenuTitle"></h1>
-
-            <div class="formContainer">
-                <div class="formLine" id="weatherMenuAPI">
-                    <label id="weatherMenuAPILabel" for="weatherMenuAPIValue"></label>
-                    <input type="text" id="weatherMenuAPIValue">
-                </div>
-
-                <div class="formLine" id="weatherMenuTown">
-                    <label id="weatherMenuTownLebel" for="weatherMenuTownValue"></label>
-                    <input type="text" id="weatherMenuTownValue">
-                </div>
-            </div>
-
-            <p id="weatherMenuCheck"></p>
-
-            <div class="formButtons">
-                <button id="weatherMenuConfirm"></button>
-                <button id="closeWeatherMenu"></button>
-             </div>
-        </div>
-        <!-- // Popup menu : weather -->
-
-        <!-- Popup menu : deconnection -->
-        <div id="logoutMenu">
-            <h1 id="logoutMenuTitle"></h1>
-            <p id="logoutMenuText"></p>
-
-            <div class="formButtons">
-                <button id="logoutMenuConfirm"></button>
-                <button id="closeLogoutMenu"></button>
-            </div>
-        </div>
-        <!-- // Popup menu : deconnection -->
-
-    </div>
-    <!-- // POPUP -->
 
     <!-- ADD LITTLE JS HERE -->
     <script src="assets/js/core.min.js"></script>

@@ -4,35 +4,33 @@
 
 :root {
     /* MAIN */
-    --background :#F8F8F8;
-    --mainTextColor : black;
+    --notTransparent: black;
+    --semiTransparent: rgba(0,0,0,0.4);
+    --almostTransparent: rgba(0,0,0,.7);
+    --background: rgba(85,133,181,0.1);
+    --mainText: black;
+    --errorText: red;
 
-    /* APP START */
-    --startInputColor : black;
-    --startInputBorder : white;
-    --startButtonColor1 : black;
-    --startButtonColor2 : white;
-    --startButtonColor3 : lightblue;
+    /* APP */
+    --startTitle: lightcoral;
+    --footerText: white;
+    --footerLink: #5585b5;
+    --timeText: #5585b5;
+    --nameText: #5585b5;
 
-    /* APP CONTENT */
-    --footerTextColor : white;
-    --footerLinkColor : #5585b5;
-    --timeBorder : #5585b5;
-    --settingsTextColor : white;
+    /* SETTINGS */
+    --settingsText: white;
     --settingsBackground: #262931;
-    --settingsTitleColor : white;
-    --settingsButtonColor1 : white;
-    --settingsButtonColor2 : #5585b5;
+    --settingsTitle: white;
+    --settingsTitleBorder: #5585b5;
 
-    /* POPUP */
-    --popupBackground : #262931;
-    --popupTextColor : white;
-    --popupTitleBorder : white;
-    --popupButtonColor1 : white;
-    --popupButtonColor2 : white;
-    --popupButtonColor3 : #5585b5;
-    --popupInputColor : black;
-    --popupInputBorder : black;
-    --popupInputFile : white;
-    --popupErrorColor : red;
+    /*  BUTTONS */
+    --button1: white;
+    --button2: #5585b5;
+
+    /* INPUT */
+    --labelText: white;
+    --inputText: black;
+    --inputBorder: black;
+    --inputFileText: white;
 }
