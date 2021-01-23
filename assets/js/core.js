@@ -41,6 +41,7 @@ const FRENCH = {
         'weatherLanguage' : "FR",
         'errorImport' : "Le fichier est incorrect. Réessayer.",
         'logoutText' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
+        'backupText' : "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
         'welcomeDay' : "Bonjour",
         'welcomeNight' : "Bonsoir"
     }
@@ -87,6 +88,7 @@ const ENGLISH = {
         'weatherLanguage' : "EN",
         'errorImport' : "The file is incorrect. Try again.",
         'logoutText' : "This action will delete all the data of the application.",
+        'backupText' : "This action is gonna save a file 'homey.json' on your device, which contain all your data.",
         'welcomeDay' : "Good morning",
         'welcomeNight' : "Good evening"
     }

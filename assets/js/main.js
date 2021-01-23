@@ -100,7 +100,10 @@ function createMenu(mode) {
         });
 
         // Button : export data
-        get("#exportData").addEventListener("click", backupSettings);
+        get("#exportData").addEventListener("click", function() {
+            if (confirm(CONTENT.misc.backupText))
+                backupSettings();
+        });
 
         // Button : theme switch
         get("#switchTheme").addEventListener("click", switchTheme);
