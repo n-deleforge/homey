@@ -2,12 +2,12 @@
 // =================================================
 // ============ CORE VARIABLES
 
-let settings;
-const VERSION = 1.7;
-const GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
-const MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const FRENCH = {
+let SETTINGS;
+const _VERSION = 1.7;
+const _GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
+const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
+const _MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const _FRENCH = {
     'start' : {
         'startTitle' : "Bienvenue sur Homey !",
         'startP1' : "En utilisant Homey, tu confirmes avoir pris connaissance que des données seront stockées sur ton appareil. Cependant, aucune donnée n'est partagée avec un tiers.",
@@ -23,7 +23,7 @@ const FRENCH = {
         'switchTheme' : "🌈 Changer de thème",
         'exportData' : "📲 Faire une sauvegarde",
         'logout' : "🚫 Déconnexion",
-        'footer' : "Disponible sur " + GITHUB + " (v " + VERSION + ") - Hébergé sur  " + HOME,
+        'footer' : "Disponible sur " + _GITHUB + " (v " + _VERSION + ") - Hébergé sur  " + _HOME,
     },
     'profileMenu' : {
         'profilTitle' : "Profil",
@@ -46,7 +46,7 @@ const FRENCH = {
         'welcomeNight' : "Bonsoir"
     }
 };
-const ENGLISH = {
+const _ENGLISH = {
     'start' : {
         'startTitle' : "Welcome to Homey !",
         'startP1' : "By using Homey, you confirm that you are aware that data will be stored on your device. However, no data is shared with a third party.",
@@ -70,7 +70,7 @@ const ENGLISH = {
         'switchTheme' : "🌈 Switch theme",
         'exportData' : "📲 Make a backup",
         'logout' : "🚫 Logout",
-        'footer' : "Available on " + GITHUB + " (v " + VERSION + ") - Hosted on " + HOME,
+        'footer' : "Available on " + _GITHUB + " (v " + _VERSION + ") - Hosted on " + _HOME,
     },
     'profileMenu' : {
         'profilTitle' : "Profile",
@@ -99,26 +99,26 @@ const ENGLISH = {
 // ============ CORE INITIALISATION
 
 // ===> Correct the bug with viewport on mobile
-if (MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
+if (_MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
 
 // ===> Create the settings data or parse them if it already exists
 if (storage("get", "HOMEY-settings")) 
-    settings = JSON.parse(storage("get", "HOMEY-settings"))
+SETTINGS = JSON.parse(storage("get", "HOMEY-settings"))
 else {
-    settings = {
-        'core' : {'start' : false, 'version' : VERSION},
+    SETTINGS = {
+        'core' : {'start' : false, 'version' : _VERSION},
         'profile' : {'name' : '', 'theme' : 'dark'},
         'weather' : {'api' : '','town' : ''}
     }
 
-    storage("set", "HOMEY-settings", JSON.stringify(settings));
+    storage("set", "HOMEY-settings", JSON.stringify(SETTINGS));
 }
 
 // ===> Determine the language of the application
-const CONTENT = navigator.language == "fr" || navigator.language == "fr-FR" ? FRENCH : ENGLISH;
+const _CONTENT = navigator.language == "fr" || navigator.language == "fr-FR" ? _FRENCH : _ENGLISH;
 
-for(let i = 0; i < Object.keys(CONTENT).length - 1; i++) {
-    let data = CONTENT[Object.keys(CONTENT)[i]];
+for(let i = 0; i < Object.keys(_CONTENT).length - 1; i++) {
+    let data = _CONTENT[Object.keys(_CONTENT)[i]];
     let names = Object.keys(data);
     let values = Object.values(data);
 
