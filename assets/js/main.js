@@ -101,7 +101,7 @@ function createMenu(mode) {
 
         // Button : export data
         get("#exportData").addEventListener("click", function() {
-            if (confirm(__CONTENT.misc.backupText))
+            if (confirm(_CONTENT.misc.backupText))
                 backupSettings();
         });
 
@@ -110,7 +110,7 @@ function createMenu(mode) {
 
         // Button : logout
         get("#logout").addEventListener("click", function () {
-            if (confirm(__CONTENT.misc.logoutText)) {
+            if (confirm(_CONTENT.misc.logoutText)) {
                 storage("rem", "HOMEY-settings");
                 location.reload();
             }
