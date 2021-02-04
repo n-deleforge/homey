@@ -31,7 +31,7 @@ function createMenu(mode) {
         // Button : start the app
         get("#startApp").addEventListener("click", function () {
             SETTINGS.core.start = true;
-            updateJSON();
+            updateData();
             location.reload();
         }) 
 
@@ -42,9 +42,9 @@ function createMenu(mode) {
                 reader.readAsText(get("#importData").files[0]);
                 reader.onload = function (e) {
                     let importData = e.target.result;
-                    settings = JSON.parse(importData);
+                    SETTINGS = JSON.parse(importData);
 
-                    updateJSON();
+                    updateData();
                     location.reload();
                 }
             } 
@@ -78,7 +78,7 @@ function createMenu(mode) {
             if (get("#newName").checkValidity() && get("#newName").value != "") {
                 get("#profilLabel").style.color = getVariableCSS("--popupTextColor");
                 SETTINGS.profile.name = get("#newName").value;
-                updateJSON();
+                updateData();
             } 
             else get("#profilLabel").style.color = getVariableCSS("--errorText");
         });
@@ -90,7 +90,7 @@ function createMenu(mode) {
                 get("#weatherTownLabel").style.color = getVariableCSS("--popupTextColor");
                 SETTINGS.weather.api = get('#weatherAPIValue').value;
                 SETTINGS.weather.town = get('#weatherTownValue').value;
-                updateJSON();
+                updateData();
                 displayWeatherInfo();
             }
             else {
@@ -102,7 +102,7 @@ function createMenu(mode) {
         // Button : export data
         get("#exportData").addEventListener("click", function() {
             if (confirm(_CONTENT.misc.backupText))
-                backupSettings();
+                download(JSON.stringify(SETTINGS), "homey.json");
         });
 
         // Button : theme switch
@@ -166,15 +166,15 @@ function displayWeatherInfo() {
 
 // ===> Request to OpenWeather
 function requestWeather() {
-    const req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
+    const OPEN_WEATHER = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + SETTINGS.weather.town + '&appid=' + SETTINGS.weather.api + '&lang=' + _CONTENT.misc.weatherLanguage + '&units=metric');
 
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            let data = JSON.parse(this.responseText); let timestamp = new Date(); let logo;
-
+    fetch(OPEN_WEATHER)
+        .then((response) => response.json())
+        .then((weather) => {
+            let timestamp = new Date(); let logo;
             if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
             else {
-                switch (data.weather[0].main) {
+                switch (weather.weather[0].main) {
                     case 'Clear': logo = "☀️"; break;
                     case 'Clouds': logo = "⛅"; break;
                     case 'Drizzle': logo = "🌧️"; break;
@@ -187,13 +187,12 @@ function requestWeather() {
                 }
             }
 
-            get('#displayWeather').innerHTML = logo + " " + Math.round(data.main.temp) + " <sup>°c</sup>";
-        }
-        else get('#displayWeather').innerHTML = "❗";
-    };
-
-    req.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + SETTINGS.weather.town + '&appid=' + SETTINGS.weather.api + '&lang=' + _CONTENT.misc.weatherLanguage + '&units=metric', true)
-    req.send(null);
+        get('#displayWeather').innerHTML = logo + " " + Math.round(weather.main.temp) + " <sup>°c</sup>";
+        })
+        .catch((error) => {
+            console.log(error);
+            get('#displayWeather').innerHTML = "❓";
+        });
 }
 
 // =================================================
@@ -206,13 +205,13 @@ function switchTheme() {
         case "dark" : // Dark theme to light theme
             displayTheme("load", "light");
             SETTINGS.profile.theme = "light";
-            updateJSON();
+            updateData();
             break;
 
         case "light" : // Light theme to dark theme
             displayTheme("load", "dark");
             SETTINGS.profile.theme = "dark";
-            updateJSON();
+            updateData();
             break;
     }
 }
@@ -237,19 +236,14 @@ function displayTheme(mode, theme) {
 // ============ ASIDE FUNCTIONS
 
 // ===> Update the localStorage
-function updateJSON() {
+function updateData() {
     storage("set", "HOMEY-settings", JSON.stringify(SETTINGS))
-}
-
-// ===> Download settings written in a JSON file
-function backupSettings() {
-    download(JSON.stringify(SETTINGS), "homey.json");
 }
 
 // Check the version of the app
 function checkVersion() {
     if (SETTINGS.core.version != _VERSION) {
         SETTINGS.core.version = _VERSION;
-        updateJSON();
+        updateData();
     }    
 }
