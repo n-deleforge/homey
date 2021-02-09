@@ -13,9 +13,7 @@
 html,
 body {
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: montserrat,sans-serif !important;
+    font-family: montserrat, sans-serif;
     color: var(--mainText);
     background-color: var(--background);
 }
