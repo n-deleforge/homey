@@ -42,14 +42,8 @@ const _ENGLISH = {
     'startP2': "If it's your first visit then you start the application.",
     'startP3': "But if you already have used the application, you can import your settings.",
     'startApp': "Start",
-    'displayImportMenu': "Import",
-    'importMenuTitle': "Import",
-    'importMenuLabel': "Filesave",
-    'importMenuCheck': "The file is normally called \"homey.json\".",
-    'importMenuConfirm': "Confirm",
-    'closeImportMenu': "Cancel",
-    'settingsTitle': "Settings",
-    'setupTitle': "Configuration",
+    'importConfirm': "Confirm",
+    'setupTitle': "Settings",
     'profileTitle': "🙂 Profile",
     'weatherTitle': "⛅ Weather",
     'switchTheme': "🌈 Switch theme",
@@ -76,10 +70,10 @@ const _ENGLISH = {
 // =================================================
 // ============ CORE INITIALISATION
 
-// ===> Correct the bug with viewport on mobile
+// Correct the bug with viewport on mobile
 if (_MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
 
-// ===> Create the settings data or parse them if it already exists
+// Create the settings data or parse them if it already exists
 if (storage("get", "HOMEY-settings"))
     SETTINGS = JSON.parse(storage("get", "HOMEY-settings"))
 else {
@@ -101,7 +95,7 @@ else {
     storage("set", "HOMEY-settings", JSON.stringify(SETTINGS));
 }
 
-// ===> Determine the language of the application
+// Determine the language of the application
 const _CONTENT = (navigator.language == "fr" || navigator.language == "fr-FR") ? _FRENCH : _ENGLISH;
 let names = Object.keys(_CONTENT);
 let values = Object.values(_CONTENT);

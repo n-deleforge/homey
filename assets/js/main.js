@@ -2,7 +2,10 @@
 // =================================================
 // ============ MAIN
 
-// ===> Check if the app is already started
+/**
+ * Initialize the application
+ **/
+
 SETTINGS.core.start == false ? firstStart() : loadApp();
 
 /**
