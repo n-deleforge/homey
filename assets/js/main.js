@@ -225,20 +225,20 @@ function requestWeather() {
 // ============ THEMING
 
 /**
- * Switch the application theme between dark and light
+ * Switch between application themes
  **/
 
 function switchTheme() {
     switch(SETTINGS.profile.theme) {
-        case "dark" : // Dark theme to light theme
-            displayTheme("load", "light");
-            SETTINGS.profile.theme = "light";
+        case "classic" : // Classic to original
+            displayTheme("load", "original");
+            SETTINGS.profile.theme = "original";
             saveSettings();
             break;
 
-        case "light" : // Light theme to dark theme
-            displayTheme("load", "dark");
-            SETTINGS.profile.theme = "dark";
+        case "original" : // Original to classic
+            displayTheme("load", "classic");
+            SETTINGS.profile.theme = "classic";
             saveSettings();
             break;
     }
@@ -254,12 +254,12 @@ function displayTheme(mode, theme = null) {
     if (mode == "auto") displayTheme("load", SETTINGS.profile.theme);
     else
         switch(theme) {
-            case "dark" : // Dark theme
-                get("#theme").href = "assets/css/theme-dark.min.css"; 
+            case "classic" : // Classic theme
+                get("#theme").href = "assets/css/theme-classic.min.css"; 
                 break;
 
-            case "light" : // Light theme
-                get("#theme").href = "assets/css/theme-light.min.css";
+            case "original" : // Orignla theme
+                get("#theme").href = "assets/css/theme-original.min.css";
                 break;
         }
 }

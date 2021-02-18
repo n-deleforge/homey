@@ -74,9 +74,7 @@ const _ENGLISH = {
 if (_MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
 
 // Create the settings data or parse them if it already exists
-if (storage("get", "HOMEY-settings"))
-    SETTINGS = JSON.parse(storage("get", "HOMEY-settings"))
-else {
+if (!storage("get", "HOMEY-settings")) {
     SETTINGS = {
         'core': {
             'start': false,
@@ -84,16 +82,16 @@ else {
         },
         'profile': {
             'name': '',
-            'theme': 'dark'
+            'theme': 'classic'
         },
         'weather': {
             'api': '',
             'town': ''
         }
     }
-
     storage("set", "HOMEY-settings", JSON.stringify(SETTINGS));
 }
+else SETTINGS = JSON.parse(storage("get", "HOMEY-settings"));
 
 // Determine the language of the application
 const _CONTENT = (navigator.language == "fr" || navigator.language == "fr-FR") ? _FRENCH : _ENGLISH;

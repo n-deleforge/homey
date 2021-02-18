@@ -1,6 +1,6 @@
 /* ======================================== */
 /* ======================================== */
-/* ======== DARK THEME */
+/* ======== ORIGINAL THEME */
 
 :root {
     /* MAIN */
@@ -10,6 +10,7 @@
     --errorText: red;
 
     /* APP */
+    --bgPath: url("../images/bg.png");
     --startTitle: lightcoral;
     --footerText: white;
     --footerLink: lightcoral;

@@ -13,9 +13,14 @@
 html,
 body {
     margin: 0;
+    overflow: hidden;
     font-family: montserrat, sans-serif;
     color: var(--mainText);
     background-color: var(--background);
+}
+
+p {
+    margin: 0;
 }
 
 #container {
@@ -39,6 +44,15 @@ body {
 #start h1 {
     margin: 0;
     color: var(--startTitle);
+}
+
+#startP1,
+#startP2 {
+    margin: 1vh 0;
+}
+
+#startP3 {
+    margin: 2.5vh 0;
 }
 
 /* ======================================== */
@@ -76,10 +90,13 @@ body {
     display: none;
     width: 100vw;
     padding: 2vh;
+    background-image: var(--bgPath);
+
 }
 
 #content {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     align-items: center;
     justify-content: center;
