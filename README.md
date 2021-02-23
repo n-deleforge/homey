@@ -15,6 +15,7 @@ If you download or clone the project to host it yourself, then you'll need [**Li
 
 # Changelog
 
+- 1.7.1 : A few changes into the display (hour back in the center), light theme retired, "original" theme added with an image as a background (I don't remember where I found it, sorry)
 - 1.7 : New display of the app with the username, new menu, no popup anymore, lighter and cleaner
 - 1.6 : Internal applications system removed, better readability in JS with new functions and also much lighter, CSS variables added, new theme system with only CSS variables, CSS cleaning
 - 1.5 : Big JS rewriting, noteapp removed, less JS, less CSS, new favicon, checkVersion function added, new menu display with categories, dark and light themes
