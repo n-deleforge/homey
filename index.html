@@ -53,20 +53,21 @@
 
                 <!-- PROFILE -->
                 <h1 id="profileTitle"></h1>
-                <div class="formContainer">
+                <form class="formContainer">
                     <div class="formLine">
                         <label id="profileLabel" for="newName"></label>
                         <input type="text" id="newName" pattern="([a-zA-ZÀ-Ý -]){2,15}">
                     </div>
-                </div>
-                <div class="formButtons">
-                    <button class="buttonLine" id="profileConfirm"></button> 
-                 </div>
+
+                    <div class="formButtons">
+                        <button type="submit" class="buttonLine" id="profileConfirm" onclick="return false"></button> 
+                     </div>
+                </form>
                 <!-- // PROFILE -->
 
                 <!-- WEATHER -->
                 <h1 id="weatherTitle"></h1>
-                <div class="formContainer">
+                <form class="formContainer">
                     <div class="formLine" id="weatherAPI">
                         <label id="weatherAPILabel" for="weatherAPIValue"></label>
                         <input type="text" id="weatherAPIValue">
@@ -76,11 +77,11 @@
                         <label id="weatherTownLabel" for="weatherTownValue"></label>
                         <input type="text" id="weatherTownValue">
                     </div>
-                </div>
 
-                <div class="formButtons">
-                    <button class="buttonLine" id="weatherConfirm"></button>
-                </div>
+                    <div class="formButtons">
+                        <button type="submit" class="buttonLine" id="weatherConfirm" onclick="return false"></button>
+                    </div>
+                </form>
                 <!-- // WEATHER -->
 
                 <!-- BUTTONS -->
