@@ -208,7 +208,10 @@ function requestWeather() {
                     case 'Thunderstorm': logo = "🌩️"; break;
                     case 'Atmosphere': logo = "🌩️"; break;
                     case 'Fog': logo = "🌫️"; break;
-                    default : logo = "❓";
+                    case 'Mist': logo = "🌫️"; break;
+                    default : 
+                        logo = "❓";
+                        console.log(weather.weather[0].main);
                 }
             }
 
