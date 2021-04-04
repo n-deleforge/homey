@@ -3,7 +3,7 @@
 // ============ CORE VARIABLES
 
 let SETTINGS;
-const _VERSION = 1.7;
+const _VERSION = 1.8;
 const _GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
 const _MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -14,20 +14,23 @@ const _FRENCH = {
     'startP3': "Mais si tu as déjà utilisé l'application, tu peux importer tes paramètres.",
     'startApp': "Démarrer",
     'importConfirm': "Importer",
-    'setupTitle': "Configuration",
+    'setupTitle': "Paramètres",
     'profileTitle': "🙂 Profil",
     'weatherTitle': "⛅ Météo",
     'switchTheme': "🌈 Changer de thème",
     'exportData': "📲 Faire une sauvegarde",
     'logout': "🚫 Déconnexion",
     'footer': "Disponible sur " + _GITHUB + " (v " + _VERSION + ") - Hébergé sur  " + _HOME,
-    'profileTitle': "Profil",
+    'profileTitle': "▼ Profil",
     'profileLabel': "Prénom",
     'profileConfirm': "Appliquer",
-    'weatherTitle': "Météo",
+    'weatherTitle': "▼ Météo",
     'weatherAPILabel': "Clé API",
     'weatherTownLabel': "Ville",
     'weatherConfirm': "Appliquer",
+    'backgroundTitle': "▼ Style",
+    'backgroundLabel': "Fond d'écran",
+    'backgroundConfirm': "Appliquer",
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
     'errorImport': "Le fichier est incorrect. Réessayer.",
@@ -57,6 +60,9 @@ const _ENGLISH = {
     'weatherAPILabel': "API OpenWeather",
     'weatherTownLabel': "Town",
     'weatherConfirm': "Confirm",
+    'backgroundTitle': "▼ Style",
+    'backgroundLabel': "Wallpaper",
+    'backgroundConfirm': "Confirm",
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
     'errorImport': "The file is incorrect. Try again.",
@@ -81,12 +87,15 @@ if (!storage("get", "HOMEY-settings")) {
             'version': _VERSION
         },
         'profile': {
-            'name': '',
-            'theme': 'classic'
+            'name': ''
         },
         'weather': {
             'api': '',
             'town': ''
+        },
+        'style' : {
+            'theme' : 'classic',
+            'background': ''
         }
     }
     storage("set", "HOMEY-settings", JSON.stringify(SETTINGS));

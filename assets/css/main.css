@@ -90,8 +90,9 @@ p {
     display: none;
     width: 100vw;
     padding: 2vh;
-    background-image: var(--bgPath);
-
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 #content {

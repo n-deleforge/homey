@@ -6,136 +6,110 @@
  * Initialize the application
  **/
 
-SETTINGS.core.start == false ? firstStart() : loadApp();
-
-/**
- * Only called at the first start, checking data importation
- **/
-
-function firstStart() {
+if (SETTINGS.core.start == false) {
     get("#start").style.display = "flex";
     get("#importData").value = "";
-    createMenu("start");
-}
-
-/**
- * Called when the application is loaded from local storage (display everything)
- **/
-
-function loadApp() {
+    createMenuAtStart();
+} else {
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
-
-    displayBasic();
-    setInterval(displayBasic, 1000);
+    displayApp();
+    setInterval(displayApp, 1000);
     displayTheme("auto");
     displayWeatherInfo();
     checkVersion();
-    createMenu();
+    createMenuAtLoad();
+    managingSubMenu();
 }
 
 /**
- * Create all the events for the buttons and the menu
- * @param {string} mode "start" for the first launch ortherwise "load"
+ * Create all the events for the buttons at the start of the app
  **/
 
-function createMenu(mode) {
-    if (mode == "start") {
-        // Button : start the app
-        get("#startApp").addEventListener("click", () => {
-            SETTINGS.core.start = true;
-            saveSettings();
-            location.reload();
-        }) 
+function createMenuAtStart() {
+    // Button : start the app
+    get("#startApp").addEventListener("click", () => {
+        SETTINGS.core.start = true;
+        saveSettings();
+        location.reload();
+    })
 
-        // Button : import settings
-        get("#importConfirm").addEventListener("click", () => {
-            if (get("#importData").files.length != 0) {
-                let reader = new FileReader();
-                reader.readAsText(get("#importData").files[0]);
-                reader.onload = (e) => {
-                    let importData = e.target.result;
-                    SETTINGS = JSON.parse(importData);
+    // Button : import settings
+    get("#importConfirm").addEventListener("click", () => {
+        if (get("#importData").files.length != 0) {
+            let reader = new FileReader();
+            reader.readAsText(get("#importData").files[0]);
+            reader.onload = (e) => {
+                let importData = e.target.result;
+                SETTINGS = JSON.parse(importData);
 
-                    saveSettings();
-                    location.reload();
-                }
-            } 
-            else get("#importData").style.color = getVariableCSS("errorText");
-        })
-    }
-
-    else {
-        // Button : open settings menu
-        get("#displaySettings").addEventListener("click", () => {
-            get("#blankPage").style.display = "flex";
-            get("#displaySettings").style.display = "none";
-            get('#listSettings').style.animation = "fadeInRight";
-            get('#listSettings').style.animationDuration = "0.5s";
-            get("#listSettings").style.display = "flex";
-        })
-
-        // Button : close settings menu
-        get("#closeSettings").addEventListener("click", closeMenu)
-
-        // Same function for the void aside the menu
-        get("#blankPage").addEventListener("click", closeMenu)
-
-        // Fill the data
-        get("#newName").value = SETTINGS.profile.name;
-        get('#weatherAPIValue').value = SETTINGS.weather.api;
-        get('#weatherTownValue').value = SETTINGS.weather.town;
-
-        // Button : change name
-        get("#profileConfirm").addEventListener("click", () => {
-            if (get("#newName").checkValidity() && get("#newName").value != "") {
-                get("#profileLabel").style.color = getVariableCSS("labelText");
-                SETTINGS.profile.name = get("#newName").value;
                 saveSettings();
-            } 
-            else get("#profileLabel").style.color = getVariableCSS("errorText");
-        });
-
-        // Button : change weather
-        get("#weatherConfirm").addEventListener("click", () => {
-            if (get('#weatherAPIValue').value != "" && get('#weatherTownValue').value != "") {
-                get("#weatherAPILabel").style.color = getVariableCSS("labelText");
-                get("#weatherTownLabel").style.color = getVariableCSS("labelText");
-                SETTINGS.weather.api = get('#weatherAPIValue').value;
-                SETTINGS.weather.town = get('#weatherTownValue').value;
-                saveSettings();
-                displayWeatherInfo();
-            }
-            else {
-                get("#weatherAPILabel").style.color = getVariableCSS("errorText");
-                get("#weatherTownLabel").style.color = getVariableCSS("errorText");
-            }
-        });
-
-        // Button : export data
-        get("#exportData").addEventListener("click", () => {
-            if (confirm(_CONTENT.backupText))
-                download(JSON.stringify(SETTINGS), "homey.json");
-        });
-
-        // Button : theme switch
-        get("#switchTheme").addEventListener("click", switchTheme);
-
-        // Button : logout
-        get("#logout").addEventListener("click", () => {
-            if (confirm(_CONTENT.logoutText)) {
-                storage("rem", "HOMEY-settings");
                 location.reload();
             }
-        });
-    }
+        } else get("#importData").style.color = getVariableCSS("errorText");
+    })
 }
 
 /**
- * Close the menu and reset the labels colors
+ * Create all the events for the buttons and the menu when the app is loaded
+ **/
+
+function createMenuAtLoad() {
+    // Button : open settings menu
+    get("#displaySettings").addEventListener("click", () => {
+        get("#blankPage").style.display = "flex";
+        get("#displaySettings").style.display = "none";
+        get('#listSettings').style.animation = "fadeInRight";
+        get('#listSettings').style.animationDuration = "0.5s";
+        get("#listSettings").style.display = "flex";
+    })
+
+    // Button : close settings menu
+    get("#closeSettings").addEventListener("click", closeMenu);
+    get("#blankPage").addEventListener("click", closeMenu);
+
+    // Fill the data
+    get("#newName").value = SETTINGS.profile.name;
+    get('#weatherAPIValue').value = SETTINGS.weather.api;
+    get('#weatherTownValue').value = SETTINGS.weather.town;
+
+    // Button : change name
+    get("#profileConfirm").addEventListener("click", changeProfile);
+
+    // Button : change weather
+    get("#weatherConfirm").addEventListener("click", changeWeather);
+
+    // Button : change background
+    get("#backgroundConfirm").addEventListener("click", changeBackground);
+
+    // Button : theme switch
+    get("#switchTheme").addEventListener("click", switchTheme);
+
+    // Button : export data
+    get("#exportData").addEventListener("click", () => {
+        if (confirm(_CONTENT.backupText)) download(JSON.stringify(SETTINGS), "homey.json");
+    });
+
+    // Button : logout
+    get("#logout").addEventListener("click", () => {
+        if (confirm(_CONTENT.logoutText)) {
+            storage("rem", "HOMEY-settings");
+            location.reload();
+        }
+    });
+}
+
+/**
+ * Close the menu (called by the cross or the app)
  **/
 
 function closeMenu() {
+    // Hide all submenu at closing
+    for (let i = 0; i < get(".listSettingsTitle").length - 1; i++) {
+        get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
+        get(".listSettingsTitle")[i].innerHTML = "▼ " + get(".listSettingsTitle")[i].innerHTML.split(" ")[1];
+    }
+
     get("#displaySettings").style.display = "block";
     get("#listSettings").style.display = "none";
     get("#blankPage").style.display = "none";
@@ -143,6 +117,43 @@ function closeMenu() {
     get("#profileLabel").style.color = getVariableCSS("labelText");
     get("#weatherAPILabel").style.color = getVariableCSS("labelText");
     get("#weatherTownLabel").style.color = getVariableCSS("labelText");
+}
+
+/**
+ * Managin the menu and the submenus
+ **/
+
+function managingSubMenu() {
+    const subMenuList = get(".listSettingsTitle");
+    let subMenuOpened = false;
+
+    for (let i = 0; i < subMenuList.length - 1; i++) {
+        // At first, hide all submenus
+        get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
+
+        subMenuList[i].addEventListener("click", () => {
+            // Opening
+            if (subMenuList[i].nextElementSibling.style.display == "none") {
+                // If one submenu is opened, close all the submenus
+                if (subMenuOpened) {
+                    for (let j = 0; j < subMenuList.length - 1; j++) {
+                        subMenuList[j].nextElementSibling.style.display = "none";
+                        subMenuList[j].innerHTML = "▼ " + subMenuList[j].innerHTML.split(" ")[1];
+                    }
+                }
+                // And open the one which is choosen
+                subMenuList[i].innerHTML = "▲ " + subMenuList[i].innerHTML.split(" ")[1];
+                subMenuList[i].nextElementSibling.style.display = "block";
+                subMenuOpened = true;
+            } 
+            
+            // Closing
+            else {
+                subMenuList[i].innerHTML = "▼ " + subMenuList[i].innerHTML.split(" ")[1];
+                subMenuList[i].nextElementSibling.style.display = "none";
+            }
+        });
+    }
 }
 
 // =================================================
@@ -153,7 +164,7 @@ function closeMenu() {
  * Display time, date (+ interval) and name
  **/
 
-function displayBasic() {
+function displayApp() {
     // Hour and date
     let timestamp = new Date();
     let date = timestamp.toLocaleString(_CONTENT.dateLanguage, { weekday: "long", month: "long", day: "numeric" }); 
@@ -183,6 +194,36 @@ function displayWeatherInfo() {
     else {
         get('#displayWeather').innerHTML = "";
         get('#displayWeather').style.display = "none";
+    }
+}
+
+/**
+ * Check the name and save it
+ **/
+
+function changeProfile() {
+    if (get("#newName").checkValidity() && get("#newName").value != "") {
+        get("#profileLabel").style.color = getVariableCSS("labelText");
+        SETTINGS.profile.name = get("#newName").value;
+        saveSettings();
+    } else get("#profileLabel").style.color = getVariableCSS("errorText");
+}
+
+/**
+ * Check the weather and save it
+ **/
+
+function changeWeather() {
+    if (get('#weatherAPIValue').value != "" && get('#weatherTownValue').value != "") {
+        get("#weatherAPILabel").style.color = getVariableCSS("labelText");
+        get("#weatherTownLabel").style.color = getVariableCSS("labelText");
+        SETTINGS.weather.api = get('#weatherAPIValue').value;
+        SETTINGS.weather.town = get('#weatherTownValue').value;
+        saveSettings();
+        displayWeatherInfo();
+    } else {
+        get("#weatherAPILabel").style.color = getVariableCSS("errorText");
+        get("#weatherTownLabel").style.color = getVariableCSS("errorText");
     }
 }
 
@@ -232,39 +273,49 @@ function requestWeather() {
  **/
 
 function switchTheme() {
-    switch(SETTINGS.profile.theme) {
-        case "classic" : // Classic to original
-            displayTheme("load", "original");
-            SETTINGS.profile.theme = "original";
-            saveSettings();
-            break;
-
-        case "original" : // Original to classic
-            displayTheme("load", "classic");
-            SETTINGS.profile.theme = "classic";
-            saveSettings();
-            break;
+    if (SETTINGS.style.theme ==  "classic") {
+        displayTheme("load", "custom");
+        SETTINGS.style.theme = "custom";
     }
+    else if (SETTINGS.style.theme == "custom") {
+        displayTheme("load", "classic");
+        SETTINGS.style.theme = "classic"
+    }
+    saveSettings();
 }
 
 /**
- * Change the CSS file
+ * Display the custom background and change the CSS file
  * @param {string} mode auto (checking savinf data) or manual
  * @param {string} theme name of the theme called (only with "manual" mode)
  **/
 
 function displayTheme(mode, theme = null) {
-    if (mode == "auto") displayTheme("load", SETTINGS.profile.theme);
-    else
-        switch(theme) {
-            case "classic" : // Classic theme
-                get("#theme").href = "assets/css/theme-classic.min.css"; 
-                break;
+    if (SETTINGS.style.background != "") get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
 
-            case "original" : // Orignla theme
-                get("#theme").href = "assets/css/theme-original.min.css";
-                break;
+    if (mode == "auto") 
+        displayTheme("load", SETTINGS.profile.theme);
+    else {
+        if (theme == "classic") get("#theme").href = "assets/css/theme-classic.css";
+        else if (theme == "custom") get("#theme").href = "assets/css/theme-custom.css";
+    }
+}
+
+/**
+ * Read the picture as base64 and save it
+ **/
+function changeBackground() {
+    if (get("#backgroundValue").files.length != 0) {
+        let reader = new FileReader();
+        reader.readAsDataURL(get("#backgroundValue").files[0]);
+        reader.onload = (e) => {
+            let importData = e.target.result;
+            SETTINGS.style.background = importData;
+            get("#backgroundValue").value = null
+            saveSettings();
+            location.reload();
         }
+    } else get("#backgroundLabel").style.color = getVariableCSS("errorText");
 }
 
 // =================================================

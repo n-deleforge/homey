@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
-    <link rel="stylesheet" href="assets/css/theme-classic.min.css" id="theme">
+    <link rel="stylesheet" href="assets/css/theme-classic.css" id="theme">
     <link rel="stylesheet" href="assets/css/main.min.css">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
@@ -52,7 +52,7 @@
                 <button id="closeSettings">❌</button>
 
                 <!-- PROFILE -->
-                <h1 id="profileTitle"></h1>
+                <h1 class="listSettingsTitle" id="profileTitle"></h1>
                 <form class="formContainer">
                     <div class="formLine">
                         <label id="profileLabel" for="newName"></label>
@@ -66,26 +66,40 @@
                 <!-- // PROFILE -->
 
                 <!-- WEATHER -->
-                <h1 id="weatherTitle"></h1>
+                <h1 class="listSettingsTitle" id="weatherTitle"></h1>
+                    <form class="formContainer">
+                        <div class="formLine" id="weatherAPI">
+                            <label id="weatherAPILabel" for="weatherAPIValue"></label>
+                            <input type="text" id="weatherAPIValue">
+                        </div>
+
+                        <div class="formLine" id="weatherTown">
+                            <label id="weatherTownLabel" for="weatherTownValue"></label>
+                            <input type="text" id="weatherTownValue">
+                        </div>
+
+                        <div class="formButtons">
+                            <button type="submit" class="buttonLine" id="weatherConfirm" onclick="return false"></button>
+                        </div>
+                    </form>
+                <!-- // WEATHER -->
+
+                <!-- BACKGROUND -->
+                <h1 class="listSettingsTitle" id="backgroundTitle"></h1>
                 <form class="formContainer">
-                    <div class="formLine" id="weatherAPI">
-                        <label id="weatherAPILabel" for="weatherAPIValue"></label>
-                        <input type="text" id="weatherAPIValue">
-                    </div>
-    
-                    <div class="formLine" id="weatherTown">
-                        <label id="weatherTownLabel" for="weatherTownValue"></label>
-                        <input type="text" id="weatherTownValue">
+                    <div class="formLine">
+                        <label id="backgroundLabel" for="backgroundValue"></label>
+                        <input type="file" id="backgroundValue">
                     </div>
 
                     <div class="formButtons">
-                        <button type="submit" class="buttonLine" id="weatherConfirm" onclick="return false"></button>
-                    </div>
+                        <button type="submit" class="buttonLine" id="backgroundConfirm" onclick="return false"></button> 
+                     </div>
                 </form>
-                <!-- // WEATHER -->
+                <!-- // BACKGROUND -->
 
                 <!-- BUTTONS -->
-                <h1 id="setupTitle"></h1>
+                <h1 class="listSettingsTitle" id="setupTitle"></h1>
                     <button class="button" id="exportData"></button>
                     <button class="button" id="switchTheme"></button>
                     <button class="button" id="logout"></button>
