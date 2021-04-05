@@ -11,13 +11,13 @@ if (SETTINGS.core.start == false) {
     get("#importData").value = "";
     createMenuAtStart();
 } else {
+    checkVersion();
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
     displayApp();
     setInterval(displayApp, 1000);
     displayTheme("auto");
     displayWeatherInfo();
-    checkVersion();
     createMenuAtLoad();
     managingSubMenu();
 }
@@ -105,15 +105,14 @@ function createMenuAtLoad() {
 
 function closeMenu() {
     // Hide all submenu at closing
-    for (let i = 0; i < get(".listSettingsTitle").length - 1; i++) {
-        get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
-        get(".listSettingsTitle")[i].innerHTML = "▼ " + get(".listSettingsTitle")[i].innerHTML.split(" ")[1];
-    }
+    for (let i = 0; i < get(".listSettingsTitle").length - 1; i++) get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
 
+    // Hide the menu
     get("#displaySettings").style.display = "block";
     get("#listSettings").style.display = "none";
     get("#blankPage").style.display = "none";
 
+    // Reset the label color
     get("#profileLabel").style.color = getVariableCSS("labelText");
     get("#weatherAPILabel").style.color = getVariableCSS("labelText");
     get("#weatherTownLabel").style.color = getVariableCSS("labelText");
@@ -124,34 +123,27 @@ function closeMenu() {
  **/
 
 function managingSubMenu() {
-    const subMenuList = get(".listSettingsTitle");
     let subMenuOpened = false;
+    const subMenuList = get(".listSettingsTitle");
 
+    // At first, hide all submenus
     for (let i = 0; i < subMenuList.length - 1; i++) {
-        // At first, hide all submenus
         get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
 
+        // Add an event on all submenu titles
         subMenuList[i].addEventListener("click", () => {
             // Opening
             if (subMenuList[i].nextElementSibling.style.display == "none") {
                 // If one submenu is opened, close all the submenus
-                if (subMenuOpened) {
-                    for (let j = 0; j < subMenuList.length - 1; j++) {
-                        subMenuList[j].nextElementSibling.style.display = "none";
-                        subMenuList[j].innerHTML = "▼ " + subMenuList[j].innerHTML.split(" ")[1];
-                    }
-                }
+                if (subMenuOpened) for (let j = 0; j < subMenuList.length - 1; j++) subMenuList[j].nextElementSibling.style.display = "none";
+                
                 // And open the one which is choosen
-                subMenuList[i].innerHTML = "▲ " + subMenuList[i].innerHTML.split(" ")[1];
                 subMenuList[i].nextElementSibling.style.display = "block";
                 subMenuOpened = true;
             } 
             
             // Closing
-            else {
-                subMenuList[i].innerHTML = "▼ " + subMenuList[i].innerHTML.split(" ")[1];
-                subMenuList[i].nextElementSibling.style.display = "none";
-            }
+            else subMenuList[i].nextElementSibling.style.display = "none";
         });
     }
 }
@@ -335,6 +327,11 @@ function saveSettings() {
  **/
 
 function checkVersion() {
+    if (!SETTINGS.style) {
+        storage("rem", "HOMEY-settings");
+        location.reload();
+    }
+
     if (SETTINGS.core.version != _VERSION) {
         SETTINGS.core.version = _VERSION;
         saveSettings();
