@@ -12,14 +12,14 @@ if (SETTINGS.core.start == false) {
     createMenuAtStart();
 } else {
     checkVersion();
-    get("#start").style.display = "none";
-    get("#app").style.display = "flex";
     displayApp();
     setInterval(displayApp, 1000);
     displayTheme("auto");
     displayWeatherInfo();
     createMenuAtLoad();
     managingSubMenu();
+    get("#start").style.display = "none";
+    get("#app").style.display = "flex";
 }
 
 /**
@@ -36,18 +36,26 @@ function createMenuAtStart() {
 
     // Button : import settings
     get("#importConfirm").addEventListener("click", () => {
-        if (get("#importData").files.length != 0) {
-            let reader = new FileReader();
-            reader.readAsText(get("#importData").files[0]);
-            reader.onload = (e) => {
-                let importData = e.target.result;
-                SETTINGS = JSON.parse(importData);
+        const acceptedExtensions = ["json"];
+        const input = get("#importData");
 
-                saveSettings();
-                location.reload();
-            }
-        } else get("#importData").style.color = getVariableCSS("errorText");
-    })
+        if (input.files && input.files[0]) {
+            const fileExtension = input.files[0].name.split('.').pop().toLowerCase();
+            const fileAcceptable  = acceptedExtensions.indexOf(fileExtension) > -1;
+
+            if (fileAcceptable) {
+            const reader = new FileReader();
+            reader.readAsText(input.files[0]);
+                reader.onload = (e) => {
+                    let importData = e.target.result;
+                    SETTINGS = JSON.parse(importData);
+
+                    saveSettings();
+                    location.reload();
+                }
+            } else input.style.color = getVariableCSS("errorText");
+        } else input.style.color = getVariableCSS("errorText");
+    });
 }
 
 /**
@@ -224,10 +232,11 @@ function changeWeather() {
  **/
 
 function requestWeather() {
-    const OPEN_WEATHER = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + SETTINGS.weather.town + '&appid=' + SETTINGS.weather.api + '&lang=' + _CONTENT.weatherLanguage + '&units=metric');
+    const request = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + SETTINGS.weather.town + '&appid=' + SETTINGS.weather.api + '&lang=' + _CONTENT.weatherLanguage + '&units=metric');
 
-    fetch(OPEN_WEATHER)
+    fetch(request)
         .then((response) => response.json())
+
         .then((weather) => {
             let timestamp = new Date(); let logo;
             if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
@@ -250,6 +259,7 @@ function requestWeather() {
 
         get('#displayWeather').innerHTML = logo + " " + Math.round(weather.main.temp) + " <sup>°c</sup>";
         })
+
         .catch((error) => {
             console.log(error);
             get('#displayWeather').innerHTML = "❓";
@@ -297,16 +307,24 @@ function displayTheme(mode, theme = null) {
  * Read the picture as base64 and save it
  **/
 function changeBackground() {
-    if (get("#backgroundValue").files.length != 0) {
+    const acceptedExtensions = ["jpg", "jpeg", "png"];
+    const input = get("#backgroundValue");
+
+    if (input.files && input.files[0]) {
+        const fileExtension = input.files[0].name.split('.').pop().toLowerCase();
+        const fileAcceptable  = acceptedExtensions.indexOf(fileExtension) > -1;
+
+        if (fileAcceptable) {
         let reader = new FileReader();
-        reader.readAsDataURL(get("#backgroundValue").files[0]);
-        reader.onload = (e) => {
-            let importData = e.target.result;
-            SETTINGS.style.background = importData;
-            get("#backgroundValue").value = null
-            saveSettings();
-            location.reload();
-        }
+        reader.readAsDataURL(input.files[0]);
+            reader.onload = (e) => {
+                let importData = e.target.result;
+                SETTINGS.style.background = importData;
+                input.value = null
+                saveSettings();
+                location.reload();
+            }
+        } else get("#backgroundLabel").style.color = getVariableCSS("errorText");   
     } else get("#backgroundLabel").style.color = getVariableCSS("errorText");
 }
 
