@@ -3,10 +3,10 @@
 /* ======== MAIN */
 
 @font-face {
-    font-family: 'montserrat';
+    font-family: 'open-sans';
     font-style: normal;
     font-weight: normal;
-    src: url('../fonts/montserrat.woff2') format('woff2'), url('../fonts/montserrat.woff') format('woff');
+    src: url('../fonts/opensans-regular.woff') format('woff');
     font-display: swap;
 }
 
@@ -257,7 +257,7 @@ button {
 label {
     display: block;
     padding: 1vh;
-    font-size: 1em;
+    font-size: 1.3em;
     font-weight: bold;
     color: var(--labelText);
 }

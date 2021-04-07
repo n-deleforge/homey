@@ -90,6 +90,13 @@ function createMenuAtLoad() {
     // Button : change background
     get("#backgroundConfirm").addEventListener("click", changeBackground);
 
+    // Button : delete background
+    get("#backgroundDelete").addEventListener("click", () => {
+        SETTINGS.style.background = "";
+        saveSettings();
+        location.reload();
+    });
+
     // Button : theme switch
     get("#switchTheme").addEventListener("click", switchTheme);
 
