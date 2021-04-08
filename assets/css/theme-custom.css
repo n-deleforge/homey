@@ -5,26 +5,26 @@
 :root {
     /* MAIN */
     --transparent: rgba(0,0,0,0.4);
-    --background: #262931;
+    --background: #5D8AA8;
     --mainText: white;
-    --errorText: red;
+    --errorText: #2c3968;
 
     /* APP */
-    --startTitle: lightcoral;
+    --startTitle: #2c3968;
     --footerText: white;
-    --footerLink: lightcoral;
-    --timeText: lightcoral;
-    --nameText: lightcoral;
+    --footerLink: white;
+    --timeText: #2c3968;
+    --nameText: #2c3968;
     
     /* SETTINGS */
     --settingsText: white;
     --settingsBackground: black;
     --settingsTitle: white;
-    --settingsTitleBorder: lightcoral;
+    --settingsTitleBorder: #2c3968;
 
     /*  BUTTONS */
     --button1: white;
-    --button2: lightcoral;
+    --button2: #2c3968;
 
     /* INPUT */
     --labelText: white;

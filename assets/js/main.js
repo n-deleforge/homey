@@ -12,12 +12,12 @@ if (SETTINGS.core.start == false) {
     createMenuAtStart();
 } else {
     checkVersion();
-    displayApp();
-    setInterval(displayApp, 1000);
     displayTheme("auto");
-    displayWeatherInfo();
     createMenuAtLoad();
     managingSubMenu();
+    displayWeatherInfo();
+    displayApp();
+    setInterval(displayApp, 1000);
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 }
@@ -92,9 +92,11 @@ function createMenuAtLoad() {
 
     // Button : delete background
     get("#backgroundDelete").addEventListener("click", () => {
-        SETTINGS.style.background = "";
-        saveSettings();
-        location.reload();
+        if (confirm(_CONTENT.backgroundText)) {
+            SETTINGS.style.background = "";
+            saveSettings();
+            location.reload();
+        }
     });
 
     // Button : theme switch
@@ -131,17 +133,21 @@ function closeMenu() {
     get("#profileLabel").style.color = getVariableCSS("labelText");
     get("#weatherAPILabel").style.color = getVariableCSS("labelText");
     get("#weatherTownLabel").style.color = getVariableCSS("labelText");
+    get("#backgroundLabel").style.color = getVariableCSS("labelText");
 }
 
 /**
- * Managin the menu and the submenus
+ * Managing the menu and the submenus
  **/
 
 function managingSubMenu() {
     let subMenuOpened = false;
     const subMenuList = get(".listSettingsTitle");
 
-    // At first, hide all submenus
+    // First, hide the button to delete background if there is no background
+    if (SETTINGS.style.background == "") get("#backgroundDelete").style.display = "none";
+
+    // And then, hide all submenus
     for (let i = 0; i < subMenuList.length - 1; i++) {
         get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
 
@@ -291,6 +297,7 @@ function switchTheme() {
         SETTINGS.style.theme = "classic"
     }
     saveSettings();
+    console.log("hey");
 }
 
 /**
@@ -303,10 +310,16 @@ function displayTheme(mode, theme = null) {
     if (SETTINGS.style.background != "") get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
 
     if (mode == "auto") 
-        displayTheme("load", SETTINGS.profile.theme);
+        displayTheme("load", SETTINGS.style.theme);
     else {
-        if (theme == "classic") get("#theme").href = "assets/css/theme-classic.css";
-        else if (theme == "custom") get("#theme").href = "assets/css/theme-custom.css";
+        if (theme == "classic") {
+            get("#theme").href = "assets/css/theme-classic.css";
+            get("#switchTheme").innerHTML = _CONTENT.switchTheme;
+        }
+        else if (theme == "custom") {
+            get("#theme").href = "assets/css/theme-custom.css";
+            get("#switchTheme").innerHTML = _CONTENT.customTheme;
+        }
     }
 }
 
@@ -319,7 +332,7 @@ function changeBackground() {
 
     if (input.files && input.files[0]) {
         const fileExtension = input.files[0].name.split('.').pop().toLowerCase();
-        const fileAcceptable  = acceptedExtensions.indexOf(fileExtension) > -1;
+        const fileAcceptable = acceptedExtensions.indexOf(fileExtension) > -1;
 
         if (fileAcceptable) {
         let reader = new FileReader();
