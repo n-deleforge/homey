@@ -25,6 +25,9 @@ const _FRENCH = {
     'backgroundLabel': "Image (JPG, PNG)",
     'backgroundConfirm': "Appliquer",
     'backgroundDelete': "Supprimer",
+    'preferenceTitle' : "⭐ Préférences",
+    'preferenceNameLabel' : "Afficher message et prénom",
+    'preferenceDateLabel' : "Afficher la date complète",
     'setupTitle': "🔧 Paramètres",
     'switchTheme': "🌈 Thème classique",
     'customTheme': "🌈 Thème personnalisé",
@@ -58,6 +61,9 @@ const _ENGLISH = {
     'backgroundLabel': "Picture (JPG, PNG)",
     'backgroundConfirm': "Confirm",
     'backgroundDelete': "Delete",
+    'preferenceTitle' : "⭐ Preferences",
+    'preferenceNameLabel' : "Display message and name",
+    'preferenceDateLabel' : "Display the complete date",
     'setupTitle': "🔧 Settings",
     'switchTheme': "🌈 Classic theme",
     'customTheme': "🌈 Custom theme",
@@ -89,11 +95,13 @@ if (!storage("get", "HOMEY-settings")) {
             'version': _VERSION
         },
         'profile': {
-            'name': ''
+            'name': '',
+            'displayName': true,
+            'displayDate': true,
         },
         'weather': {
             'api': '',
-            'town': ''
+            'town': '',
         },
         'style' : {
             'theme' : 'classic',

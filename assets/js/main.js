@@ -80,40 +80,19 @@ function createMenuAtLoad() {
     get("#newName").value = SETTINGS.profile.name;
     get('#weatherAPIValue').value = SETTINGS.weather.api;
     get('#weatherTownValue').value = SETTINGS.weather.town;
+    if (SETTINGS.profile.displayName) get("#preferenceName").checked = true;
+    if (SETTINGS.profile.displayDate) get("#preferenceDate").checked = true;
 
-    // Button : change name
+    // All the buttons
     get("#profileConfirm").addEventListener("click", changeProfile);
-
-    // Button : change weather
     get("#weatherConfirm").addEventListener("click", changeWeather);
-
-    // Button : change background
     get("#backgroundConfirm").addEventListener("click", changeBackground);
-
-    // Button : delete background
-    get("#backgroundDelete").addEventListener("click", () => {
-        if (confirm(_CONTENT.backgroundText)) {
-            SETTINGS.style.background = "";
-            saveSettings();
-            location.reload();
-        }
-    });
-
-    // Button : theme switch
+    get("#backgroundDelete").addEventListener("click", deleteBackground);
+    get("#preferenceName").addEventListener("click", checkDisplayName);
+    get("#preferenceDate").addEventListener("click", checkDisplayDate);
     get("#switchTheme").addEventListener("click", switchTheme);
-
-    // Button : export data
-    get("#exportData").addEventListener("click", () => {
-        if (confirm(_CONTENT.backupText)) download(JSON.stringify(SETTINGS), "homey.json");
-    });
-
-    // Button : logout
-    get("#logout").addEventListener("click", () => {
-        if (confirm(_CONTENT.logoutText)) {
-            storage("rem", "HOMEY-settings");
-            location.reload();
-        }
-    });
+    get("#exportData").addEventListener("click", exportData);
+    get("#logout").addEventListener("click", logout);
 }
 
 /**
@@ -190,31 +169,15 @@ function displayApp() {
     let welcome2 = SETTINGS.profile.name != "" ? ' <span id="displayName">' + SETTINGS.profile.name + '</span>' : "";
 
     get("#displayTime").innerHTML = hours + ":" + minutes;
-    get("#displayDate").innerHTML = date;
-    get("#displayWelcome").innerHTML = welcome1 + welcome2;
-}
-
-/**
- * Check weather settings and call the requestWeather function (+ interval)
- **/
-
-function displayWeatherInfo() {
-    if (SETTINGS.weather.api != "" && SETTINGS.weather.town != "") {
-        requestWeather();
-        setInterval(requestWeather, 1800000); // Every 30 minutes
-        get('#displayWeather').style.display = "block";
-    } 
-    else {
-        get('#displayWeather').innerHTML = "";
-        get('#displayWeather').style.display = "none";
-    }
+    get("#displayDate").innerHTML = (SETTINGS.profile.displayDate) ? date : null;
+    get("#displayWelcome").innerHTML = (SETTINGS.profile.displayName) ? welcome1 + welcome2 : null;
 }
 
 /**
  * Check the name and save it
  **/
 
-function changeProfile() {
+ function changeProfile() {
     if (get("#newName").checkValidity() && get("#newName").value != "") {
         get("#profileLabel").style.color = getVariableCSS("labelText");
         SETTINGS.profile.name = get("#newName").value;
@@ -237,6 +200,22 @@ function changeWeather() {
     } else {
         get("#weatherAPILabel").style.color = getVariableCSS("errorText");
         get("#weatherTownLabel").style.color = getVariableCSS("errorText");
+    }
+}
+
+/**
+ * Check weather settings and call the requestWeather function (+ interval)
+ **/
+
+function displayWeatherInfo() {
+    if (SETTINGS.weather.api != "" && SETTINGS.weather.town != "") {
+        requestWeather();
+        setInterval(requestWeather, 1800000); // Every 30 minutes
+        get('#displayWeather').style.display = "block";
+    } 
+    else {
+        get('#displayWeather').innerHTML = "";
+        get('#displayWeather').style.display = "none";
     }
 }
 
@@ -279,6 +258,24 @@ function requestWeather() {
         });
 }
 
+/**
+ * Display or hide the name and welcome message
+ **/
+
+function checkDisplayName() {
+    SETTINGS.profile.displayName = (get("#preferenceName").checked == true) ? true : false;
+    saveSettings();
+}
+
+/**
+ * Display or hide the complete date
+ **/
+
+ function checkDisplayDate() {
+    SETTINGS.profile.displayDate = (get("#preferenceDate").checked == true) ? true : false;
+    saveSettings();
+}
+
 // =================================================
 // =================================================
 // ============ THEMING
@@ -296,8 +293,8 @@ function switchTheme() {
         displayTheme("load", "classic");
         SETTINGS.style.theme = "classic"
     }
+
     saveSettings();
-    console.log("hey");
 }
 
 /**
@@ -309,8 +306,7 @@ function switchTheme() {
 function displayTheme(mode, theme = null) {
     if (SETTINGS.style.background != "") get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
 
-    if (mode == "auto") 
-        displayTheme("load", SETTINGS.style.theme);
+    if (mode == "auto") displayTheme("load", SETTINGS.style.theme);
     else {
         if (theme == "classic") {
             get("#theme").href = "assets/css/theme-classic.css";
@@ -326,6 +322,7 @@ function displayTheme(mode, theme = null) {
 /**
  * Read the picture as base64 and save it
  **/
+
 function changeBackground() {
     const acceptedExtensions = ["jpg", "jpeg", "png"];
     const input = get("#backgroundValue");
@@ -348,6 +345,18 @@ function changeBackground() {
     } else get("#backgroundLabel").style.color = getVariableCSS("errorText");
 }
 
+/**
+ * Delete the background saved in base64
+ **/
+
+function deleteBackground() {
+    if (confirm(_CONTENT.backgroundText)) {
+        SETTINGS.style.background = "";
+        saveSettings();
+        location.reload();
+    }
+}
+
 // =================================================
 // =================================================
 // ============ UNCATEGORIZED
@@ -358,6 +367,26 @@ function changeBackground() {
 
 function saveSettings() {
     storage("set", "HOMEY-settings", JSON.stringify(SETTINGS))
+}
+
+/**
+ * Create a file with localstorage data
+ **/
+
+function exportData() {
+    if (confirm(_CONTENT.backupText)) 
+        download(JSON.stringify(SETTINGS), "homey.json");
+}
+
+/**
+ * Delete all the data and restart the app
+ **/
+
+function logout() {
+    if (confirm(_CONTENT.logoutText)) {
+        storage("rem", "HOMEY-settings");
+        location.reload();
+    }
 }
 
 /**

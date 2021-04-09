@@ -4,17 +4,20 @@
 
 :root {
     /* MAIN */
-    --transparent: rgba(0,0,0,0.4);
-    --background: #5D8AA8;
-    --mainText: white;
-    --errorText: #2c3968;
+    --bodyBackground: #262931;
+    --bodyText: white;
 
-    /* APP */
+    /* UNCATEGORIZED */
+    --transparent: rgba(0,0,0,0.4);
+    --errorText: red;
+
+    /* START */
     --startTitle: #2c3968;
+
+    /* APPLICATION */
     --footerText: white;
-    --footerLink: white;
+    --footerLink: #2c3968;
     --timeText: #2c3968;
-    --nameText: #2c3968;
     
     /* SETTINGS */
     --settingsText: white;
