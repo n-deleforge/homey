@@ -7,15 +7,18 @@
  **/
 
 if (SETTINGS.core.start == false) {
+    displayTheme();
+    createMenuAtStart();
     get("#start").style.display = "flex";
     get("#importData").value = "";
-    createMenuAtStart();
 } else {
     checkVersion();
-    displayTheme("auto");
+    displayTheme();
     createMenuAtLoad();
     managingSubMenu();
     displayWeatherInfo();
+    checkDisplayName();
+    checkDisplayDate();
     displayApp();
     setInterval(displayApp, 1000);
     get("#start").style.display = "none";
@@ -80,8 +83,10 @@ function createMenuAtLoad() {
     get("#newName").value = SETTINGS.profile.name;
     get('#weatherAPIValue').value = SETTINGS.weather.api;
     get('#weatherTownValue').value = SETTINGS.weather.town;
+    get('#styleContent').value =  SETTINGS.style.css;
     if (SETTINGS.profile.displayName) get("#preferenceName").checked = true;
     if (SETTINGS.profile.displayDate) get("#preferenceDate").checked = true;
+    if (SETTINGS.profile.displayWeather) get("#preferenceWeather").checked = true;
 
     // All the buttons
     get("#profileConfirm").addEventListener("click", changeProfile);
@@ -90,7 +95,9 @@ function createMenuAtLoad() {
     get("#backgroundDelete").addEventListener("click", deleteBackground);
     get("#preferenceName").addEventListener("click", checkDisplayName);
     get("#preferenceDate").addEventListener("click", checkDisplayDate);
-    get("#switchTheme").addEventListener("click", switchTheme);
+    get("#preferenceWeather").addEventListener("click", checkDisplayWeather);
+    get("#styleConfirm").addEventListener("click", changeStyle);
+    get("#styleReset").addEventListener("click", resetStyle);
     get("#exportData").addEventListener("click", exportData);
     get("#logout").addEventListener("click", logout);
 }
@@ -169,8 +176,11 @@ function displayApp() {
     let welcome2 = SETTINGS.profile.name != "" ? ' <span id="displayName">' + SETTINGS.profile.name + '</span>' : "";
 
     get("#displayTime").innerHTML = hours + ":" + minutes;
-    get("#displayDate").innerHTML = (SETTINGS.profile.displayDate) ? date : null;
-    get("#displayWelcome").innerHTML = (SETTINGS.profile.displayName) ? welcome1 + welcome2 : null;
+    get("#displayDate").innerHTML = date;
+    get("#displayWelcome").innerHTML = welcome1 + welcome2;
+
+    // get("#displayDate").innerHTML = (SETTINGS.profile.displayDate) ? date : null;
+    // get("#displayWelcome").innerHTML = (SETTINGS.profile.displayName) ? welcome1 + welcome2 : null;
 }
 
 /**
@@ -208,12 +218,11 @@ function changeWeather() {
  **/
 
 function displayWeatherInfo() {
-    if (SETTINGS.weather.api != "" && SETTINGS.weather.town != "") {
+    if (SETTINGS.profile.displayWeather && SETTINGS.weather.api != "" && SETTINGS.weather.town != "") {
         requestWeather();
         setInterval(requestWeather, 1800000); // Every 30 minutes
         get('#displayWeather').style.display = "block";
-    } 
-    else {
+    } else {
         get('#displayWeather').innerHTML = "";
         get('#displayWeather').style.display = "none";
     }
@@ -228,7 +237,6 @@ function requestWeather() {
 
     fetch(request)
         .then((response) => response.json())
-
         .then((weather) => {
             let timestamp = new Date(); let logo;
             if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
@@ -248,7 +256,6 @@ function requestWeather() {
                         console.log(weather.weather[0].main);
                 }
             }
-
         get('#displayWeather').innerHTML = logo + " " + Math.round(weather.main.temp) + " <sup>°c</sup>";
         })
 
@@ -259,20 +266,32 @@ function requestWeather() {
 }
 
 /**
- * Display or hide the name and welcome message
+ * Display or hide the welcome message
  **/
 
-function checkDisplayName() {
+ function checkDisplayName() {
     SETTINGS.profile.displayName = (get("#preferenceName").checked == true) ? true : false;
+    get("#displayWelcome").style.display = (SETTINGS.profile.displayName) ? "block" : "none";
     saveSettings();
 }
 
 /**
- * Display or hide the complete date
+ * Display or hide the date
  **/
 
  function checkDisplayDate() {
     SETTINGS.profile.displayDate = (get("#preferenceDate").checked == true) ? true : false;
+    get("#displayDate").style.display = (SETTINGS.profile.displayDate) ? "block" : "none";
+    saveSettings();
+}
+
+/**
+ * Display or hide the weather
+ **/
+
+ function checkDisplayWeather() {
+    SETTINGS.profile.displayWeather = (get("#preferenceWeather").checked == true) ? true : false;
+    displayWeatherInfo();
     saveSettings();
 }
 
@@ -281,42 +300,14 @@ function checkDisplayName() {
 // ============ THEMING
 
 /**
- * Switch between application themes
+ * Display the custom background 
  **/
 
-function switchTheme() {
-    if (SETTINGS.style.theme ==  "classic") {
-        displayTheme("load", "custom");
-        SETTINGS.style.theme = "custom";
-    }
-    else if (SETTINGS.style.theme == "custom") {
-        displayTheme("load", "classic");
-        SETTINGS.style.theme = "classic"
-    }
+function displayTheme() {
+    get("#styleVariables").innerHTML = ":root {" + SETTINGS.style.css + "}";
 
-    saveSettings();
-}
-
-/**
- * Display the custom background and change the CSS file
- * @param {string} mode auto (checking savinf data) or manual
- * @param {string} theme name of the theme called (only with "manual" mode)
- **/
-
-function displayTheme(mode, theme = null) {
-    if (SETTINGS.style.background != "") get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
-
-    if (mode == "auto") displayTheme("load", SETTINGS.style.theme);
-    else {
-        if (theme == "classic") {
-            get("#theme").href = "assets/css/theme-classic.css";
-            get("#switchTheme").innerHTML = _CONTENT.switchTheme;
-        }
-        else if (theme == "custom") {
-            get("#theme").href = "assets/css/theme-custom.css";
-            get("#switchTheme").innerHTML = _CONTENT.customTheme;
-        }
-    }
+    if (SETTINGS.style.background != "") 
+        get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
 }
 
 /**
@@ -357,6 +348,30 @@ function deleteBackground() {
     }
 }
 
+/**
+ * Modify the CSS variables with a custom themes
+ **/
+
+function changeStyle() {
+    if (get("#styleContent").value != "") {
+        SETTINGS.style.css = get("#styleContent").value;
+        saveSettings();
+        displayTheme();
+    }
+}
+
+/**
+ * Delete the csutom CSS
+ **/
+
+function resetStyle() {
+    if (confirm(_CONTENT.styleText)) {
+        get("#styleContent").value = _CSS;
+        SETTINGS.style.css = "";
+        saveSettings();
+    }
+}
+
 // =================================================
 // =================================================
 // ============ UNCATEGORIZED
@@ -394,11 +409,6 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (!SETTINGS.style) {
-        storage("rem", "HOMEY-settings");
-        location.reload();
-    }
-
     if (SETTINGS.core.version != _VERSION) {
         SETTINGS.core.version = _VERSION;
         saveSettings();

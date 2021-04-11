@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
-    <link rel="stylesheet" href="assets/css/theme-classic.css" id="theme">
-    <link rel="stylesheet" href="assets/css/main.min.css">
+    <style id="styleVariables"></style>
+    <link rel="stylesheet" href="assets/css/main.css">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
@@ -95,7 +95,7 @@
                     <div class="formButtons">
                         <button type="submit" class="buttonLine" id="backgroundConfirm" onclick="return false"></button>
                         <button class="buttonLine" id="backgroundDelete" onclick="return false"></button>
-                     </div>
+                    </div>
                 </form>
                 <!-- // BACKGROUND -->
 
@@ -104,13 +104,27 @@
                     <div class="unsetForm">
                         <div><input type="checkbox" id="preferenceName"><label id="preferenceNameLabel" for="preferenceName"></label></div>
                         <div><input type="checkbox" id="preferenceDate"><label id="preferenceDateLabel" for="preferenceDate"></label></div>
-                     </div>
-                </form>
+                        <div><input type="checkbox" id="preferenceWeather"><label id="preferenceWeatherLabel" for="preferenceWeather"></label></div>
+                    </div>
                 <!-- // PREFERENCES -->
+
+                <!-- COLORS -->
+                <h1 class="listSettingsTitle" id="styleTitle"></h1>
+                <form class="formContainer">
+                    <div class="formLine">
+                        <label id="styleLabel" for="styleContent"></label>
+                        <textarea id="styleContent"></textarea>
+                    </div>
+
+                    <div class="formButtons">
+                        <button type="submit" class="buttonLine" id="styleConfirm" onclick="return false"></button>
+                        <button class="buttonLine" id="styleReset" onclick="return false"></button>
+                    </div>
+                </form>
+                <!-- // COLORS -->
 
                 <!-- BUTTONS -->
                 <h1 class="listSettingsTitle" id="setupTitle"></h1>
-                    <button class="button" id="switchTheme"></button>
                     <button class="button" id="exportData"></button>
                     <button class="button" id="logout"></button>
                 <!-- // BUTTONS -->

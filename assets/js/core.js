@@ -26,11 +26,14 @@ const _FRENCH = {
     'backgroundConfirm': "Appliquer",
     'backgroundDelete': "Supprimer",
     'preferenceTitle' : "⭐ Préférences",
-    'preferenceNameLabel' : "Afficher message et prénom",
-    'preferenceDateLabel' : "Afficher la date complète",
+    'preferenceNameLabel' : "Afficher le message",
+    'preferenceDateLabel' : "Afficher la date",
+    'preferenceWeatherLabel' : "Afficher la météo",
+    'styleTitle': "🎨 Couleurs",
+    'styleLabel': "Couleur de fond",
+    'styleConfirm': "Appliquer",
+    'styleReset': "Réinitialiser",
     'setupTitle': "🔧 Paramètres",
-    'switchTheme': "🌈 Thème classique",
-    'customTheme': "🌈 Thème personnalisé",
     'exportData': "📲 Faire une sauvegarde",
     'logout': "🚫 Déconnexion",
     'footer': "Disponible sur " + _GITHUB + " (v " + _VERSION + ") - Hébergé sur  " + _HOME,
@@ -40,6 +43,7 @@ const _FRENCH = {
     'logoutText': "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
     'backupText': "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
     'backgroundText' : "Cette action va supprimer votre fond d'écran personnalisé.",
+    'styleText' : "Cette action va réinitialiser le CSS initial de l'application",
     'welcomeDay': "Bonjour",
     'welcomeNight': "Bonsoir"
 };
@@ -62,11 +66,10 @@ const _ENGLISH = {
     'backgroundConfirm': "Confirm",
     'backgroundDelete': "Delete",
     'preferenceTitle' : "⭐ Preferences",
-    'preferenceNameLabel' : "Display message and name",
-    'preferenceDateLabel' : "Display the complete date",
+    'preferenceNameLabel' : "Display the message",
+    'preferenceDateLabel' : "Display the date",
+    'preferenceWeatherLabel' : "Display the weather",
     'setupTitle': "🔧 Settings",
-    'switchTheme': "🌈 Classic theme",
-    'customTheme': "🌈 Custom theme",
     'exportData': "📲 Make a backup",
     'logout': "🚫 Logout",
     'footer': "Available on " + _GITHUB + " (v " + _VERSION + ") - Hosted on " + _HOME,
@@ -76,9 +79,33 @@ const _ENGLISH = {
     'logoutText': "This action will delete all the data of the application.",
     'backupText': "This action is gonna save a file 'homey.json' on your device, which contain all your data.",
     'backgroundText' : "This action will delete your custom wallpaper.",
+    'styleText' : "This action will reset the initial CSS of the application.",
     'welcomeDay': "Good morning",
     'welcomeNight': "Good evening"
 };
+const _CSS = `/* MAIN */
+--bodyBackground: #262931;
+--bodyText: white;
+/* APPLICATION */
+--startTitle: lightcoral;
+--timeText: lightcoral;
+/* SETTINGS */
+--settingsText: white;
+--settingsBackground: black;
+--settingsTitleBorder: lightcoral;
+/* FOOTER */
+--footerText: white;
+--footerLink: lightcoral;
+/*  BUTTONS */
+--button: white;
+--buttonHover: lightcoral;
+/* INPUT */
+--labelText: white;
+--inputText: black;
+--inputBorder: black;
+/* UNCATEGORIZED */
+--transparent: rgba(0,0,0,0.4);
+--errorText: red;`;
 
 // =================================================
 // =================================================
@@ -92,20 +119,21 @@ if (!storage("get", "HOMEY-settings")) {
     SETTINGS = {
         'core': {
             'start': false,
-            'version': _VERSION
+            'version': _VERSION,
         },
         'profile': {
             'name': '',
             'displayName': true,
             'displayDate': true,
+            'displayWeather': true,
         },
         'weather': {
             'api': '',
             'town': '',
         },
         'style' : {
-            'theme' : 'classic',
-            'background': ''
+            'css': _CSS,
+            'background': '',
         }
     }
     storage("set", "HOMEY-settings", JSON.stringify(SETTINGS));

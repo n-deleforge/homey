@@ -23,6 +23,13 @@ p {
     margin: 0;
 }
 
+input:focus,
+input:active,
+button:focus,
+button:active {
+    outline: none !important;
+}
+
 #container {
     display: flex;
     justify-content: center;
@@ -152,7 +159,8 @@ p {
 #listSettings h1 {
     margin: 4vh 0 0.5vh 0.5vw;
     border-bottom: 2px solid var(--settingsTitleBorder);
-    color: var(--settingsTitle);
+    color: var(--settingsText);
+    font-size: 1.5em;
 }
 
 #closeSettings,
@@ -220,7 +228,7 @@ button {
     border: 2px solid transparent;
     border-radius: 10px;
     text-align: left;
-    background-color: var(--button1);
+    background-color: var(--button);
 }
 
 .buttonSpecial {
@@ -230,8 +238,8 @@ button {
 }
 
 .button:hover {
-    color: var(--button1);
-    background-color: var(--button2);
+    color: var(--button);
+    background-color: var(--buttonHover);
 }
 
 .buttonLine {
@@ -239,13 +247,13 @@ button {
     margin: 1vh;
     padding: 1vh;
     border: 0;
-    border-bottom: 2px solid var(--button1);
-    color: var(--button1);
+    border-bottom: 2px solid var(--button);
+    color: var(--button);
     background-color: transparent;
 }
 
 .buttonLine:hover {
-    border-bottom: 2px solid var(--button2);
+    border-bottom: 2px solid var(--buttonHover);
 }
 
 /* ======================================== */
@@ -255,7 +263,6 @@ button {
 label {
     display: block;
     padding: 1vh;
-    font-size: 1.3em;
     font-weight: bold;
     color: var(--labelText);
 }
@@ -266,7 +273,6 @@ input {
     border: 2px solid var(--inputBorder);
     border-radius: 10px;
     font-family: inherit;
-    font-size: 1.1em;
     color: var(--inputText);
 }
 
@@ -276,8 +282,24 @@ input[type=file] {
     border-top: 2px solid white;
     border-bottom: 2px solid white;
     border-radius: 0;
-    color: var(--inputFileText);
+    color: var(--labelText);
 }
+
+/* START - Custom checkboxes */
+input[type=checkbox] {
+    position: absolute;
+    left: -9999px;
+}
+
+input[type=checkbox] + label::before {
+    display: inline;
+    content: "❌  ";
+}
+  
+input[type=checkbox]:checked + label::before {
+    content: "✔️  ";
+}
+/* END - Custom checkboxes */
 
 .unsetForm {
     padding: 2vh 2vh 0 2vh;
@@ -295,18 +317,16 @@ input[type=file] {
    width: auto;
 }
 
+#styleContent {
+    width: 19.5vw;
+    height: 18vh;
+}
+
 /* ======================================== */
 /* ======================================== */
 /* ======== MOBILE */
 
 @media(max-width:1024px) {
-    input:focus,
-    input.active,
-    button:focus,
-    button:active {
-        outline: none !important;
-    }
-
     #start {
         width: 85vw;
         padding-bottom: 4vh;
