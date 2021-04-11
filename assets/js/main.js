@@ -409,8 +409,11 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (SETTINGS.core.version != _VERSION) {
-        SETTINGS.core.version = _VERSION;
-        saveSettings();
-    }    
+    if (!SETTINGS.style.bakcground) SETTINGS.style.background = "";
+    if (!SETTINGS.style.css) SETTINGS.style.css = _CSS;
+    if (!SETTINGS.profile.displayName) SETTINGS.profile.displayName = true;
+    if (!SETTINGS.profile.displayDate) SETTINGS.profile.displayDate = true;
+    if (!SETTINGS.profile.displayWeather) SETTINGS.profile.displayWeather = true;
+    if (SETTINGS.core.version != _VERSION) SETTINGS.core.version = _VERSION;
+    saveSettings();
 }
