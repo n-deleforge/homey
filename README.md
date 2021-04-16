@@ -1,7 +1,7 @@
 # Homey
 
-> Version 1.8 :memo:  
-> A personal start page for your browser with date and weather.
+> Version 1.9 :memo:  
+> A personal start page for your browser with time, date, weather and other functions.
 
 ## How to use it ?
 
@@ -15,7 +15,7 @@ If you download or clone the project to host it yourself, then you'll need [**Li
 
 # Changelog
 
-- 1.9 : Big changes. Now it's possible to edit CSS in live witthout modify CSS files. It is also possible to hdie some elements as the date, the weather or the welcome message.
+- 1.9 : Big changes. Now it's possible to edit CSS in live witthout modify CSS files. It is also possible to hide some elements as the date, the weather or the welcome message.
 - 1.8 : "Original" theme removed for a "Custom" theme which is the same as the "Classic" theme but can be modified easily at your conveniance. Also add a function to display your own wallpaper which is saved as base64 data.
 - 1.7.1 : A few changes into the display (hour back in the center), light theme retired, "original" theme added with an image as a background (I don't remember where I found it, sorry)
 - 1.7 : New display of the app with the username, new menu, no popup anymore, lighter and cleaner

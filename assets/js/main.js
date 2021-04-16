@@ -300,7 +300,7 @@ function requestWeather() {
 // ============ THEMING
 
 /**
- * Display the custom background 
+ * Display the custom background / css
  **/
 
 function displayTheme() {
@@ -349,7 +349,7 @@ function deleteBackground() {
 }
 
 /**
- * Modify the CSS variables with a custom themes
+ * Modify the CSS variables with a custom theme
  **/
 
 function changeStyle() {
@@ -361,14 +361,13 @@ function changeStyle() {
 }
 
 /**
- * Delete the csutom CSS
+ * Delete the custom CSS and replace it with the original CSS
  **/
 
 function resetStyle() {
     if (confirm(_CONTENT.styleText)) {
         get("#styleContent").value = _CSS;
-        SETTINGS.style.css = "";
-        saveSettings();
+        changeStyle();
     }
 }
 
@@ -409,7 +408,7 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (!SETTINGS.style.bakcground) SETTINGS.style.background = "";
+    if (!SETTINGS.style.background) SETTINGS.style.background = "";
     if (!SETTINGS.style.css) SETTINGS.style.css = _CSS;
     if (!SETTINGS.profile.displayName) SETTINGS.profile.displayName = true;
     if (!SETTINGS.profile.displayDate) SETTINGS.profile.displayDate = true;

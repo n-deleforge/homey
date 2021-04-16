@@ -30,7 +30,6 @@ const _FRENCH = {
     'preferenceDateLabel' : "Afficher la date",
     'preferenceWeatherLabel' : "Afficher la météo",
     'styleTitle': "🎨 Couleurs",
-    'styleLabel': "Couleur de fond",
     'styleConfirm': "Appliquer",
     'styleReset': "Réinitialiser",
     'setupTitle': "🔧 Paramètres",
@@ -69,6 +68,9 @@ const _ENGLISH = {
     'preferenceNameLabel' : "Display the message",
     'preferenceDateLabel' : "Display the date",
     'preferenceWeatherLabel' : "Display the weather",
+    'styleTitle': "🎨 Colors",
+    'styleConfirm': "Confirm",
+    'styleReset': "Reset",
     'setupTitle': "🔧 Settings",
     'exportData': "📲 Make a backup",
     'logout': "🚫 Logout",
@@ -84,28 +86,53 @@ const _ENGLISH = {
     'welcomeNight': "Good evening"
 };
 const _CSS = `/* MAIN */
---bodyBackground: #262931;
+/*  ======== */
+--bodyBg: #262931;
 --bodyText: white;
+/*  ======== */
+
 /* APPLICATION */
---startTitle: lightcoral;
+/*  ======== */
 --timeText: lightcoral;
+/*  ======== */
+
 /* SETTINGS */
+/*  ======== */
 --settingsText: white;
 --settingsBackground: black;
 --settingsTitleBorder: lightcoral;
+/*  ======== */
+
 /* FOOTER */
+/*  ======== */
 --footerText: white;
 --footerLink: lightcoral;
+/*  ======== */
+
 /*  BUTTONS */
---button: white;
---buttonHover: lightcoral;
+/*  ======== */
+--buttonText: black;
+--buttonTextHover: white;
+--buttonBg: white;
+--buttonBgHover: lightcoral;
+/*  ======== */
+
 /* INPUT */
+/*  ======== */
 --labelText: white;
 --inputText: black;
+/* ^ also affects textarea */
 --inputBorder: black;
+--inputFileText: white;
+--inputFileBorder: white;
+/*  ======== */
+
 /* UNCATEGORIZED */
---transparent: rgba(0,0,0,0.4);
---errorText: red;`;
+/*  ======== */
+--transparency: rgba(0,0,0,0.4);
+/* ^ it is used for the app transparency with the menu opened */
+--errorText: red;
+/*  ======== */`;
 
 // =================================================
 // =================================================
