@@ -11,7 +11,7 @@ Or clone the git : ```git clone https://github.com/n-deleforge/homey.git```
 
 ## Note for self-host
 
-If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 118 of `index.html`.
+If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 149 of `index.html`.
 
 # Changelog
 
