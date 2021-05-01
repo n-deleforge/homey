@@ -14,7 +14,7 @@ html,
 body {
     margin: 0;
     overflow: hidden;
-    font-family: montserrat, sans-serif;
+    font-family: open-sans, sans-serif;
     color: var(--bodyText);
     background-color: var(--bodyBg);
 }
