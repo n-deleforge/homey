@@ -178,9 +178,6 @@ function displayApp() {
     get("#displayTime").innerHTML = hours + ":" + minutes;
     get("#displayDate").innerHTML = date;
     get("#displayWelcome").innerHTML = welcome1 + welcome2;
-
-    // get("#displayDate").innerHTML = (SETTINGS.profile.displayDate) ? date : null;
-    // get("#displayWelcome").innerHTML = (SETTINGS.profile.displayName) ? welcome1 + welcome2 : null;
 }
 
 /**
@@ -380,7 +377,7 @@ function resetStyle() {
  **/
 
 function saveSettings() {
-    storage("set", "HOMEY-settings", JSON.stringify(SETTINGS))
+    setStorage("HOMEY-settings", JSON.stringify(SETTINGS))
 }
 
 /**
@@ -398,7 +395,7 @@ function exportData() {
 
 function logout() {
     if (confirm(_CONTENT.logoutText)) {
-        storage("rem", "HOMEY-settings");
+        remStorage("HOMEY-settings");
         location.reload();
     }
 }
