@@ -14,7 +14,7 @@ html,
 body {
     margin: 0;
     overflow: hidden;
-    font-family: open-sans, sans-serif;
+    font-family: open-sans,sans-serif;
     color: var(--bodyText);
     background-color: var(--bodyBg);
 }
@@ -40,6 +40,165 @@ button:active {
 
 /* ======================================== */
 /* ======================================== */
+/* ======== BUTTON */
+
+button {
+    font-family: inherit;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button {
+    margin: 1vh;
+    padding: 1vh;
+    border: 0;
+    border-radius: 5px;
+    text-align: left;
+    color: var(--buttonText);
+    background-color: var(--buttonBg);
+}
+
+.buttonSpecial {
+    margin: 0 auto;
+    min-width: 20vw;
+    text-align: center;
+}
+
+.button:hover {
+    color: var(--buttonTextHover);
+    background-color: var(--buttonBgHover);
+}
+
+.buttonLine {
+    width: auto;
+    margin: 1vh;
+    padding: 1vh;
+    border: 0;
+    border-bottom: 2px solid var(--buttonBg);
+    color: var(--buttonBg);
+    background-color: transparent;
+}
+
+.buttonLine:hover {
+    border-bottom: 2px solid var(--buttonBgHover);
+}
+
+.buttonLarge {
+    width: 50%;
+    padding: 1vh;
+    border: 0;
+    border-radius: 0;
+    font-size: 1.2em;
+    color: var(--buttonText);
+    background-color: var(--buttonBg);
+}
+
+.buttonLarge:hover {
+    color: var(--buttonBgHover);
+}
+
+#popupAccept {
+    background-color: var(--buttonBgHover) !important;
+}
+
+#popupAccept:hover {
+    color: var(--buttonBg) !important;
+}
+
+.listButton {
+    display: flex;
+}
+
+.listButtonCenter {
+    text-align: center;
+}
+
+/* @media(max-width:1024px) {
+
+} */
+
+/* ======================================== */
+/* ======================================== */
+/* ======== FORM */
+
+label {
+    display: block;
+    padding: 1vh;
+    font-weight: bold;
+    color: var(--labelText);
+}
+
+input,
+textarea {
+    width: 90%;
+    padding: 1vh;
+    border: 2px solid var(--inputBorder);
+    border-radius: 10px;
+    font-family: serif;
+    font-size: 1em;
+    color: var(--inputText);
+}
+
+input[type=text],
+textarea {
+    font-size: 1.2em;
+}
+
+input[type=file] {
+    margin-bottom: 2vh;
+    border: 0;
+    border-top: 2px solid var(--inputFileBorder);
+    border-bottom: 2px solid var(--inputFileBorder);
+    border-radius: 0;
+    font-family: inherit !important;
+    color: var(--inputFileText);
+}
+
+/* START - Custom checkboxes */
+input[type=checkbox] {
+    position: absolute;
+    left: -9999px;
+}
+
+input[type=checkbox] + label::before {
+    content: "❌  ";
+    display: inline;
+}
+
+input[type=checkbox]:checked + label::before {
+    content: "✔️  ";
+}
+/* END - Custom checkboxes */
+
+#styleContent {
+    width: 18vw !important;
+    height: 18vh !important;
+    margin-top: 2vh;
+}
+
+#preferenceList {
+    padding: 2vh 2vh 0 2vh;
+}
+
+#preferenceList div {
+    margin: 0.5vh 0;
+}
+
+#preferenceList label {
+    display: inline;
+}
+
+#preferenceList input {
+    width: auto;
+}
+
+/* @media(max-width:1024px) {
+    
+} */
+
+/* ======================================== */
+/* ======================================== */
 /* ======== START */
 
 #start {
@@ -62,6 +221,18 @@ button:active {
 
 #startP3 {
     margin: 2.5vh 0;
+}
+
+@media(max-width:1024px) {
+    #start {
+        width: 85vw;
+        padding-bottom: 4vh;
+        font-size: 1em;
+    }
+
+    #start button {
+        min-width: 75vw;
+    }
 }
 
 /* ======================================== */
@@ -90,6 +261,13 @@ button:active {
     flex-grow: 1;
 }
 
+@media(max-width:1024px) {
+    #topTaskbar p {
+        margin-right: 10vw;
+        font-size: 2em;
+    }
+}
+
 /* ======================================== */
 /* ======================================== */
 /* ======== APP */
@@ -98,8 +276,8 @@ button:active {
     display: none;
     width: 100vw;
     padding: 2vh;
-    background-repeat: no-repeat;
     background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
@@ -128,6 +306,24 @@ button:active {
 
 #displayWeather {
     font-size: 2em;
+}
+
+@media(max-width:1024px) {
+    #app {
+        width: 90vw;
+    }
+
+    #content {
+        font-size: 2em;
+    }
+
+    #displayDate {
+        display: none !important;
+    }
+
+    #displayWelcome {
+        text-align: center;
+    }
 }
 
 /* ======================================== */
@@ -161,8 +357,8 @@ button:active {
 #listSettings h1 {
     margin: 4vh 0 0.5vh 0.5vw;
     border-bottom: 2px solid var(--settingsTitleBorder);
-    color: var(--settingsText);
     font-size: 1.5em;
+    color: var(--settingsText);
 }
 
 #closeSettings,
@@ -213,163 +409,7 @@ button:active {
     text-decoration: underline;
 }
 
-/* ======================================== */
-/* ======================================== */
-/* ======== BUTTONS */
-
-button {
-    font-family: inherit;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.button {
-    margin: 1vh;
-    padding: 1vh;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    text-align: left;
-    color: var(--buttonText);
-    background-color: var(--buttonBg);
-}
-
-.buttonSpecial {
-    margin: 0 auto;
-    min-width: 20vw;
-    text-align: center;
-}
-
-.button:hover {
-    color: var(--buttonTextHover);
-    background-color: var(--buttonBgHover);
-}
-
-.buttonLine {
-    width: auto;
-    margin: 1vh;
-    padding: 1vh;
-    border: 0;
-    border-bottom: 2px solid var(--buttonBg);
-    color: var(--buttonBg);
-    background-color: transparent;
-}
-
-.buttonLine:hover {
-    border-bottom: 2px solid var(--buttonBgHover);
-}
-
-.formButtonCenter {
-    text-align: center;
-}
-
-/* ======================================== */
-/* ======================================== */
-/* ======== FORM */
-
-label {
-    display: block;
-    padding: 1vh;
-    font-weight: bold;
-    color: var(--labelText);
-}
-
-input,
-textarea {
-    width: 90%;
-    padding: 1vh;
-    border: 2px solid var(--inputBorder);
-    border-radius: 10px;
-    font-family: serif;
-    font-size: 1em;
-    color: var(--inputText);
-}
-
-input[type=text],
-textarea {
-    font-size: 1.2em;
-}
-
-input[type=file] {
-    margin-bottom: 2vh;
-    border: 0;
-    border-top: 2px solid var(--inputFileBorder);
-    border-bottom: 2px solid var(--inputFileBorder);
-    border-radius: 0;
-    font-family: inherit !important;
-    color: var(--inputFileText);
-}
-
-/* START - Custom checkboxes */
-input[type=checkbox] {
-    position: absolute;
-    left: -9999px;
-}
-
-input[type=checkbox] + label::before {
-    display: inline;
-    content: "❌  ";
-}
-  
-input[type=checkbox]:checked + label::before {
-    content: "✔️  ";
-}
-/* END - Custom checkboxes */
-
-#styleContent {
-    margin-top: 2vh;
-    width: 18vw !important;
-    height: 18vh !important;
-}
-
-#preferenceList {
-    padding: 2vh 2vh 0 2vh;
-}
-
-#preferenceList  div {
-    margin: 0.5vh 0
-}
-
-#preferenceList  label {
-    display: inline;
-}
-
-#preferenceList  input {
-   width: auto;
-}
-
-/* ======================================== */
-/* ======================================== */
-/* ======== MOBILE */
-
 @media(max-width:1024px) {
-    #start {
-        width: 85vw;
-        padding-bottom: 4vh;
-        font-size: 1em;
-    }
-
-    #start button {
-        min-width: 75vw;
-    }
-
-    #topTaskbar p {
-        margin-right: 10vw;
-        font-size: 2em;
-    }
-
-    #app {
-        width: 90vw;
-    }
-
-    #displayDate {
-        display: none;
-    }
-
-    #displayWelcome {
-        text-align: center;
-    }
-
     #listSettings {
         width: 92vw;
         font-size: 0.8em;
@@ -378,6 +418,59 @@ input[type=checkbox]:checked + label::before {
     #blankSettings {
         flex-grow: 0;
         height: 5vh;
+    }
+
+    #styleContent {
+        width: 85vw !important;
+    }
+}
+
+/* ======================================== */
+/* ======================================== */
+/* ======== POPUP */
+
+#blankPopup {
+    display: none;
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--transparency);
+}
+
+#popup {
+    display: none;
+    z-index: 5;
+    position: absolute;
+    top: 37%;
+    right: 37%;
+    flex-direction: column;
+    width: 25vw;
+    height: 25vh;
+    color: var(--settingsText);
+    background-color: var(--settingsBackground);
+}
+
+#popupContent {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 2vh;
+}
+
+#popupText {
+    font-size: 1.2em;
+    text-align: justify;
+}
+
+@media(max-width:1024px) {
+    #popup {
+        top: 36%;
+        right: 0;
+        width: 100vw;
+        height: 35vh;
     }
 }
 

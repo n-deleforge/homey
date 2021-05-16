@@ -39,12 +39,15 @@ const _FRENCH = {
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
     'errorImport': "Le fichier est incorrect. Réessayer.",
-    'logoutText': "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
-    'backupText': "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
-    'backgroundText' : "Cette action va supprimer votre fond d'écran personnalisé.",
-    'styleText' : "Cette action va réinitialiser le CSS initial de l'application",
     'welcomeDay': "Bonjour",
-    'welcomeNight': "Bonsoir"
+    'welcomeNight': "Bonsoir",
+    'popupTitle' : "Attention !",
+    'popupAccept' : "Confirmer",
+    'popupCancel' : "Annuler",
+    'popupLogout' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
+    'popupBackup' : "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
+    'popupResetStyle' : "Cette action va réinitialiser le CSS initial de l'application",
+    'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
 const _ENGLISH = {
     'startTitle': "Welcome to Homey !",
@@ -78,12 +81,15 @@ const _ENGLISH = {
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
     'errorImport': "The file is incorrect. Try again.",
-    'logoutText': "This action will delete all the data of the application.",
-    'backupText': "This action is gonna save a file 'homey.json' on your device, which contain all your data.",
-    'backgroundText' : "This action will delete your custom wallpaper.",
-    'styleText' : "This action will reset the initial CSS of the application.",
     'welcomeDay': "Good morning",
-    'welcomeNight': "Good evening"
+    'welcomeNight': "Good evening",
+    'popupTitle' : "Warning !",
+    'popupAccept' : "Confirm",
+    'popupCancel' : "Cancel",
+    'popupLogout' : "This action will delete all the data of the application.",
+    'popupBackup' : "This action is gonna save a file 'homey.json' on your device, which contain all your data.",
+    'popupResetStyle' : "This action will reset the initial CSS of the application.",
+    'popupBackground' :  "This action will delete your custom wallpaper.",
 };
 const _CSS = `/* MAIN */
 /*  ======== */
@@ -129,8 +135,8 @@ const _CSS = `/* MAIN */
 
 /* UNCATEGORIZED */
 /*  ======== */
---transparency: rgba(0,0,0,0.4);
-/* ^ it is used for the app transparency with the menu opened */
+--transparency: rgba(0,0,0,0.5);
+/* ^ it is used for the app transparency with the menu / popup opened */
 --errorText: red;
 /*  ======== */`;
 

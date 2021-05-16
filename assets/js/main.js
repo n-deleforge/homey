@@ -92,14 +92,61 @@ function createMenuAtLoad() {
     get("#profileConfirm").addEventListener("click", changeProfile);
     get("#weatherConfirm").addEventListener("click", changeWeather);
     get("#backgroundConfirm").addEventListener("click", changeBackground);
-    get("#backgroundDelete").addEventListener("click", deleteBackground);
+    get("#backgroundDelete").addEventListener("click", () => {
+        get("#blankPopup").style.display = "block";
+        get("#popup").style.display = "flex";
+        get("#popupText").innerHTML = _CONTENT.popupBackground;
+
+        get("#popupCancel").addEventListener("click", () => {
+            get("#popupAccept").removeEventListener("click", resetStyle);
+            get("#blankPopup").style.display = "none";
+            get("#popup").style.display = "none";
+        });
+    });
+    get("#popupAccept").addEventListener("click", resetStyle);
     get("#preferenceName").addEventListener("click", checkDisplayName);
     get("#preferenceDate").addEventListener("click", checkDisplayDate);
     get("#preferenceWeather").addEventListener("click", checkDisplayWeather);
     get("#styleConfirm").addEventListener("click", changeStyle);
-    get("#styleReset").addEventListener("click", resetStyle);
-    get("#exportData").addEventListener("click", exportData);
-    get("#logout").addEventListener("click", logout);
+    get("#styleReset").addEventListener("click", () => {
+        get("#blankPopup").style.display = "block";
+        get("#popup").style.display = "flex";
+        get("#popupText").innerHTML = _CONTENT.popupResetStyle;
+    
+        get("#popupCancel").addEventListener("click", () => {
+            get("#popupAccept").removeEventListener("click", resetStyle);
+            get("#blankPopup").style.display = "none";
+            get("#popup").style.display = "none";
+        });
+    
+        get("#popupAccept").addEventListener("click", resetStyle);
+    });
+    get("#exportData").addEventListener("click", () =>  {
+        get("#blankPopup").style.display = "block";
+        get("#popup").style.display = "flex";
+        get("#popupText").innerHTML = _CONTENT.popupBackup;
+    
+        get("#popupCancel").addEventListener("click", () => {
+            get("#popupAccept").removeEventListener("click", exportData);
+            get("#blankPopup").style.display = "none";
+            get("#popup").style.display = "none";
+        });
+    
+        get("#popupAccept").addEventListener("click", exportData);
+    });
+    get("#logout").addEventListener("click", () => {
+        get("#blankPopup").style.display = "block";
+        get("#popup").style.display = "flex";
+        get("#popupText").innerHTML = _CONTENT.popupLogout;
+    
+        get("#popupCancel").addEventListener("click", () => {
+            get("#popupAccept").removeEventListener("click", logout);
+            get("#blankPopup").style.display = "none";
+            get("#popup").style.display = "none";
+        });
+    
+        get("#popupAccept").addEventListener("click", logout);
+    });
 }
 
 /**
@@ -338,11 +385,9 @@ function changeBackground() {
  **/
 
 function deleteBackground() {
-    if (confirm(_CONTENT.backgroundText)) {
-        SETTINGS.style.background = "";
-        saveSettings();
-        location.reload();
-    }
+    SETTINGS.style.background = "";
+    saveSettings();
+    location.reload();
 }
 
 /**
@@ -362,10 +407,10 @@ function changeStyle() {
  **/
 
 function resetStyle() {
-    if (confirm(_CONTENT.styleText)) {
-        get("#styleContent").value = _CSS;
-        changeStyle();
-    }
+    get("#styleContent").value = _CSS;
+    changeStyle();
+    get("#blankPopup").style.display = "none";
+    get("#popup").style.display = "none";
 }
 
 // =================================================
@@ -385,8 +430,7 @@ function saveSettings() {
  **/
 
 function exportData() {
-    if (confirm(_CONTENT.backupText)) 
-        download(JSON.stringify(SETTINGS), "homey.json");
+    download(JSON.stringify(SETTINGS), "homey.json"); 
 }
 
 /**
@@ -394,10 +438,8 @@ function exportData() {
  **/
 
 function logout() {
-    if (confirm(_CONTENT.logoutText)) {
-        remStorage("HOMEY-settings");
-        location.reload();
-    }
+    remStorage("HOMEY-settings");
+    location.reload();
 }
 
 /**
