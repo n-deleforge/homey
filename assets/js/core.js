@@ -5,7 +5,7 @@
 let SETTINGS;
 const _VERSION = 1.8;
 const _GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">nd</a>";
+const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">NDDev</a>";
 const _MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const _FRENCH = {
     'startTitle': "Bienvenue sur Homey !",
@@ -35,7 +35,7 @@ const _FRENCH = {
     'setupTitle': "🔧 Paramètres",
     'exportData': "📲 Faire une sauvegarde",
     'logout': "🚫 Déconnexion",
-    'footer': "Disponible sur " + _GITHUB + " (v " + _VERSION + ") - Hébergé sur  " + _HOME,
+    'footer': "Disponible sur " + _GITHUB + " (v " + _VERSION + ") ©  " + _HOME,
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
     'errorImport': "Le fichier est incorrect. Réessayer.",
@@ -77,7 +77,7 @@ const _ENGLISH = {
     'setupTitle': "🔧 Settings",
     'exportData': "📲 Make a backup",
     'logout': "🚫 Logout",
-    'footer': "Available on " + _GITHUB + " (v " + _VERSION + ") - Hosted on " + _HOME,
+    'footer': "Available on " + _GITHUB + " (v " + _VERSION + ") © " + _HOME,
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
     'errorImport': "The file is incorrect. Try again.",

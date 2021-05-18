@@ -16,9 +16,9 @@ if (SETTINGS.core.start == false) {
     displayTheme();
     createMenuAtLoad();
     managingSubMenu();
-    displayWeatherInfo();
     checkDisplayName();
     checkDisplayDate();
+    checkDisplayWeather();
     displayApp();
     setInterval(displayApp, 1000);
     get("#start").style.display = "none";
@@ -84,9 +84,6 @@ function createMenuAtLoad() {
     get('#weatherAPIValue').value = SETTINGS.weather.api;
     get('#weatherTownValue').value = SETTINGS.weather.town;
     get('#styleContent').value =  SETTINGS.style.css;
-    if (SETTINGS.profile.displayName) get("#preferenceName").checked = true;
-    if (SETTINGS.profile.displayDate) get("#preferenceDate").checked = true;
-    if (SETTINGS.profile.displayWeather) get("#preferenceWeather").checked = true;
 
     // Button : profile
     get("#profileConfirm").addEventListener("click", changeProfile);
@@ -225,15 +222,15 @@ function managingSubMenu() {
 
 function displayApp() {
     // Hour and date
-    let timestamp = new Date();
+    const timestamp = new Date();
     let date = timestamp.toLocaleString(_CONTENT.dateLanguage, { weekday: "long", month: "long", day: "numeric" }); 
     let hours = timestamp.getHours();
     let minutes = timestamp.getMinutes();
     if (hours < 10) hours = '0' + hours;  if (minutes < 10) minutes = '0' + minutes;
 
     // Welcome
-    let welcome1 = timestamp.getHours() < 7 || timestamp.getHours() > 19 ? _CONTENT.welcomeNight : _CONTENT.welcomeDay;
-    let welcome2 = SETTINGS.profile.name != "" ? ' <span id="displayName">' + SETTINGS.profile.name + '</span>' : "";
+    const welcome1 = timestamp.getHours() < 7 || timestamp.getHours() > 19 ? _CONTENT.welcomeNight : _CONTENT.welcomeDay;
+    const welcome2 = SETTINGS.profile.name != "" ? ' <span id="displayName">' + SETTINGS.profile.name + '</span>' : "";
 
     get("#displayTime").innerHTML = hours + ":" + minutes;
     get("#displayDate").innerHTML = date;
@@ -435,7 +432,7 @@ function resetStyle() {
  **/
 
 function saveSettings() {
-    setStorage("HOMEY-settings", JSON.stringify(SETTINGS))
+    setStorage("HOMEY-settings", JSON.stringify(SETTINGS));
 }
 
 /**
