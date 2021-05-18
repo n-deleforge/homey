@@ -88,9 +88,13 @@ function createMenuAtLoad() {
     if (SETTINGS.profile.displayDate) get("#preferenceDate").checked = true;
     if (SETTINGS.profile.displayWeather) get("#preferenceWeather").checked = true;
 
-    // All the buttons
+    // Button : profile
     get("#profileConfirm").addEventListener("click", changeProfile);
+
+    // Button : weather
     get("#weatherConfirm").addEventListener("click", changeWeather);
+
+    // Buttons : background
     get("#backgroundConfirm").addEventListener("click", changeBackground);
     get("#backgroundDelete").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
@@ -98,15 +102,20 @@ function createMenuAtLoad() {
         get("#popupText").innerHTML = _CONTENT.popupBackground;
 
         get("#popupCancel").addEventListener("click", () => {
-            get("#popupAccept").removeEventListener("click", resetStyle);
+            get("#popupAccept").removeEventListener("click", deleteBackground);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
+
+        get("#popupAccept").addEventListener("click", deleteBackground);
     });
-    get("#popupAccept").addEventListener("click", resetStyle);
+
+    // Buttons : preferences
     get("#preferenceName").addEventListener("click", checkDisplayName);
     get("#preferenceDate").addEventListener("click", checkDisplayDate);
     get("#preferenceWeather").addEventListener("click", checkDisplayWeather);
+
+    // Buttons : style
     get("#styleConfirm").addEventListener("click", changeStyle);
     get("#styleReset").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
@@ -121,6 +130,8 @@ function createMenuAtLoad() {
     
         get("#popupAccept").addEventListener("click", resetStyle);
     });
+
+    // Button : backup
     get("#exportData").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
@@ -134,6 +145,8 @@ function createMenuAtLoad() {
     
         get("#popupAccept").addEventListener("click", exportData);
     });
+
+    // Button : logout
     get("#logout").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
