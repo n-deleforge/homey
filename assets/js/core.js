@@ -158,7 +158,7 @@ if (!getStorage("HOMEY-settings")) {
             'name': '',
             'displayName': true,
             'displayDate': true,
-            'displayWeather': true,
+            'displayWeather': false,
         },
         'weather': {
             'api': '',

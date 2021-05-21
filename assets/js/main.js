@@ -16,14 +16,16 @@ if (SETTINGS.core.start == false) {
     displayTheme();
     createMenuAtLoad();
     managingSubMenu();
-    checkDisplayName();
-    checkDisplayDate();
-    checkDisplayWeather();
+    checkPreference("all");
     displayApp();
     setInterval(displayApp, 1000);
     get("#start").style.display = "none";
     get("#app").style.display = "flex";
 }
+
+// =================================================
+// =================================================
+// ============ MENU
 
 /**
  * Create all the events for the buttons at the start of the app
@@ -66,7 +68,9 @@ function createMenuAtStart() {
  **/
 
 function createMenuAtLoad() {
-    // Button : open settings menu
+    // Button : open and close the menu
+    get("#closeSettings").addEventListener("click", closeMenu);
+    get("#blankPage").addEventListener("click", closeMenu);
     get("#displaySettings").addEventListener("click", () => {
         get("#blankPage").style.display = "flex";
         get("#displaySettings").style.display = "none";
@@ -75,60 +79,57 @@ function createMenuAtLoad() {
         get("#listSettings").style.display = "flex";
     })
 
-    // Button : close settings menu
-    get("#closeSettings").addEventListener("click", closeMenu);
-    get("#blankPage").addEventListener("click", closeMenu);
-
-    // Fill the data
+    // Fill the existing data
     get("#newName").value = SETTINGS.profile.name;
     get('#weatherAPIValue').value = SETTINGS.weather.api;
     get('#weatherTownValue').value = SETTINGS.weather.town;
     get('#styleContent').value =  SETTINGS.style.css;
 
-    // Button : profile
+    // Button : profile + weather
     get("#profileConfirm").addEventListener("click", changeProfile);
-
-    // Button : weather
     get("#weatherConfirm").addEventListener("click", changeWeather);
 
     // Buttons : background
-    get("#backgroundConfirm").addEventListener("click", changeBackground);
+    get("#backgroundConfirm").addEventListener("click", modifyBackground);
     get("#backgroundDelete").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
         get("#popupText").innerHTML = _CONTENT.popupBackground;
 
         get("#popupCancel").addEventListener("click", () => {
-            get("#popupAccept").removeEventListener("click", deleteBackground);
+            get("#popupAccept").removeEventListener("click", resetBackground);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
 
-        get("#popupAccept").addEventListener("click", deleteBackground);
+        get("#popupAccept").addEventListener("click", resetBackground);
     });
 
     // Buttons : preferences
-    get("#preferenceName").addEventListener("click", checkDisplayName);
-    get("#preferenceDate").addEventListener("click", checkDisplayDate);
-    get("#preferenceWeather").addEventListener("click", checkDisplayWeather);
+    if (SETTINGS.profile.displayName == true) get("#preferenceName").checked = true;
+    if (SETTINGS.profile.displayDate == true) get("#preferenceDate").checked = true;
+    if (SETTINGS.profile.displayWeather == true) get("#preferenceWeather").checked = true;
+    get("#preferenceName").addEventListener("click", () => { checkPreference("name") });
+    get("#preferenceDate").addEventListener("click", () => { checkPreference("date") });
+    get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
 
     // Buttons : style
-    get("#styleConfirm").addEventListener("click", changeStyle);
+    get("#styleConfirm").addEventListener("click", modifyCSS);
     get("#styleReset").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _CONTENT.popupResetStyle;
+        get("#popupText").innerHTML = _CONTENT.popupresetCSS;
     
         get("#popupCancel").addEventListener("click", () => {
-            get("#popupAccept").removeEventListener("click", resetStyle);
+            get("#popupAccept").removeEventListener("click", resetCSS);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
     
-        get("#popupAccept").addEventListener("click", resetStyle);
+        get("#popupAccept").addEventListener("click", resetCSS);
     });
 
-    // Button : backup
+    // Button : backup + logout
     get("#exportData").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
@@ -142,8 +143,6 @@ function createMenuAtLoad() {
     
         get("#popupAccept").addEventListener("click", exportData);
     });
-
-    // Button : logout
     get("#logout").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
@@ -160,7 +159,7 @@ function createMenuAtLoad() {
 }
 
 /**
- * Close the menu (called by the cross or the app)
+ * Close the menu and reset all the colored labels
  **/
 
 function closeMenu() {
@@ -221,7 +220,7 @@ function managingSubMenu() {
  **/
 
 function displayApp() {
-    // Hour and date
+    // Time and date
     const timestamp = new Date();
     let date = timestamp.toLocaleString(_CONTENT.dateLanguage, { weekday: "long", month: "long", day: "numeric" }); 
     let hours = timestamp.getHours();
@@ -238,7 +237,7 @@ function displayApp() {
 }
 
 /**
- * Check the name and save it
+ * Check the profile section informations and save it
  **/
 
  function changeProfile() {
@@ -250,7 +249,7 @@ function displayApp() {
 }
 
 /**
- * Check the weather and save it
+ * Check the weather section informations and save it
  **/
 
 function changeWeather() {
@@ -260,7 +259,7 @@ function changeWeather() {
         SETTINGS.weather.api = get('#weatherAPIValue').value;
         SETTINGS.weather.town = get('#weatherTownValue').value;
         saveSettings();
-        displayWeatherInfo();
+        displayWeather();
     } else {
         get("#weatherAPILabel").style.color = getVariableCSS("errorText");
         get("#weatherTownLabel").style.color = getVariableCSS("errorText");
@@ -271,15 +270,12 @@ function changeWeather() {
  * Check weather settings and call the requestWeather function (+ interval)
  **/
 
-function displayWeatherInfo() {
+function displayWeather() {
     if (SETTINGS.profile.displayWeather && SETTINGS.weather.api != "" && SETTINGS.weather.town != "") {
         requestWeather();
         setInterval(requestWeather, 1800000); // Every 30 minutes
         get('#displayWeather').style.display = "block";
-    } else {
-        get('#displayWeather').innerHTML = "";
-        get('#displayWeather').style.display = "none";
-    }
+    } else get('#displayWeather').style.display = "none";
 }
 
 /**
@@ -319,39 +315,41 @@ function requestWeather() {
         });
 }
 
-/**
- * Display or hide the welcome message
- **/
-
- function checkDisplayName() {
-    SETTINGS.profile.displayName = (get("#preferenceName").checked == true) ? true : false;
-    get("#displayWelcome").style.display = (SETTINGS.profile.displayName) ? "block" : "none";
-    saveSettings();
-}
-
-/**
- * Display or hide the date
- **/
-
- function checkDisplayDate() {
-    SETTINGS.profile.displayDate = (get("#preferenceDate").checked == true) ? true : false;
-    get("#displayDate").style.display = (SETTINGS.profile.displayDate) ? "block" : "none";
-    saveSettings();
-}
-
-/**
- * Display or hide the weather
- **/
-
- function checkDisplayWeather() {
-    SETTINGS.profile.displayWeather = (get("#preferenceWeather").checked == true) ? true : false;
-    displayWeatherInfo();
-    saveSettings();
-}
-
 // =================================================
 // =================================================
 // ============ THEMING
+
+/**
+ * Check the preferences and modify the display
+ * @param {string} value all, name, date or weather
+ **/
+
+ function checkPreference(value) {
+    switch(value) {
+        case "all" :
+            checkPreference("name");
+            checkPreference("date");
+            checkPreference("weather");
+            break;
+
+        case "name" :
+            SETTINGS.profile.displayName = (get("#preferenceName").checked == true) ? true : false;
+            get("#displayWelcome").style.display = (SETTINGS.profile.displayName) ? "block" : "none";
+            break;
+
+        case "date" :
+            SETTINGS.profile.displayDate = (get("#preferenceDate").checked == true) ? true : false;
+            get("#displayDate").style.display = (SETTINGS.profile.displayDate) ? "block" : "none";
+            break;
+
+        case "weather" :
+            SETTINGS.profile.displayWeather = (get("#preferenceWeather").checked == true) ? true : false;
+            displayWeather();
+            break;
+    }
+
+    saveSettings();
+}
 
 /**
  * Display the custom background / css
@@ -359,16 +357,14 @@ function requestWeather() {
 
 function displayTheme() {
     get("#styleVariables").innerHTML = ":root {" + SETTINGS.style.css + "}";
-
-    if (SETTINGS.style.background != "") 
-        get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+    if (SETTINGS.style.background != "") get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
 }
 
 /**
  * Read the picture as base64 and save it
  **/
 
-function changeBackground() {
+function modifyBackground() {
     const acceptedExtensions = ["jpg", "jpeg", "png"];
     const input = get("#backgroundValue");
 
@@ -394,7 +390,7 @@ function changeBackground() {
  * Delete the background saved in base64
  **/
 
-function deleteBackground() {
+function resetBackground() {
     SETTINGS.style.background = "";
     saveSettings();
     location.reload();
@@ -404,7 +400,7 @@ function deleteBackground() {
  * Modify the CSS variables with a custom theme
  **/
 
-function changeStyle() {
+function modifyCSS() {
     if (get("#styleContent").value != "") {
         SETTINGS.style.css = get("#styleContent").value;
         saveSettings();
@@ -416,9 +412,9 @@ function changeStyle() {
  * Delete the custom CSS and replace it with the original CSS
  **/
 
-function resetStyle() {
+function resetCSS() {
     get("#styleContent").value = _CSS;
-    changeStyle();
+    modifyCSS();
     get("#blankPopup").style.display = "none";
     get("#popup").style.display = "none";
 }
@@ -441,6 +437,8 @@ function saveSettings() {
 
 function exportData() {
     download(JSON.stringify(SETTINGS), "homey.json"); 
+    get("#blankPopup").style.display = "none";
+    get("#popup").style.display = "none";
 }
 
 /**
@@ -457,11 +455,6 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (!SETTINGS.style.background) SETTINGS.style.background = "";
-    if (!SETTINGS.style.css) SETTINGS.style.css = _CSS;
-    if (!SETTINGS.profile.displayName) SETTINGS.profile.displayName = true;
-    if (!SETTINGS.profile.displayDate) SETTINGS.profile.displayDate = true;
-    if (!SETTINGS.profile.displayWeather) SETTINGS.profile.displayWeather = true;
     if (SETTINGS.core.version != _VERSION) SETTINGS.core.version = _VERSION;
     saveSettings();
 }
