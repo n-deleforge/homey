@@ -5,7 +5,7 @@
 let SETTINGS;
 const _VERSION = 1.8;
 const _GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">NDDev</a>";
+const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ForgeCode</a>";
 const _MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const _FRENCH = {
     'startTitle': "Bienvenue sur Homey !",
