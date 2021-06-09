@@ -237,39 +237,6 @@ input[type=checkbox]:checked + label::before {
 
 /* ======================================== */
 /* ======================================== */
-/* ======== TASKBAR */
-
-#taskbar {
-    display: flex;
-    position: absolute;
-    top: 1vh;
-    left: 1vw;
-    width: 98vw;
-}
-
-#leftTaskbar {
-    display: flex;
-    align-items: center;
-}
-
-#taskbar p {
-    margin: 0;
-    margin-right: 2vw;
-}
-
-#blankTaskbar {
-    flex-grow: 1;
-}
-
-@media(max-width:1024px) {
-    #topTaskbar p {
-        margin-right: 10vw;
-        font-size: 2em;
-    }
-}
-
-/* ======================================== */
-/* ======================================== */
 /* ======== APP */
 
 #app {
@@ -281,26 +248,41 @@ input[type=checkbox]:checked + label::before {
     background-size: cover;
 }
 
-#content {
+#app-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.app-container {
+    width: 32vw;
+    height: 32vh;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    align-items: center;
     justify-content: center;
-    font-size: 3em;
+    align-items: center;
+}
+
+.app-containerLeftTop {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#displayTime {
+    font-size: 8em;
+    color: var(--timeText);
+}
+
+#displayWelcome {
+    text-align: center;
+    font-size: 2em;
 }
 
 #displayName {
     font-weight: 700;
 }
 
-#displayTime {
-    font-size: 3em;
-    color: var(--timeText);
-}
-
 #displayDate {
-    text-align: center;
     font-size: 2em;
 }
 
@@ -310,19 +292,20 @@ input[type=checkbox]:checked + label::before {
 
 @media(max-width:1024px) {
     #app {
-        width: 90vw;
+        padding: 0;
     }
 
-    #content {
+    #app-wrapper {
+        width: 100%;
+    }
+
+    .app-container {
+        width: 100vh;
+        height: 10vh;
+    }
+
+    #displayTime {
         font-size: 2em;
-    }
-
-    #displayDate {
-        display: none !important;
-    }
-
-    #displayWelcome {
-        text-align: center;
     }
 }
 
@@ -341,13 +324,17 @@ input[type=checkbox]:checked + label::before {
 
 #closeSettings {
     position: absolute;
-    top: 1vh;
-    right: 1vw;
+    top: 2vh;
+    right: 2vw;
 }
 
 #displaySettings {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
     color: var(--settingsText);
     opacity: 0.2;
+    z-index: 2;
 }
 
 #displaySettings:hover {

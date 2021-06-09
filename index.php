@@ -1,3 +1,7 @@
+<?php
+    $_VERSION = "1.930";
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -6,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <style id="styleVariables"></style>
-    <link rel="stylesheet" href="assets/css/main.min.css?v=1.920">
+    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo $_VERSION; ?>">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
@@ -35,24 +39,25 @@
 
         <!-- APP -->
         <div id="app">
-
-            <!-- CONTENT -->
-            <div id="taskbar">
-                <div id="leftTaskbar">
+            <div id="app-wrapper">
+                <div class="app-container app-containerLeftTop">
+                    <p id="displayWelcome"></p>
                     <p id="displayWeather"></p>
-                    <p id="displayDate"></p>
                 </div>
-                <div id="blankTaskbar"></div>
-                <div id="rightTaskbar">
-                    <button id="displaySettings">⚙️</button>
+                <div class="app-container"></div>
+                <div class="app-container"></div>
+                <div class="app-container"></div>
+                <div class="app-container">
+                        <p id="displayTime"></p>
+                        <p id="displayDate"></p>
                 </div>
+                <div class="app-container"></div>
+                <div class="app-container"></div>
+                <div class="app-container"></div>
+                <div class="app-container"></div>
             </div>
-
-            <div id="content">
-                <p id="displayTime"></p>
-                <p id="displayWelcome"></p>
-            </div>
-            <!-- // CONTENT -->
+            
+            <button id="displaySettings">⚙️</button>
 
             <!-- MENU -->
             <div id="blankPage"></div>
@@ -160,8 +165,8 @@
 
     </div>
 
-    <script src="../../libraries/littleJS.min.js?v=1.9"></script>
-    <script src="assets/js/core.min.js?v=1.924"></script>
-    <script src="assets/js/main.min.js?v=1.923"></script>
+    <script src="../../libraries/littleJS.min.js?v=<?php echo $_VERSION; ?>"></script>
+    <script src="assets/js/core.min.js?v=<?php echo $_VERSION; ?>"></script>
+    <script src="assets/js/main.min.js?v=<?php echo $_VERSION; ?>"></script>
 </body>
 </html>

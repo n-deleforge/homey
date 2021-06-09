@@ -232,7 +232,7 @@ function displayApp() {
     const welcome2 = SETTINGS.profile.name != "" ? ' <span id="displayName">' + SETTINGS.profile.name + '</span>' : "";
 
     get("#displayTime").innerHTML = hours + ":" + minutes;
-    get("#displayDate").innerHTML = date;
+    get("#displayDate").innerHTML = ucFirst(date.split(" ")[0]) + " " + date.split(" ")[1] + " " + ucFirst(date.split(" ")[2]);
     get("#displayWelcome").innerHTML = welcome1 + welcome2;
 }
 
