@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <style id="styleVariables"></style>
-    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo $_VERSION; ?>">
+    <link rel="stylesheet" href="assets/css/main.min.css?v=<?php echo $_VERSION; ?>">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
@@ -48,8 +48,8 @@
                 <div class="app-container"></div>
                 <div class="app-container"></div>
                 <div class="app-container">
-                        <p id="displayTime"></p>
-                        <p id="displayDate"></p>
+                    <p id="displayTime"></p>
+                    <p id="displayDate"></p>
                 </div>
                 <div class="app-container"></div>
                 <div class="app-container"></div>
