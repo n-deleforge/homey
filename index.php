@@ -1,5 +1,5 @@
 <?php
-    $_VERSION = "1.930";
+    $_VERSION = "1.93031";
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
-    <style id="styleVariables"></style>
+    <style id="css"></style>
     <link rel="stylesheet" href="assets/css/main.min.css?v=<?php echo $_VERSION; ?>">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
@@ -122,15 +122,15 @@
                 <!-- // PREFERENCES -->
 
                 <!-- COLORS -->
-                <h1 class="listSettingsTitle" id="styleTitle"></h1>
+                <h1 class="listSettingsTitle" id="cssTitle"></h1>
                 <form class="formContainer">
                     <div class="formLine">
-                        <textarea id="styleContent" spellcheck="false"></textarea>
+                        <textarea id="cssContent" spellcheck="false"></textarea>
                     </div>
 
                     <div class="formButton">
-                        <button type="submit" class="buttonLine" id="styleConfirm" onclick="return false"></button>
-                        <button class="buttonLine" id="styleReset" onclick="return false"></button>
+                        <button type="submit" class="buttonLine" id="cssConfirm" onclick="return false"></button>
+                        <button class="buttonLine" id="cssReset" onclick="return false"></button>
                     </div>
                 </form>
                 <!-- // COLORS -->

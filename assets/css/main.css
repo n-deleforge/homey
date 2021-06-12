@@ -171,7 +171,7 @@ input[type=checkbox]:checked + label::before {
 }
 /* END - Custom checkboxes */
 
-#styleContent {
+#cssContent {
     width: 18vw !important;
     height: 18vh !important;
     margin-top: 2vh;
@@ -276,18 +276,22 @@ input[type=checkbox]:checked + label::before {
 #displayWelcome {
     text-align: center;
     font-size: 2em;
+    color: var(--welcomeText);
 }
 
 #displayName {
     font-weight: 700;
+    color: var(--nameText);
 }
 
 #displayDate {
     font-size: 2em;
+    color: var(--dateText);
 }
 
 #displayWeather {
     font-size: 2em;
+    color: var(--weatherText);
 }
 
 @media(max-width:1024px) {

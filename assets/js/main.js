@@ -83,7 +83,7 @@ function createMenuAtLoad() {
     get("#newName").value = SETTINGS.profile.name;
     get('#weatherAPIValue').value = SETTINGS.weather.api;
     get('#weatherTownValue').value = SETTINGS.weather.town;
-    get('#styleContent').value =  SETTINGS.style.css;
+    get('#cssContent').value =  SETTINGS.style.css;
 
     // Button : profile + weather
     get("#profileConfirm").addEventListener("click", changeProfile);
@@ -114,11 +114,11 @@ function createMenuAtLoad() {
     get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
 
     // Buttons : style
-    get("#styleConfirm").addEventListener("click", modifyCSS);
-    get("#styleReset").addEventListener("click", () => {
+    get("#cssConfirm").addEventListener("click", modifyCSS);
+    get("#cssReset").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _CONTENT.popupresetCSS;
+        get("#popupText").innerHTML = _CONTENT.popupResetCSS;
     
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", resetCSS);
@@ -356,7 +356,7 @@ function requestWeather() {
  **/
 
 function displayTheme() {
-    get("#styleVariables").innerHTML = ":root {" + SETTINGS.style.css + "}";
+    get("#css").innerHTML = ":root {" + SETTINGS.style.css + "}";
     if (SETTINGS.style.background != "") get("#app").style.backgroundImage = "url(" + SETTINGS.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
 }
 
@@ -401,8 +401,8 @@ function resetBackground() {
  **/
 
 function modifyCSS() {
-    if (get("#styleContent").value != "") {
-        SETTINGS.style.css = get("#styleContent").value;
+    if (get("#cssContent").value != "") {
+        SETTINGS.style.css = get("#cssContent").value;
         saveSettings();
         displayTheme();
     }
@@ -413,7 +413,7 @@ function modifyCSS() {
  **/
 
 function resetCSS() {
-    get("#styleContent").value = _CSS;
+    get("#cssContent").value = _CSS;
     modifyCSS();
     get("#blankPopup").style.display = "none";
     get("#popup").style.display = "none";

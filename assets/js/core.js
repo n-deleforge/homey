@@ -29,9 +29,9 @@ const _FRENCH = {
     'preferenceNameLabel' : "Afficher le message",
     'preferenceDateLabel' : "Afficher la date",
     'preferenceWeatherLabel' : "Afficher la météo",
-    'styleTitle': "🎨 Couleurs",
-    'styleConfirm': "Appliquer",
-    'styleReset': "Réinitialiser",
+    'cssTitle': "🎨 Couleurs",
+    'cssConfirm': "Appliquer",
+    'cssReset': "Réinitialiser",
     'setupTitle': "🔧 Paramètres",
     'exportData': "📲 Faire une sauvegarde",
     'logout': "🚫 Déconnexion",
@@ -46,7 +46,7 @@ const _FRENCH = {
     'popupCancel' : "Annuler",
     'popupLogout' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
     'popupBackup' : "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
-    'popupResetStyle' : "Cette action va réinitialiser le CSS initial de l'application",
+    'popupResetCSS' : "Cette action va réinitialiser le CSS initial de l'application",
     'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
 const _ENGLISH = {
@@ -71,9 +71,9 @@ const _ENGLISH = {
     'preferenceNameLabel' : "Display the message",
     'preferenceDateLabel' : "Display the date",
     'preferenceWeatherLabel' : "Display the weather",
-    'styleTitle': "🎨 Colors",
-    'styleConfirm': "Confirm",
-    'styleReset': "Reset",
+    'cssTitle': "🎨 Colors",
+    'cssConfirm': "Confirm",
+    'cssReset': "Reset",
     'setupTitle': "🔧 Settings",
     'exportData': "📲 Make a backup",
     'logout': "🚫 Logout",
@@ -88,57 +88,64 @@ const _ENGLISH = {
     'popupCancel' : "Cancel",
     'popupLogout' : "This action will delete all the data of the application.",
     'popupBackup' : "This action is gonna save a file 'homey.json' on your device, which contain all your data.",
-    'popupResetStyle' : "This action will reset the initial CSS of the application.",
+    'popupResetCSS' : "This action will reset the initial CSS of the application.",
     'popupBackground' :  "This action will delete your custom wallpaper.",
 };
-const _CSS = `/* MAIN */
-/*  ======== */
+const _CSS = `/* main css */
 --bodyBg: #262931;
 --bodyText: white;
-/*  ======== */
 
-/* APPLICATION */
-/*  ======== */
+/* ======== */
+
+/* widgets style */
 --timeText: lightcoral;
-/*  ======== */
+--dateText: white;
+--weatherText: white;
+--welcomeText: white;
+--nameText: white;
 
-/* SETTINGS */
-/*  ======== */
+/* ======== */
+
+/* settings style */
 --settingsText: white;
 --settingsBackground: black;
 --settingsTitleBorder: lightcoral;
-/*  ======== */
 
-/* FOOTER */
-/*  ======== */
+/* ======== */
+
+/* footer style */
 --footerText: white;
 --footerLink: lightcoral;
-/*  ======== */
 
-/*  BUTTONS */
-/*  ======== */
+/* ======== */
+
+/*  buttons style */
 --buttonText: black;
 --buttonTextHover: white;
 --buttonBg: white;
 --buttonBgHover: lightcoral;
-/*  ======== */
 
-/* INPUT */
-/*  ======== */
+/* ======== */
+
+/* input style */
 --labelText: white;
 --inputText: black;
-/* ^ also affects textarea */
 --inputBorder: black;
 --inputFileText: white;
 --inputFileBorder: white;
-/*  ======== */
 
-/* UNCATEGORIZED */
-/*  ======== */
+/* ======== */
+
+/* uncategorized */
 --transparency: rgba(0,0,0,0.5);
-/* ^ it is used for the app transparency with the menu / popup opened */
 --errorText: red;
-/*  ======== */`;
+
+/* ======== */
+
+/* custom rules */
+
+`;
+
 
 // =================================================
 // =================================================
