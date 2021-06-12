@@ -52,9 +52,10 @@ button {
 .button {
     margin: 1vh;
     padding: 1vh;
+    min-width: 2.5vw;
     border: 0;
     border-radius: 5px;
-    text-align: left;
+    text-align: center;
     color: var(--buttonText);
     background-color: var(--buttonBg);
 }
@@ -111,7 +112,8 @@ button {
 }
 
 .listButtonCenter {
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 /* @media(max-width:1024px) {
@@ -146,16 +148,17 @@ textarea {
 }
 
 input[type=file] {
-    margin-bottom: 2vh;
+    margin-top: 2vh;
     border: 0;
-    border-top: 2px solid var(--inputFileBorder);
-    border-bottom: 2px solid var(--inputFileBorder);
+    border-top: 1.5px solid var(--inputFileBorder);
+    border-bottom: 1.5px solid var(--inputFileBorder);
     border-radius: 0;
     font-family: inherit !important;
     color: var(--inputFileText);
 }
 
 /* START - Custom checkboxes */
+
 input[type=checkbox] {
     position: absolute;
     left: -9999px;
@@ -169,6 +172,7 @@ input[type=checkbox] + label::before {
 input[type=checkbox]:checked + label::before {
     content: "✔️  ";
 }
+
 /* END - Custom checkboxes */
 
 #cssContent {
@@ -193,54 +197,20 @@ input[type=checkbox]:checked + label::before {
     width: auto;
 }
 
+.formContainerColumn {
+    flex-direction: column;
+}
+
 /* @media(max-width:1024px) {
     
 } */
 
 /* ======================================== */
 /* ======================================== */
-/* ======== START */
-
-#start {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    width: 40vw;
-    font-size: 1.4em;
-}
-
-#start h1 {
-    margin: 0;
-    color: lightcoral;
-}
-
-#startP1,
-#startP2 {
-    margin: 1vh 0;
-}
-
-#startP3 {
-    margin: 2.5vh 0;
-}
-
-@media(max-width:1024px) {
-    #start {
-        width: 85vw;
-        padding-bottom: 4vh;
-        font-size: 1em;
-    }
-
-    #start button {
-        min-width: 75vw;
-    }
-}
-
-/* ======================================== */
-/* ======================================== */
 /* ======== APP */
 
 #app {
-    display: none;
+    display: flex;
     width: 100vw;
     padding: 2vh;
     background-position: center;
@@ -255,17 +225,17 @@ input[type=checkbox]:checked + label::before {
 }
 
 .app-container {
-    width: 32vw;
-    height: 32vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 32vw;
+    height: 32vh;
 }
 
 .app-containerLeftTop {
-    justify-content: flex-start;
     align-items: flex-start;
+    justify-content: flex-start;
 }
 
 #displayTime {
@@ -333,12 +303,12 @@ input[type=checkbox]:checked + label::before {
 }
 
 #displaySettings {
+    z-index: 2;
     position: absolute;
     top: 2vh;
     right: 2vw;
     color: var(--settingsText);
     opacity: 0.2;
-    z-index: 2;
 }
 
 #displaySettings:hover {
@@ -350,6 +320,10 @@ input[type=checkbox]:checked + label::before {
     border-bottom: 2px solid var(--settingsTitleBorder);
     font-size: 1.5em;
     color: var(--settingsText);
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    user-select: none; /* Standard */
+    -ms-user-select: none; /* IE10+/Edge */
 }
 
 #closeSettings,
@@ -379,9 +353,14 @@ input[type=checkbox]:checked + label::before {
     right: 0;
     flex-direction: column;
     padding: 2vh;
+    max-width: 20vw;
     min-height: 96vh;
     min-width: 20vw;
     background-color: var(--settingsBackground);
+}
+
+#importText {
+    margin: 1vh !important;
 }
 
 #footer {
@@ -452,8 +431,8 @@ input[type=checkbox]:checked + label::before {
 }
 
 #popupText {
-    font-size: 1.2em;
     text-align: justify;
+    font-size: 1.2em;
 }
 
 @media(max-width:1024px) {

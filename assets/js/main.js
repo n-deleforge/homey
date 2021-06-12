@@ -2,72 +2,23 @@
 // =================================================
 // ============ MAIN
 
-/**
- * Initialize the application
- **/
-
-if (SETTINGS.core.start == false) {
-    displayTheme();
-    createMenuAtStart();
-    get("#start").style.display = "flex";
-    get("#importData").value = "";
-} else {
-    checkVersion();
-    displayTheme();
-    createMenuAtLoad();
-    managingSubMenu();
-    checkPreference("all");
-    displayApp();
-    setInterval(displayApp, 1000);
-    get("#start").style.display = "none";
-    get("#app").style.display = "flex";
-}
+checkVersion();
+displayTheme();
+createMenu();
+managingSubMenu();
+checkPreference("all");
+displayApp();
+setInterval(displayApp, 1000);
 
 // =================================================
 // =================================================
 // ============ MENU
 
 /**
- * Create all the events for the buttons at the start of the app
- **/
-
-function createMenuAtStart() {
-    // Button : start the app
-    get("#startApp").addEventListener("click", () => {
-        SETTINGS.core.start = true;
-        saveSettings();
-        location.reload();
-    })
-
-    // Button : import settings
-    get("#importConfirm").addEventListener("click", () => {
-        const acceptedExtensions = ["json"];
-        const input = get("#importData");
-
-        if (input.files && input.files[0]) {
-            const fileExtension = input.files[0].name.split('.').pop().toLowerCase();
-            const fileAcceptable  = acceptedExtensions.indexOf(fileExtension) > -1;
-
-            if (fileAcceptable) {
-            const reader = new FileReader();
-            reader.readAsText(input.files[0]);
-                reader.onload = (e) => {
-                    let importData = e.target.result;
-                    SETTINGS = JSON.parse(importData);
-
-                    saveSettings();
-                    location.reload();
-                }
-            } else input.style.color = getVariableCSS("errorText");
-        } else input.style.color = getVariableCSS("errorText");
-    });
-}
-
-/**
  * Create all the events for the buttons and the menu when the app is loaded
  **/
 
-function createMenuAtLoad() {
+function createMenu() {
     // Button : open and close the menu
     get("#closeSettings").addEventListener("click", closeMenu);
     get("#blankPage").addEventListener("click", closeMenu);
@@ -129,7 +80,9 @@ function createMenuAtLoad() {
         get("#popupAccept").addEventListener("click", resetCSS);
     });
 
-    // Button : backup + logout
+    // Button : import and export
+    get("#importData").style.color = getVariableCSS("labelText");
+    get("#importConfirm").addEventListener("click", importData);
     get("#exportData").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
@@ -143,6 +96,8 @@ function createMenuAtLoad() {
     
         get("#popupAccept").addEventListener("click", exportData);
     });
+
+    // Button : logout
     get("#logout").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
@@ -164,7 +119,7 @@ function createMenuAtLoad() {
 
 function closeMenu() {
     // Hide all submenu at closing
-    for (let i = 0; i < get(".listSettingsTitle").length - 1; i++) get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
+    for (let i = 0; i < get(".listSettingsTitle").length; i++) get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
 
     // Hide the menu
     get("#displaySettings").style.display = "block";
@@ -176,6 +131,7 @@ function closeMenu() {
     get("#weatherAPILabel").style.color = getVariableCSS("labelText");
     get("#weatherTownLabel").style.color = getVariableCSS("labelText");
     get("#backgroundLabel").style.color = getVariableCSS("labelText");
+    get("#importData").style.color = getVariableCSS("labelText");
 }
 
 /**
@@ -190,7 +146,7 @@ function managingSubMenu() {
     if (SETTINGS.style.background == "") get("#backgroundDelete").style.display = "none";
 
     // And then, hide all submenus
-    for (let i = 0; i < subMenuList.length - 1; i++) {
+    for (let i = 0; i < subMenuList.length; i++) {
         get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
 
         // Add an event on all submenu titles
@@ -198,10 +154,11 @@ function managingSubMenu() {
             // Opening
             if (subMenuList[i].nextElementSibling.style.display == "none") {
                 // If one submenu is opened, close all the submenus
-                if (subMenuOpened) for (let j = 0; j < subMenuList.length - 1; j++) subMenuList[j].nextElementSibling.style.display = "none";
+                if (subMenuOpened) for (let j = 0; j < subMenuList.length; j++) subMenuList[j].nextElementSibling.style.display = "none";
                 
-                // And open the one which is choosen
-                subMenuList[i].nextElementSibling.style.display = "block";
+                // And open the one which is choosen (expect for the backup menu which is a flex)
+                if (i == subMenuList.length -1) subMenuList[i].nextElementSibling.style.display = "flex";
+                else subMenuList[i].nextElementSibling.style.display = "block";
                 subMenuOpened = true;
             } 
             
@@ -432,11 +389,38 @@ function saveSettings() {
 }
 
 /**
+ *  Load a file to restore a previous save
+ **/
+
+function importData() {
+    const acceptedExtensions = ["json"];
+    const input = get("#importData");
+
+    if (input.files && input.files[0]) {
+        const fileExtension = input.files[0].name.split('.').pop().toLowerCase();
+        const fileAcceptable  = acceptedExtensions.indexOf(fileExtension) > -1;
+
+        if (fileAcceptable) {
+        const reader = new FileReader();
+        reader.readAsText(input.files[0]);
+            reader.onload = (e) => {
+                let importData = e.target.result;
+                SETTINGS = JSON.parse(importData);
+
+                saveSettings();
+                location.reload();
+            }
+        } else input.style.color = getVariableCSS("errorText");
+    } else input.style.color = getVariableCSS("errorText");
+}
+
+/**
  * Create a file with localstorage data
  **/
 
 function exportData() {
     download(JSON.stringify(SETTINGS), "homey.json"); 
+    get("#popupAccept").removeEventListener("click", exportData);
     get("#blankPopup").style.display = "none";
     get("#popup").style.display = "none";
 }

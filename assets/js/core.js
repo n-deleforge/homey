@@ -3,17 +3,12 @@
 // ============ CORE VARIABLES
 
 let SETTINGS;
-const _VERSION = 1.8;
+const _VERSION = "1.9.5";
 const _GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ForgeCode</a>";
 const _MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 const _FRENCH = {
-    'startTitle': "Bienvenue sur Homey !",
-    'startP1': "En utilisant Homey, tu confirmes avoir pris connaissance que des données seront stockées sur ton appareil. Cependant, aucune donnée n'est partagée avec un tiers.",
-    'startP2': "Si c'est ta première visite alors tu peux démarrer l'application.",
-    'startP3': "Mais si tu as déjà utilisé l'application, tu peux importer tes paramètres.",
-    'startApp': "Démarrer",
-    'importConfirm': "Importer",
     'profileTitle': "🙂 Profil",
     'profileLabel': "Prénom",
     'profileConfirm': "Appliquer",
@@ -32,13 +27,14 @@ const _FRENCH = {
     'cssTitle': "🎨 Couleurs",
     'cssConfirm': "Appliquer",
     'cssReset': "Réinitialiser",
-    'setupTitle': "🔧 Paramètres",
-    'exportData': "📲 Faire une sauvegarde",
-    'logout': "🚫 Déconnexion",
+    'importTitle': "💾 Restauration",
+    'importText': "Si vous importez un fichier de configuration, vos données actuelles seront effacées et l'application sera redémarrée.",
+    'importConfirm': "Importer",
+    'exportData': "📲",
+    'logout': "🚫",
     'footer': "Disponible sur " + _GITHUB + " (v " + _VERSION + ") ©  " + _HOME,
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
-    'errorImport': "Le fichier est incorrect. Réessayer.",
     'welcomeDay': "Bonjour",
     'welcomeNight': "Bonsoir",
     'popupTitle' : "Attention !",
@@ -50,12 +46,6 @@ const _FRENCH = {
     'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
 const _ENGLISH = {
-    'startTitle': "Welcome to Homey !",
-    'startP1': "By using Homey, you confirm that you are aware that data will be stored on your device. However, no data is shared with a third party.",
-    'startP2': "If it's your first visit then you start the application.",
-    'startP3': "But if you already have used the application, you can import your settings.",
-    'startApp': "Start",
-    'importConfirm': "Confirm",
     'profileTitle': "🙂 Profile",
     'profileLabel': "Name",
     'profileConfirm': "Confirm",
@@ -74,13 +64,14 @@ const _ENGLISH = {
     'cssTitle': "🎨 Colors",
     'cssConfirm': "Confirm",
     'cssReset': "Reset",
-    'setupTitle': "🔧 Settings",
-    'exportData': "📲 Make a backup",
-    'logout': "🚫 Logout",
+    'importTitle': "💾 Restoration",
+    'importText': "If you import a config file, your actual data will be deleted and the app is gonna be reset.",
+    'importConfirm': "Import",
+    'exportData': "📲",
+    'logout': "🚫",
     'footer': "Available on " + _GITHUB + " (v " + _VERSION + ") © " + _HOME,
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
-    'errorImport': "The file is incorrect. Try again.",
     'welcomeDay': "Good morning",
     'welcomeNight': "Good evening",
     'popupTitle' : "Warning !",
@@ -138,13 +129,7 @@ const _CSS = `/* main css */
 
 /* uncategorized */
 --transparency: rgba(0,0,0,0.5);
---errorText: red;
-
-/* ======== */
-
-/* custom rules */
-
-`;
+--errorText: red;`;
 
 
 // =================================================
@@ -163,7 +148,7 @@ if (!getStorage("HOMEY-settings")) {
         },
         'profile': {
             'name': '',
-            'displayName': true,
+            'displayName': false,
             'displayDate': true,
             'displayWeather': false,
         },
