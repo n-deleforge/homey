@@ -179,6 +179,7 @@ input[type=checkbox]:checked + label::before {
     width: 18vw !important;
     height: 18vh !important;
     margin-top: 2vh;
+    border: 2px solid transparent;
 }
 
 #preferenceList {

@@ -131,6 +131,7 @@ function closeMenu() {
     get("#weatherAPILabel").style.color = getVariableCSS("labelText");
     get("#weatherTownLabel").style.color = getVariableCSS("labelText");
     get("#backgroundLabel").style.color = getVariableCSS("labelText");
+    get("#cssContent").style.border = "2px solid transparent";
     get("#importData").style.color = getVariableCSS("labelText");
 }
 
@@ -358,11 +359,12 @@ function resetBackground() {
  **/
 
 function modifyCSS() {
-    if (get("#cssContent").value != "") {
+    if (get("#cssContent").value.search("}") == -1 && get("#cssContent").value != "") {
+        get("#cssContent").style.border = "2px solid transparent";
         SETTINGS.style.css = get("#cssContent").value;
         saveSettings();
         displayTheme();
-    }
+    } else get("#cssContent").style.border = "2px solid" + getVariableCSS("errorText");
 }
 
 /**

@@ -1,5 +1,5 @@
 <?php
-    $_FILE_VERSIONING = "3034";
+    $_FILE_VERSIONING = "3035";
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
-    <style id="css">
-        :root{--bodyBg:#262931;--bodyText:white;--timeText:lightcoral;--dateText:white;--weatherText:white;--welcomeText:white;--nameText:white;--settingsText:white;--settingsBackground:black;--settingsTitleBorder:lightcoral;--footerText:white;--footerLink:lightcoral;--buttonText:black;--buttonTextHover:white;--buttonBg:white;--buttonBgHover:lightcoral;--labelText:white;--inputText:black;--inputBorder:black;--inputFileText:white;--inputFileBorder:white;--transparency:rgba(0,0,0,0.5);--errorText:red}
-    </style>
-    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo $_FILE_VERSIONING; ?>">
+    <style id="css"></style>
+    <link rel="stylesheet" href="assets/css/main.min.css?v=<?php echo $_FILE_VERSIONING; ?>">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
@@ -156,7 +154,7 @@
     </div>
 
     <script src="../../libraries/littleJS.min.js?v=<?php echo $_FILE_VERSIONING; ?>"></script>
-    <script src="assets/js/core.js?v=<?php echo $_FILE_VERSIONING; ?>"></script>
-    <script src="assets/js/main.js?v=<?php echo $_FILE_VERSIONING; ?>"></script>
+    <script src="assets/js/core.min.js?v=<?php echo $_FILE_VERSIONING; ?>"></script>
+    <script src="assets/js/main.min.js?v=<?php echo $_FILE_VERSIONING; ?>"></script>
 </body>
 </html>
