@@ -1,5 +1,5 @@
 <?php
-    $_FILE_VERSIONING = "3035";
+    $_FILE_VERSIONING = "3039";
 ?>
 
 <!DOCTYPE html>
@@ -76,21 +76,6 @@
                     </form>
                 <!-- // WEATHER -->
 
-                <!-- BACKGROUND -->
-                <h1 class="listSettingsTitle" id="backgroundTitle"></h1>
-                    <form class="formContainer">
-                        <div class="formLine">
-                            <label id="backgroundLabel" for="backgroundValue"></label>
-                            <input type="file" id="backgroundValue" accept="image/png, image/jpeg">
-                        </div>
-
-                        <div class="formButton">
-                            <button type="submit" class="buttonLine" id="backgroundConfirm" onclick="return false"></button>
-                            <button class="buttonLine" id="backgroundDelete" onclick="return false"></button>
-                        </div>
-                    </form>
-                <!-- // BACKGROUND -->
-
                 <!-- PREFERENCES -->
                 <h1 class="listSettingsTitle" id="preferenceTitle"></h1>
                     <div id="preferenceList">
@@ -114,18 +99,33 @@
                 </form>
                 <!-- // COLORS -->
 
-                <!-- BACKUP -->
+                <!-- BACKGROUND -->
+                <h1 class="listSettingsTitle" id="backgroundTitle"></h1>
+                    <form class="formContainer">
+                        <div class="formLine">
+                            <label id="backgroundLabel" for="backgroundValue"></label>
+                            <input type="file" id="backgroundValue" accept="image/png, image/jpeg">
+                        </div>
+
+                        <div class="formButton">
+                            <button type="submit" class="buttonLine" id="backgroundConfirm" onclick="return false"></button>
+                            <button class="buttonLine" id="backgroundDelete" onclick="return false"></button>
+                        </div>
+                    </form>
+                <!-- // BACKGROUND -->
+
+                <!-- IMPORT -->
                 <h1 class="listSettingsTitle" id="importTitle"></h1>
                 <form class="formContainer formContainerColumn">
-                    <p id="importText"></p>
                     <div class="formLine">
+                        <label id="importLabel" for="importData"></label>
                         <input class="buttonSpecial" type="file" id="importData" accept="application/JSON">
                     </div>
-                    <div class="listButtonCenter">
+                    <div class="listButton">
                         <button type="submit" class="buttonLine" id="importConfirm" onclick="return false"></button>
                     </div>
                 </form>
-                <!-- // BACKUP -->
+                <!-- // IMPORT -->
                 
                 <div id="blankSettings"></div>
                 <div class="listButtonCenter">

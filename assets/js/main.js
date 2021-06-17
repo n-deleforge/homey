@@ -1,5 +1,4 @@
 // =================================================
-// =================================================
 // ============ MAIN
 
 checkVersion();
@@ -10,7 +9,6 @@ checkPreference("all");
 displayApp();
 setInterval(displayApp, 1000);
 
-// =================================================
 // =================================================
 // ============ MENU
 
@@ -114,7 +112,7 @@ function createMenu() {
 }
 
 /**
- * Close the menu and reset all the colored labels
+ * Close the menu
  **/
 
 function closeMenu() {
@@ -126,13 +124,7 @@ function closeMenu() {
     get("#listSettings").style.display = "none";
     get("#blankPage").style.display = "none";
 
-    // Reset the label color
-    get("#profileLabel").style.color = getVariableCSS("labelText");
-    get("#weatherAPILabel").style.color = getVariableCSS("labelText");
-    get("#weatherTownLabel").style.color = getVariableCSS("labelText");
-    get("#backgroundLabel").style.color = getVariableCSS("labelText");
-    get("#cssContent").style.border = "2px solid transparent";
-    get("#importData").style.color = getVariableCSS("labelText");
+    resetMenu();
 }
 
 /**
@@ -152,6 +144,8 @@ function managingSubMenu() {
 
         // Add an event on all submenu titles
         subMenuList[i].addEventListener("click", () => {
+            resetMenu();
+
             // Opening
             if (subMenuList[i].nextElementSibling.style.display == "none") {
                 // If one submenu is opened, close all the submenus
@@ -169,7 +163,19 @@ function managingSubMenu() {
     }
 }
 
-// =================================================
+/**
+ * Reset the color of the labels / borders
+ **/
+
+function resetMenu() {
+    get("#profileLabel").style.color = getVariableCSS("labelText");
+    get("#weatherAPILabel").style.color = getVariableCSS("labelText");
+    get("#weatherTownLabel").style.color = getVariableCSS("labelText");
+    get("#backgroundLabel").style.color = getVariableCSS("labelText");
+    get("#cssContent").style.border = "2px solid transparent";
+    get("#importLabel").style.color = getVariableCSS("labelText");
+}
+
 // =================================================
 // ============ TIME, DATE AND WEATHER
 
@@ -273,7 +279,6 @@ function requestWeather() {
         });
 }
 
-// =================================================
 // =================================================
 // ============ THEMING
 
@@ -379,7 +384,6 @@ function resetCSS() {
 }
 
 // =================================================
-// =================================================
 // ============ UNCATEGORIZED
 
 /**
@@ -412,8 +416,8 @@ function importData() {
                 saveSettings();
                 location.reload();
             }
-        } else input.style.color = getVariableCSS("errorText");
-    } else input.style.color = getVariableCSS("errorText");
+        } else get("#importLabel").style.color = getVariableCSS("errorText");
+    } else get("#importLabel").style.color = getVariableCSS("errorText");
 }
 
 /**

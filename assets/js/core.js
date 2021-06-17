@@ -1,5 +1,4 @@
 // =================================================
-// =================================================
 // ============ CORE VARIABLES
 
 let SETTINGS;
@@ -28,7 +27,7 @@ const _FRENCH = {
     'cssConfirm': "Appliquer",
     'cssReset': "Réinitialiser",
     'importTitle': "💾 Restauration",
-    'importText': "Si vous importez un fichier de configuration, vos données actuelles seront effacées et l'application sera redémarrée.",
+    'importLabel' : "Fichier (JSON)",
     'importConfirm': "Importer",
     'exportData': "📲",
     'logout': "🚫",
@@ -65,7 +64,7 @@ const _ENGLISH = {
     'cssConfirm': "Confirm",
     'cssReset': "Reset",
     'importTitle': "💾 Restoration",
-    'importText': "If you import a config file, your actual data will be deleted and the app is gonna be reset.",
+    'importLabel' : "File (JSON)",
     'importConfirm': "Import",
     'exportData': "📲",
     'logout': "🚫",
@@ -132,7 +131,6 @@ const _CSS = `/* main css */
 --errorText: red;`;
 
 
-// =================================================
 // =================================================
 // ============ CORE INITIALISATION
 
