@@ -291,6 +291,14 @@ input[type=checkbox]:checked + label::before {
     cursor: pointer;
 }
 
+#displaySettings:hover {
+    animation: rotation 2s linear infinite;
+ }
+
+#closeSettings:hover {
+    animation: growing 0.5s linear infinite;
+}
+
 #closeSettings {
     position: absolute;
     top: 2vh;
@@ -315,10 +323,8 @@ input[type=checkbox]:checked + label::before {
     border-bottom: 2px solid var(--settingsTitleBorder);
     font-size: 1.5em;
     color: var(--settingsText);
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    user-select: none; /* Standard */
-    -ms-user-select: none; /* IE10+/Edge */
+    cursor: pointer;
+    user-select: none;
 }
 
 #closeSettings,
@@ -439,7 +445,7 @@ input[type=checkbox]:checked + label::before {
 }
 
 /* ======================================== */
-/* ======== ANIMATION from animate.style */
+/* ======== ANIMATION */
 
 @keyframes fadeInRight {
     from {
@@ -451,4 +457,15 @@ input[type=checkbox]:checked + label::before {
         opacity: 1;
         transform: translate3d(0,0,0);
     }
+}
+
+@keyframes growing {
+    0% { transform: scale(1) }
+    50% { transform: scale(1.2) }
+    100% { transform: scale(1) }
+}
+
+@keyframes rotation {
+    from { transform: rotate(0deg) }
+    to { transform: rotate(360deg) }
 }
