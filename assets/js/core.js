@@ -1,13 +1,13 @@
 // =================================================
 // ============ CORE VARIABLES
 
-let SETTINGS;
-const _VERSION = "1.9.5";
-const _GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const _HOME = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ForgeCode</a>";
-const _MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+let settings;
+const _version = "1.9.61";
+const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
+const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ForgeCode</a>";
+const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-const _FRENCH = {
+const _french = {
     'profileTitle': "🙂 Profil",
     'profileLabel': "Prénom",
     'profileConfirm': "Appliquer",
@@ -31,7 +31,7 @@ const _FRENCH = {
     'importConfirm': "Importer",
     'exportData': "📲",
     'logout': "🚫",
-    'footer': "Disponible sur " + _GITHUB + " (v " + _VERSION + ") ©  " + _HOME,
+    'footer': "Disponible sur " + _github + " (v " + _version + ") ©  " + _home,
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
     'welcomeDay': "Bonjour",
@@ -44,7 +44,8 @@ const _FRENCH = {
     'popupResetCSS' : "Cette action va réinitialiser le CSS initial de l'application",
     'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
-const _ENGLISH = {
+
+const _english = {
     'profileTitle': "🙂 Profile",
     'profileLabel': "Name",
     'profileConfirm': "Confirm",
@@ -68,7 +69,7 @@ const _ENGLISH = {
     'importConfirm': "Import",
     'exportData': "📲",
     'logout': "🚫",
-    'footer': "Available on " + _GITHUB + " (v " + _VERSION + ") © " + _HOME,
+    'footer': "Available on " + _github + " (v " + _version + ") © " + _home,
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
     'welcomeDay': "Good morning",
@@ -81,68 +82,70 @@ const _ENGLISH = {
     'popupResetCSS' : "This action will reset the initial CSS of the application.",
     'popupBackground' :  "This action will delete your custom wallpaper.",
 };
-const _CSS = `/* main css */
---bodyBg: #262931;
---bodyText: white;
+
+const _css = `
+/* main css */
+--app-background: #262931;
+--app-text: white;
 
 /* ======== */
 
 /* widgets style */
---timeText: lightcoral;
---dateText: white;
---weatherText: white;
---welcomeText: white;
---nameText: white;
+--time-text: lightcoral;
+--date-text: white;
+--weather-text: white;
+--welcome-text: white;
+--name-text: white;
 
 /* ======== */
 
 /* settings style */
---settingsText: white;
---settingsBackground: black;
---settingsTitleBorder: lightcoral;
+--settings-text: white;
+--settings-background: black;
+--settings-title-border: lightcoral;
 
 /* ======== */
 
 /* footer style */
---footerText: white;
---footerLink: lightcoral;
+--footer-text: white;
+--footer-link: lightcoral;
 
 /* ======== */
 
 /*  buttons style */
---buttonText: black;
---buttonTextHover: white;
---buttonBg: white;
---buttonBgHover: lightcoral;
+--button-text: black;
+--button-text-hover: white;
+--button-background: white;
+--button-background-hover: lightcoral;
 
 /* ======== */
 
 /* input style */
---labelText: white;
---inputText: black;
---inputBorder: black;
---inputFileText: white;
---inputFileBorder: white;
+--label-text: white;
+--input-text: black;
+--input-border: black;
+--input-file-text: white;
+--input-file-border: white;
 
 /* ======== */
 
 /* uncategorized */
 --transparency: rgba(0,0,0,0.5);
---errorText: red;`;
-
+--error-text: red;
+`;
 
 // =================================================
 // ============ CORE INITIALISATION
 
 // Correct the bug with viewport on mobile
-if (_MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
+if (_mobile) get("#container").style.minHeight = window.innerHeight + 'px';
 
 // Create the settings data or parse them if it already exists
 if (!getStorage("HOMEY-settings")) {
-    SETTINGS = {
+    settings = {
         'core': {
             'start': false,
-            'version': _VERSION,
+            'version': _version,
         },
         'profile': {
             'name': '',
@@ -155,19 +158,20 @@ if (!getStorage("HOMEY-settings")) {
             'town': '',
         },
         'style' : {
-            'css': _CSS,
+            'css' : _css,
             'background': '',
         }
     }
-    setStorage("HOMEY-settings", JSON.stringify(SETTINGS));
+    setStorage("HOMEY-settings", JSON.stringify(settings));
 }
-else SETTINGS = JSON.parse(getStorage("HOMEY-settings"));
+else settings = JSON.parse(getStorage("HOMEY-settings"));
 
 // Determine the language of the application
-const _CONTENT = (navigator.language == "fr" || navigator.language == "fr-FR") ? _FRENCH : _ENGLISH;
-let names = Object.keys(_CONTENT);
-let values = Object.values(_CONTENT);
+const _content = (navigator.language == "fr" || navigator.language == "fr-FR") ? _french : _english;
+let names = Object.keys(_content); let values = Object.values(_content);
 
 for (let i = 0; i < names.length; i++) {
-    if (get("#" + names[i])) get("#" + names[i]).innerHTML = values[i];
+    if (get("#" + names[i])) {
+        get("#" + names[i]).innerHTML = values[i];
+    }
 }
