@@ -115,6 +115,11 @@ button:active {
     #displayTime {
         font-size: 2em;
     }
+
+    #displayWelcome,
+    #displayWeather {
+        font-size: 1em;
+    }
 }
 
 /* ======================================== */
@@ -272,6 +277,12 @@ input[type=checkbox]:checked + label::before {
     flex-direction: column;
 }
 
+@media(max-width:1024px) {
+    #cssContent {
+        width: 94% !important;
+    }
+}
+
 /* ======================================== */
 /* ======== MENU */
 
@@ -375,13 +386,9 @@ input[type=checkbox]:checked + label::before {
 
 @media(max-width:1024px) {
     #listSettings {
-        width: 92vw;
+        width: 94vw;
+        max-width: unset;
         font-size: 0.8em;
-    }
-
-    #blankSettings {
-        flex-grow: 0;
-        height: 5vh;
     }
 
     #styleContent {
