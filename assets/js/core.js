@@ -2,7 +2,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const _version = "1.9.61";
+const _version = "2.0.0";
 const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ForgeCode</a>";
 const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -23,11 +23,11 @@ const _french = {
     'preferenceNameLabel' : "Afficher le message",
     'preferenceDateLabel' : "Afficher la date",
     'preferenceWeatherLabel' : "Afficher la météo",
-    'cssTitle': "🎨 Couleurs",
+    'cssTitle': "🎨 Style et couleurs",
     'cssConfirm': "Appliquer",
     'cssReset': "Réinitialiser",
     'importTitle': "💾 Restauration",
-    'importLabel' : "Fichier (JSON)",
+    'importLabel' : "Fichier",
     'importConfirm': "Importer",
     'exportData': "📲",
     'logout': "🚫",
@@ -61,11 +61,11 @@ const _english = {
     'preferenceNameLabel' : "Display the message",
     'preferenceDateLabel' : "Display the date",
     'preferenceWeatherLabel' : "Display the weather",
-    'cssTitle': "🎨 Colors",
+    'cssTitle': "🎨 Style and colors",
     'cssConfirm': "Confirm",
     'cssReset': "Reset",
     'importTitle': "💾 Restoration",
-    'importLabel' : "File (JSON)",
+    'importLabel' : "File",
     'importConfirm': "Import",
     'exportData': "📲",
     'logout': "🚫",
@@ -83,34 +83,49 @@ const _english = {
     'popupBackground' :  "This action will delete your custom wallpaper.",
 };
 
-const _css = `
+const _css = `/* POSITION AND SIZE */
+
+/* welcome widget positon */
+--welcome-top : 2vh;
+--welcome-left: 1.5vw;
+
+/* date time widget positon */
+--dateTime-vertical: center;
+--dateTime-horizontal: center;
+--dateTime-padding: 0 0 0 0;
+
+/* font size */
+--welcome-fontSize: 2em;
+--weather-fontSize: 2.5em;
+--date-fontSize: 2em;
+--time-fontSize: 8em;
+
+/* uncategorized */
+--date-padding: 0 0 0 0;
+
+/* ======== */
+
+/* COLORS */
+
 /* main css */
 --app-background: #262931;
 --app-text: white;
 
-/* ======== */
-
-/* widgets style */
+/* widgets color text */
 --time-text: lightcoral;
 --date-text: white;
 --weather-text: white;
 --welcome-text: white;
 --name-text: white;
 
-/* ======== */
-
-/* settings style */
+/* settings color text */
 --settings-text: white;
 --settings-background: black;
 --settings-title-border: lightcoral;
 
-/* ======== */
-
-/* footer style */
+/* footer color text */
 --footer-text: white;
 --footer-link: lightcoral;
-
-/* ======== */
 
 /*  buttons style */
 --button-text: black;
@@ -118,16 +133,12 @@ const _css = `
 --button-background: white;
 --button-background-hover: lightcoral;
 
-/* ======== */
-
 /* input style */
 --label-text: white;
 --input-text: black;
 --input-border: black;
 --input-file-text: white;
 --input-file-border: white;
-
-/* ======== */
 
 /* uncategorized */
 --transparency: rgba(0,0,0,0.5);

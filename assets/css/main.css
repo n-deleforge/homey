@@ -46,41 +46,34 @@ button:active {
 #app {
     display: flex;
     width: 100vw;
-    padding: 2vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-#app-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+#welcomeContainer {
+    position: absolute;
+    top: var(--welcome-top);
+    left: var(--welcome-left);
 }
 
-.app-container {
+#dateTimeContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 32vw;
-    height: 32vh;
-}
-
-.app-containerLeftTop {
-    align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: var(--dateTime-vertical);
+    align-items: var(--dateTime-horizontal);
+    padding: var(--dateTime-padding);
+    flex-grow: 1;
 }
 
 #displayTime {
-    font-size: 8em;
+    font-size: var(--time-fontSize);
     color: var(--time-text);
 }
 
 #displayWelcome {
-    text-align: center;
-    font-size: 2em;
-    color: var(--welcomeText);
+    font-size: var(--welcome-fontSize);
+    color: var(--welcome-text);
 }
 
 #displayName {
@@ -89,36 +82,32 @@ button:active {
 }
 
 #displayDate {
-    font-size: 2em;
+    font-size: var(--date-fontSize);
     color: var(--date-text);
+    padding: var(--date-padding);
 }
 
 #displayWeather {
-    font-size: 2em;
+    font-size: var(--weather-fontSize);
     color: var(--weather-text);
 }
 
 @media(max-width:1024px) {
     #app {
-        padding: 0;
-    }
-
-    #app-wrapper {
-        width: 100%;
-    }
-
-    .app-container {
-        width: 100vh;
-        height: 10vh;
+        padding: 3vh 2vw;
     }
 
     #displayTime {
         font-size: 2em;
     }
 
+    #displayDate {
+        font-size: 1.5em;
+    }
+
     #displayWelcome,
     #displayWeather {
-        font-size: 1em;
+        font-size: 1.3em;
     }
 }
 

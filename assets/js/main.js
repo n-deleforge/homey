@@ -377,7 +377,7 @@ function modifyCSS() {
  **/
 
 function resetCSS() {
-    get("#cssContent").value = _CSS;
+    get("#cssContent").value = _css;
     modifyCSS();
     get("#blankPopup").style.display = "none";
     get("#popup").style.display = "none";

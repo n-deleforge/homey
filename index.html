@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <style id="css"></style>
-    <link rel="stylesheet" href="assets/css/main.min.css?v=1.9.66">
+    <link rel="stylesheet" href="assets/css/main.min.css?v=2.0.0">
     <link rel="icon" href="assets/images/favicon.ico">
 </head>
 
@@ -14,22 +14,14 @@
     <div id="container">
 
         <div id="app">
-            <div id="app-wrapper">
-                <div class="app-container app-containerLeftTop">
-                    <p id="displayWelcome"></p>
-                    <p id="displayWeather"></p>
-                </div>
-                <div class="app-container"></div>
-                <div class="app-container"></div>
-                <div class="app-container"></div>
-                <div class="app-container">
-                    <p id="displayTime"></p>
-                    <p id="displayDate"></p>
-                </div>
-                <div class="app-container"></div>
-                <div class="app-container"></div>
-                <div class="app-container"></div>
-                <div class="app-container"></div>
+            <div id="welcomeContainer">
+                <p id="displayWelcome"></p>
+                <p id="displayWeather"></p>
+            </div>
+            
+            <div id="dateTimeContainer">
+                <p id="displayTime"></p>
+                <p id="displayDate"></p>
             </div>
             
             <button id="displaySettings">⚙️</button>
@@ -149,8 +141,8 @@
         </div>
     </div>
 
-    <script src="../../libraries/littleJS.min.js?v=1.9.61"></script>
-    <script src="assets/js/core.min.js?v=1.9.61"></script>
-    <script src="assets/js/main.min.js?v=1.9.61"></script>
+    <script src="../../libraries/littleJS.min.js?v=2.0.0"></script>
+    <script src="assets/js/core.min.js?v=2.0.0"></script>
+    <script src="assets/js/main.min.js?v=2.0.0"></script>
 </body>
 </html>

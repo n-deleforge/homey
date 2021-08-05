@@ -1,6 +1,6 @@
 # Homey
 
-> Version 1.9.5 :memo:  
+> Version 2.0.0 :memo:  
 > A personal start page for your browser with time, date, weather and other functions.
 
 ## How to use it ?
@@ -15,6 +15,7 @@ If you download or clone the project to host it yourself, then you'll need [**Li
 
 ## Changelog
 
+- 2.0.0 : Not the new version as I was thinking at the start in the way the app can't be totally modifable but I added some customization in the "Style and Colors" sections for new layouts possible. I added some fixes with the responsive which was not working very well. Homey won't have many new improvements for now, except bug fixes.
 - 1.9.5 : A few graphic changes in the menu and in the app too. The app now starts directly without text or explanation. The importation is included in the menu and not at the start.
 - 1.9 : Big changes. Now it's possible to edit CSS in live witthout modify CSS files. It is also possible to hide some elements as the date, the weather or the welcome message.
 - 1.8 : "Original" theme removed for a "Custom" theme which is the same as the "Classic" theme but can be modified easily at your conveniance. Also add a function to display your own wallpaper which is saved as base64 data.
