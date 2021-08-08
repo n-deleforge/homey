@@ -2,13 +2,7 @@
 
 > Version 2.0 :memo:  
 > A personal start page for your browser with time, date, weather and other functions.
-
-## How to use it ?
-
-- You can try the app on my website : https://nicolas-deleforge.fr/apps/homey/  
-- You can download the lastest release : https://github.com/n-deleforge/homey/releases
-- Or you can clone the git : ```git clone https://github.com/n-deleforge/homey.git```
-
+> 
 ## Note for self-host
 
 If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 144 of `index.html`.
