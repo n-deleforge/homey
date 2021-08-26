@@ -4,7 +4,7 @@
 let settings;
 const _version = "1.9.6";
 const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ForgeCode</a>";
+const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ND</a>";
 const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 const _french = {
