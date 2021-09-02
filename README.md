@@ -5,7 +5,7 @@
 > 
 ## Note for self-host
 
-If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 144 of `index.html`.
+If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 148 of `index.html`.
 
 ## Changelog
 
