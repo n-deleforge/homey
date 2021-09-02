@@ -417,7 +417,10 @@ function logout() {
 
 function checkVersion() {
     if (settings.core.version != _version)  {
-        remStorage("HOMEY-settings");
+        settings.style.theme = "redBlack";
+        settings.core.version = _version;
+        if (settings.style.css) delete settings.style.css;
+        saveSettings();
         location.reload();
     }
 
