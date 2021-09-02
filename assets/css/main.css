@@ -51,63 +51,9 @@ button:active {
     background-size: cover;
 }
 
-#welcomeContainer {
-    position: absolute;
-    top: var(--welcome-top);
-    left: var(--welcome-left);
-}
-
-#dateTimeContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: var(--dateTime-vertical);
-    align-items: var(--dateTime-horizontal);
-    padding: var(--dateTime-padding);
-    flex-grow: 1;
-}
-
-#displayTime {
-    font-size: var(--time-fontSize);
-    color: var(--time-text);
-}
-
-#displayWelcome {
-    font-size: var(--welcome-fontSize);
-    color: var(--welcome-text);
-}
-
-#displayName {
-    font-weight: 700;
-    color: var(--name-text);
-}
-
-#displayDate {
-    font-size: var(--date-fontSize);
-    color: var(--date-text);
-    padding: var(--date-padding);
-}
-
-#displayWeather {
-    font-size: var(--weather-fontSize);
-    color: var(--weather-text);
-}
-
 @media(max-width:1024px) {
     #app {
         padding: 3vh 2vw;
-    }
-
-    #displayTime {
-        font-size: 2em;
-    }
-
-    #displayDate {
-        font-size: 1.5em;
-    }
-
-    #displayWelcome,
-    #displayWeather {
-        font-size: 1.3em;
     }
 }
 
@@ -199,7 +145,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
     width: 90%;
     padding: 1vh;
     border: 2px solid var(--input-border);
@@ -210,7 +157,8 @@ textarea {
 }
 
 input[type=text],
-textarea {
+textarea,
+select {
     font-size: 1.2em;
 }
 

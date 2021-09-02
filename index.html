@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <style id="css"></style>
-    <link rel="stylesheet" href="assets/css/main.min.css">
+    <link rel="stylesheet" id="theme" href="">
+    <link rel="stylesheet" href="assets/css/main.min.css?v=1.9.7">
     <link rel="icon" href="assets/image/favicon.ico">
 </head>
 
@@ -73,19 +74,22 @@
                     </div>
                 <!-- // PREFERENCES -->
 
-                <!-- COLORS -->
-                <h1 class="listSettingsTitle" id="cssTitle"></h1>
+                <!-- THEMES -->
+                <h1 class="listSettingsTitle" id="themeTitle"></h1>
                 <form class="formContainer">
                     <div class="formLine">
-                        <textarea id="cssContent" spellcheck="false"></textarea>
+                        <label id="themeNameLabel" for="theming"></label>
+                        <select id="themeList">
+                            <option id="theme1" value="redBlack"></option>
+                            <option id="theme0" value="custom"></option>
+                        </select>
                     </div>
 
                     <div class="formButton">
-                        <button type="submit" class="buttonLine" id="cssConfirm" onclick="return false"></button>
-                        <button class="buttonLine" id="cssReset" onclick="return false"></button>
+                        <button type="submit" class="buttonLine" id="themeConfirm" onclick="return false"></button>
                     </div>
                 </form>
-                <!-- // COLORS -->
+                <!-- // THEMES -->
 
                 <!-- BACKGROUND -->
                 <h1 class="listSettingsTitle" id="backgroundTitle"></h1>
@@ -142,7 +146,7 @@
     </div>
 
     <!-- <script src="path/to/LittleJS"></script> -->
-    <script src="assets/js/core.min.js"></script>
-    <script src="assets/js/main.min.js"></script>
+    <script src="assets/js/core.min.js?v=1.9.7"></script>
+    <script src="assets/js/main.min.js?v=1.9.7"></script>
 </body>
 </html>

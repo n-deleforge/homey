@@ -32,7 +32,6 @@ function createMenu() {
     get("#newName").value = settings.profile.name;
     get('#weatherAPIValue').value = settings.weather.api;
     get('#weatherTownValue').value = settings.weather.town;
-    get('#cssContent').value =  settings.style.css;
 
     // Button : profile + weather
     get("#profileConfirm").addEventListener("click", changeProfile);
@@ -62,21 +61,8 @@ function createMenu() {
     get("#preferenceDate").addEventListener("click", () => { checkPreference("date") });
     get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
 
-    // Buttons : style
-    get("#cssConfirm").addEventListener("click", modifyCSS);
-    get("#cssReset").addEventListener("click", () => {
-        get("#blankPopup").style.display = "block";
-        get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _content.popupResetCSS;
-    
-        get("#popupCancel").addEventListener("click", () => {
-            get("#popupAccept").removeEventListener("click", resetCSS);
-            get("#blankPopup").style.display = "none";
-            get("#popup").style.display = "none";
-        });
-    
-        get("#popupAccept").addEventListener("click", resetCSS);
-    });
+    // Buttons : theming
+    get("#themeConfirm").addEventListener("click", modifyTheme);
 
     // Button : import and export
     get("#importData").style.color = getVariableCSS("labelText");
@@ -172,7 +158,6 @@ function resetMenu() {
     get("#weatherAPILabel").style.color = getVariableCSS("labelText");
     get("#weatherTownLabel").style.color = getVariableCSS("labelText");
     get("#backgroundLabel").style.color = getVariableCSS("labelText");
-    get("#cssContent").style.border = "2px solid transparent";
     get("#importLabel").style.color = getVariableCSS("labelText");
 }
 
@@ -246,10 +231,10 @@ function displayWeather() {
  * API request to OpenWeather and display the data
  **/
 
-function requestWeather() {
+async function requestWeather() {
     const request = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + _content.weatherLanguage + '&units=metric');
 
-    fetch(request)
+    await fetch(request)
         .then((response) => response.json())
         .then((weather) => {
             let timestamp = new Date(); let logo;
@@ -319,8 +304,18 @@ function requestWeather() {
  **/
 
 function displayTheme() {
-    get("#css").innerHTML = ":root {" + settings.style.css + "}";
+    get("#theme").href = "assets/css/" + settings.style.theme + ".css";
     if (settings.style.background != "") get("#app").style.backgroundImage = "url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+}
+
+/**
+ * Modify current theme of the app
+ **/
+
+function modifyTheme() {
+    settings.style.theme = get("#themeList").selectedOptions[0].value;
+    saveSettings();
+    displayTheme();
 }
 
 /**
@@ -357,30 +352,6 @@ function resetBackground() {
     settings.style.background = "";
     saveSettings();
     location.reload();
-}
-
-/**
- * Modify the CSS variables with a custom theme
- **/
-
-function modifyCSS() {
-    if (get("#cssContent").value.search("}") == -1 && get("#cssContent").value != "") {
-        get("#cssContent").style.border = "2px solid transparent";
-        settings.style.css = get("#cssContent").value;
-        saveSettings();
-        displayTheme();
-    } else get("#cssContent").style.border = "2px solid" + getVariableCSS("errorText");
-}
-
-/**
- * Delete the custom CSS and replace it with the original CSS
- **/
-
-function resetCSS() {
-    get("#cssContent").value = _css;
-    modifyCSS();
-    get("#blankPopup").style.display = "none";
-    get("#popup").style.display = "none";
 }
 
 // =================================================
@@ -446,9 +417,7 @@ function logout() {
 
 function checkVersion() {
     if (settings.core.version != _version)  {
-        settings.style.css = _css;
-        settings.core.version = _version;
-        saveSettings();
+        remStorage("HOMEY-settings");
         location.reload();
     }
 
