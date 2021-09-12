@@ -1,11 +1,11 @@
 # Homey
 
-> Version 1.9.7 :memo:  
+> Version 1.9.8 :memo:  
 > A personal start page for your browser with time, date, weather and other functions.
 > 
 ## Note for self-host
 
-If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 148 of `index.html`.
+If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 153 of `index.html`.
 
 ## Changelog
 
