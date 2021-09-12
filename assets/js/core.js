@@ -2,7 +2,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const _version = "1.9.7";
+const _version = "1.9.8";
 const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ND</a>";
 const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -10,29 +10,32 @@ const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const _french = {
     'profileTitle': "🙂 Profil",
     'profileLabel': "Prénom",
-    'profileConfirm': "Appliquer",
+    'profileConfirm': "🔻 Appliquer",
     'weatherTitle': "⛅ Météo",
     'weatherAPILabel': "Clé API",
     'weatherTownLabel': "Ville",
-    'weatherConfirm': "Appliquer",
+    'weatherConfirm': "🔻 Appliquer",
     'backgroundTitle': "🖼️ Fond d'écran",
     'backgroundLabel': "Image (JPG, PNG)",
-    'backgroundConfirm': "Appliquer",
-    'backgroundDelete': "Supprimer",
+    'backgroundConfirm': "🔻 Appliquer",
+    'backgroundDelete': "❌ Supprimer",
     'preferenceTitle' : "⭐ Préférences",
     'preferenceNameLabel' : "Afficher le message",
     'preferenceDateLabel' : "Afficher la date",
     'preferenceWeatherLabel' : "Afficher la météo",
+    'preferenceBackgroundLabel' : "Assombir le fond d'écran",
     'themeTitle': "🎨 Thème",
     'themeNameLabel' : "Liste des thèmes",
     'theme1' : "Rouge et noir",
+    'theme2' : "Bleu et noir",
     'theme0' : "Personnalisé",
-    'themeConfirm': "Appliquer",
+    'themeConfirm': "🔻 Appliquer",
     'importTitle': "💾 Restauration",
-    'importLabel' : "Fichier",
-    'importConfirm': "Importer",
-    'exportData': "📲",
-    'logout': "🚫",
+    'importLabel' : "Fichier de sauvegarde",
+    'importConfirm': "🔺 Importer",
+    'otherSettingsTitle' : "🔩 Autres",
+    'exportData': "📲 Sauvegarde",
+    'logout': "🚫 Déconnexion",
     'footer': "Disponible sur " + _github + " (v " + _version + ") ©  " + _home,
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
@@ -50,15 +53,15 @@ const _french = {
 const _english = {
     'profileTitle': "🙂 Profile",
     'profileLabel': "Name",
-    'profileConfirm': "Confirm",
+    'profileConfirm': "🔻 Confirm",
     'weatherTitle': "⛅ Weather",
     'weatherAPILabel': "API OpenWeather",
     'weatherTownLabel': "Town",
-    'weatherConfirm': "Confirm",
+    'weatherConfirm': "🔻 Confirm",
     'backgroundTitle': "🖼️ Wallpaper",
     'backgroundLabel': "Picture (JPG, PNG)",
-    'backgroundConfirm': "Confirm",
-    'backgroundDelete': "Delete",
+    'backgroundConfirm': "🔻 Confirm",
+    'backgroundDelete': "❌ Delete",
     'preferenceTitle' : "⭐ Preferences",
     'preferenceNameLabel' : "Display the message",
     'preferenceDateLabel' : "Display the date",
@@ -66,13 +69,15 @@ const _english = {
     'themeTitle': "🎨 Theme",
     'themeNameLabel' : "Theme list",
     'theme1' : "Red and black",
+    'theme2' : "Blue and black",
     'theme0' : "Custom",
-    'themeConfirm': "Confirm",
+    'themeConfirm': "🔻 Confirm",
     'importTitle': "💾 Restoration",
-    'importLabel' : "File",
-    'importConfirm': "Import",
-    'exportData': "📲",
-    'logout': "🚫",
+    'importLabel' : "Save file",
+    'importConfirm': "🔺 Import",
+    'otherSettingsTitle' : "🔩 Others",
+    'exportData': "📲 Save",
+    'logout': "🚫 Logout",
     'footer': "Available on " + _github + " (v " + _version + ") © " + _home,
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
@@ -113,6 +118,7 @@ if (!getStorage("HOMEY-settings")) {
         'style' : {
             'theme' : "redBlack",
             'background': '',
+            'darkenBackground' : false
         }
     }
     setStorage("HOMEY-settings", JSON.stringify(settings));

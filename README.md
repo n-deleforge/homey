@@ -9,6 +9,7 @@ If you download or clone the project to host it yourself, then you'll need [**Li
 
 ## Changelog
 
+- 1.9.8 : A few changes for the menu. New theme with blue accent. Possibility to darken the background.
 - 1.9.7 : Well another complete change into the past. I decided to remove the CSS edit in the app because it was a bit trick and I decided to go back with the predefined CSS themes. With time, I'll maybe add some additonal themes. In waiting, there is a "custom" theme and so a `custom.css` file linked. Also the requestWeather function is now async.
 - 1.9.5 : A few graphic changes in the menu and in the app too. The app now starts directly without text or explanation. The importation is included in the menu and not at the start.
 - 1.9 : Big changes. Now it's possible to edit CSS in live witthout modify CSS files. It is also possible to hide some elements as the date, the weather or the welcome message.

@@ -156,6 +156,10 @@ select {
     color: var(--input-text);
 }
 
+select {
+    font-family: sans-serif;
+}
+
 input[type=text],
 textarea,
 select {

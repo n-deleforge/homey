@@ -60,6 +60,7 @@ function createMenu() {
     get("#preferenceName").addEventListener("click", () => { checkPreference("name") });
     get("#preferenceDate").addEventListener("click", () => { checkPreference("date") });
     get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
+    get("#preferenceBackground").addEventListener("click", () => { checkPreference("background") });
 
     // Buttons : theming
     get("#themeConfirm").addEventListener("click", modifyTheme);
@@ -278,6 +279,7 @@ async function requestWeather() {
             checkPreference("name");
             checkPreference("date");
             checkPreference("weather");
+            checkPreference("background");
             break;
 
         case "name" :
@@ -294,6 +296,11 @@ async function requestWeather() {
             settings.profile.displayWeather = (get("#preferenceWeather").checked == true) ? true : false;
             displayWeather();
             break;
+
+        case "background" :
+            settings.style.darkenBackground = (get("#preferenceBackground").checked == true) ? true : false;
+            displayTheme();
+            break;
     }
 
     saveSettings();
@@ -305,7 +312,13 @@ async function requestWeather() {
 
 function displayTheme() {
     get("#theme").href = "assets/css/" + settings.style.theme + ".css";
-    if (settings.style.background != "") get("#app").style.backgroundImage = "url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+
+    if (settings.style.background != "") {
+        if (settings.style.darkenBackground) 
+            get("#app").style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+        else 
+            get("#app").style.backgroundImage = "url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+    }
 }
 
 /**
