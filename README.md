@@ -5,11 +5,11 @@
 > 
 ## Note for self-host
 
-If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 148 of `index.html`.
+If you download or clone the project to host it yourself, then you'll need [**Little JS**](https://github.com/n-deleforge/littleJS) at the line 150 of `index.html`.
 
 ## Changelog
 
-- 1.9.8 : A few changes for the menu. New theme with blue accent. Possibility to darken the background.
+- 1.9.9 : Again, I decided to cancel the CSS files thing. It would work great but it's completely not nice to work like that but I didn't want a complete CSS part in the app so I made a mix of everything and I added the possibility to change 4 main colors directly in the app. It works great and it's much easier. Also in the future, maybe I'll add more colors to change.
 - 1.9.7 : Well another complete change into the past. I decided to remove the CSS edit in the app because it was a bit trick and I decided to go back with the predefined CSS themes. With time, I'll maybe add some additonal themes. In waiting, there is a "custom" theme and so a `custom.css` file linked. Also the requestWeather function is now async.
 - 1.9.5 : A few graphic changes in the menu and in the app too. The app now starts directly without text or explanation. The importation is included in the menu and not at the start.
 - 1.9 : Big changes. Now it's possible to edit CSS in live witthout modify CSS files. It is also possible to hide some elements as the date, the weather or the welcome message.

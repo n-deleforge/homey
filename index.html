@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
-    <link rel="stylesheet" id="theme" href="">
-    <link rel="stylesheet" href="assets/css/main.min.css?v=1.9.8">
+    <style id="css"></style>
+    <link rel="stylesheet" href="assets/css/main.min.css?v=1.9.9">
     <link rel="icon" href="assets/image/favicon.ico">
 </head>
 
@@ -70,27 +70,24 @@
                         <div><input type="checkbox" id="preferenceName"><label id="preferenceNameLabel" for="preferenceName"></label></div>
                         <div><input type="checkbox" id="preferenceDate"><label id="preferenceDateLabel" for="preferenceDate"></label></div>
                         <div><input type="checkbox" id="preferenceWeather"><label id="preferenceWeatherLabel" for="preferenceWeather"></label></div>
-                        <div><input type="checkbox" id="preferenceBackground"><label id="preferenceBackgroundLabel" for="preferenceBackground"></label></div>
+                        <div id="darkenBackground"><input type="checkbox" id="preferenceBackground"><label id="preferenceBackgroundLabel" for="preferenceBackground"></label></div>
                     </div>
                 <!-- // PREFERENCES -->
 
-                <!-- THEMES -->
+                <!-- THEMING -->
                 <h1 class="listSettingsTitle" id="themeTitle"></h1>
-                    <form class="formContainer">
-                        <div class="formLine">
-                            <label id="themeNameLabel" for="theming"></label>
-                            <select id="themeList">
-                                <option id="theme1" value="redBlack"></option>
-                                <option id="theme2" value="blueBlack"></option>
-                                <option id="theme0" value="custom"></option>
-                            </select>
-                        </div>
+                    <div id="colorList">
+                        <div><label id="color1Label" for='"color1"'></label><input type="color" id="color1"></div>
+                        <div><label id="color2Label" for='"color2"'></label><input type="color" id="color2"></div>
+                        <div><label id="color3Label" for='"color3"'></label><input type="color" id="color3"></div>
+                        <div id="backgroundColor"><label id="color4Label" for='"color4"'></label><input type="color" id="color4"></div>
 
                         <div class="formButton">
                             <button type="submit" class="buttonLine" id="themeConfirm" onclick="return false"></button>
+                            <button type="submit" class="buttonLine" id="themeReset" onclick="return false"></button>
                         </div>
-                    </form>
-                <!-- // THEMES -->
+                    </div>
+                <!-- // THEMING -->
 
                 <!-- BACKGROUND -->
                 <h1 class="listSettingsTitle" id="backgroundTitle"></h1>
@@ -151,7 +148,7 @@
     </div>
 
     <!-- <script src="path/to/LittleJS"></script> -->
-    <script src="assets/js/core.min.js?v=1.9.8"></script>
-    <script src="assets/js/main.min.js?v=1.9.8"></script>
+    <script src="assets/js/core.min.js?v=1.9.9"></script>
+    <script src="assets/js/main.min.js?v=1.9.9"></script>
 </body>
 </html>

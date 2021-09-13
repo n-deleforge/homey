@@ -2,7 +2,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const _version = "1.9.8";
+const _version = "1.9.9";
 const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ND</a>";
 const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -24,12 +24,13 @@ const _french = {
     'preferenceDateLabel' : "Afficher la date",
     'preferenceWeatherLabel' : "Afficher la météo",
     'preferenceBackgroundLabel' : "Assombir le fond d'écran",
-    'themeTitle': "🎨 Thème",
-    'themeNameLabel' : "Liste des thèmes",
-    'theme1' : "Rouge et noir",
-    'theme2' : "Bleu et noir",
-    'theme0' : "Personnalisé",
+    'themeTitle': "🎨 Couleurs",
+    'color1Label' : "Couleur du texte",
+    'color2Label' : "Couleur d'accent",
+    'color3Label' : "Fond du menu",
+    'color4Label' : "Fond de l'application",
     'themeConfirm': "🔻 Appliquer",
+    'themeReset': "❌ Réinitialiser",
     'importTitle': "💾 Restauration",
     'importLabel' : "Fichier de sauvegarde",
     'importConfirm': "🔺 Importer",
@@ -46,7 +47,7 @@ const _french = {
     'popupCancel' : "Annuler",
     'popupLogout' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
     'popupBackup' : "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
-    'popupResetCSS' : "Cette action va réinitialiser le CSS initial de l'application",
+    'popupResetTheme' : "Cette action va réinitialiser les couleurs initial de l'application",
     'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
 
@@ -66,12 +67,14 @@ const _english = {
     'preferenceNameLabel' : "Display the message",
     'preferenceDateLabel' : "Display the date",
     'preferenceWeatherLabel' : "Display the weather",
-    'themeTitle': "🎨 Theme",
-    'themeNameLabel' : "Theme list",
-    'theme1' : "Red and black",
-    'theme2' : "Blue and black",
-    'theme0' : "Custom",
+    'preferenceBackgroundLabel' : "Darken the wallpaper",
+    'themeTitle': "🎨 Colors",
+    'color1Label' : "Text color",
+    'color2Label' : "Accent color",
+    'color3Label' : "Menu color",
+    'color4Label' : "Application color",
     'themeConfirm': "🔻 Confirm",
+    'themeReset': "❌ Reset",
     'importTitle': "💾 Restoration",
     'importLabel' : "Save file",
     'importConfirm': "🔺 Import",
@@ -116,9 +119,12 @@ if (!getStorage("HOMEY-settings")) {
             'town': '',
         },
         'style' : {
-            'theme' : "redBlack",
             'background': '',
-            'darkenBackground' : false
+            'darkenBackground' : false,
+            'color1' : "#FFFFFF",
+            'color2' : "#F08080",
+            'color3' : "#000000",
+            'color4' : "#262931"
         }
     }
     setStorage("HOMEY-settings", JSON.stringify(settings));

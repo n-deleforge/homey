@@ -1,4 +1,13 @@
 /* ======================================== */
+/* ======== VARIABLES */
+
+:root {
+    --transparency: rgba(0,0,0,0.5);
+    --error-text: red;
+}
+
+
+/* ======================================== */
 /* ======== FONTS */
 
 @font-face {
@@ -17,8 +26,8 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: open-sans,sans-serif;
-    color: var(--app-text);
-    background-color: var(--app-background);
+    color: var(--color-1);
+    background-color: var(--color-4);
 }
 
 p {
@@ -58,6 +67,63 @@ button:active {
 }
 
 /* ======================================== */
+/* ======== WIDGETS */
+
+#welcomeContainer {
+    position: absolute;
+    top: 2vh;
+    left: 1.5vw;
+}
+
+#dateTimeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+#displayTime {
+    font-size: 8em;
+    color: var(--color-2);
+}
+
+#displayWelcome {
+    font-size: 2em;
+    color: var(--color-1);
+}
+
+#displayName {
+    font-weight: 700;
+    color: var(--color-1);
+}
+
+#displayDate {
+    font-size: 2em;
+    color: var(--color-1);
+}
+
+#displayWeather {
+    font-size: 2.5em;
+    color: var(--color-1);
+}
+
+@media(max-width:1024px) {
+    #displayTime {
+        font-size: 2em;
+    }
+
+    #displayDate {
+        font-size: 1.5em;
+    }
+
+    #displayWelcome,
+    #displayWeather {
+        font-size: 1.3em;
+    }
+}
+
+/* ======================================== */
 /* ======== BUTTON */
 
 button {
@@ -67,40 +133,18 @@ button {
     cursor: pointer;
 }
 
-.button {
-    margin: 1vh;
-    padding: 1vh;
-    min-width: 2.5vw;
-    border: 0;
-    border-radius: 5px;
-    text-align: center;
-    color: var(--button-text);
-    background-color: var(--button-background);
-}
-
-.buttonSpecial {
-    margin: 0 auto;
-    min-width: 20vw;
-    text-align: center;
-}
-
-.button:hover {
-    color: var(--button-text-hover);
-    background-color: var(--button-background-hover);
-}
-
 .buttonLine {
     width: auto;
     margin: 1vh;
     padding: 1vh;
     border: 0;
-    border-bottom: 2px solid var(--button-background);
-    color: var(--button-background);
+    border-bottom: 2px solid var(--color-1);
+    color: var(--color-1);
     background-color: transparent;
 }
 
 .buttonLine:hover {
-    border-bottom: 2px solid var(--button-background-hover);
+    border-bottom: 2px solid var(--color-2);
 }
 
 .buttonLarge {
@@ -109,20 +153,20 @@ button {
     border: 0;
     border-radius: 0;
     font-size: 1.2em;
-    color: var(--button-text);
-    background-color: var(--button-background);
+    color: var(--color-3);
+    background-color: var(--color-1);
 }
 
 .buttonLarge:hover {
-    color: var(--button-background-hover);
+    color: var(--color-2);
 }
 
 #popupAccept {
-    background-color: var(--button-background-hover) !important;
+    background-color: var(--color-2) !important;
 }
 
 #popupAccept:hover {
-    color: var(--button-background) !important;
+    color: var(--color-1) !important;
 }
 
 .listButton {
@@ -141,7 +185,7 @@ label {
     display: block;
     padding: 1vh;
     font-weight: bold;
-    color: var(--label-text);
+    color: var(--color-1);
 }
 
 input,
@@ -149,11 +193,11 @@ textarea,
 select {
     width: 90%;
     padding: 1vh;
-    border: 2px solid var(--input-border);
+    border: 2px solid var(--color-3);
     border-radius: 10px;
     font-family: serif;
     font-size: 1em;
-    color: var(--input-text);
+    color: var(--color-3);
 }
 
 select {
@@ -168,14 +212,22 @@ select {
 
 input[type=file] {
     border: 0;
-    border-top: 1.5px solid var(--input-file-border);
-    border-bottom: 1.5px solid var(--input-file-border);
+    border-top: 1.5px solid var(--color-1);
+    border-bottom: 1.5px solid var(--color-1);
     border-radius: 0;
     font-family: inherit !important;
-    color: var(--input-file-text);
+    color: var(--color-1);
 }
 
-/* START - Custom checkboxes */
+input[type=color] {
+    width: 5vw;
+    height: 1vh;
+    border: 0 !important;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* custom checkboxes */
 input[type=checkbox] {
     position: absolute;
     left: -9999px;
@@ -189,24 +241,20 @@ input[type=checkbox] + label::before {
 input[type=checkbox]:checked + label::before {
     content: "✔️  ";
 }
-/* END - Custom checkboxes */
+/* custom checkboxes */
 
-#cssContent {
-    width: 18vw !important;
-    height: 18vh !important;
-    margin-top: 2vh;
-    border: 2px solid transparent;
-}
-
-#preferenceList {
+#preferenceList,
+#colorList {
     padding: 2vh 2vh 0 2vh;
 }
 
-#preferenceList div {
+#preferenceList div,
+#colorList div {
     margin: 0.5vh 0;
 }
 
-#preferenceList label {
+#preferenceList label,
+#colorList label {
     display: inline;
 }
 
@@ -255,7 +303,7 @@ input[type=checkbox]:checked + label::before {
     position: absolute;
     top: 2vh;
     right: 2vw;
-    color: var(--settings-text);
+    color: var(--color-1);
     opacity: 0.2;
 }
 
@@ -265,9 +313,9 @@ input[type=checkbox]:checked + label::before {
 
 #listSettings h1 {
     margin: 4vh 0 0.5vh 0.5vw;
-    border-bottom: 2px solid var(--settings-title-border);
+    border-bottom: 2px solid var(--color-2);
     font-size: 1.5em;
-    color: var(--settings-text);
+    color: var(--color-1);
     cursor: pointer;
     user-select: none;
 }
@@ -302,7 +350,7 @@ input[type=checkbox]:checked + label::before {
     max-width: 20vw;
     min-height: 96vh;
     min-width: 20vw;
-    background-color: var(--settings-background);
+    background-color: var(--color-3);
 }
 
 #importText {
@@ -313,12 +361,12 @@ input[type=checkbox]:checked + label::before {
     padding-top: 1vh;
     text-align: center;
     font-size: 0.9em;
-    color: var(--footer-text);
+    color: var(--color-1);
 }
 
 #footer a {
     text-decoration: transparent;
-    color: var(--footer-link);
+    color: var(--color-2);
 }
 
 #footer a:hover {
@@ -360,8 +408,8 @@ input[type=checkbox]:checked + label::before {
     flex-direction: column;
     width: 25vw;
     height: 25vh;
-    color: var(--settings-text);
-    background-color: var(--settings-background);
+    color: var(--color-1);
+    background-color: var(--color-3);
 }
 
 #popupContent {

@@ -28,73 +28,83 @@ function createMenu() {
         get("#listSettings").style.display = "flex";
     })
 
-    // Fill the existing data
+    // Profle
     get("#newName").value = settings.profile.name;
+    get("#profileConfirm").addEventListener("click", changeProfile);
+
+    // Weather
     get('#weatherAPIValue').value = settings.weather.api;
     get('#weatherTownValue').value = settings.weather.town;
-
-    // Button : profile + weather
-    get("#profileConfirm").addEventListener("click", changeProfile);
     get("#weatherConfirm").addEventListener("click", changeWeather);
 
-    // Buttons : background
+    // Background
     get("#backgroundConfirm").addEventListener("click", modifyBackground);
     get("#backgroundDelete").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
         get("#popupText").innerHTML = _content.popupBackground;
-
+        get("#popupAccept").addEventListener("click", resetBackground);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", resetBackground);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
-
-        get("#popupAccept").addEventListener("click", resetBackground);
     });
 
-    // Buttons : preferences
+    // Preferences
     if (settings.profile.displayName == true) get("#preferenceName").checked = true;
     if (settings.profile.displayDate == true) get("#preferenceDate").checked = true;
     if (settings.profile.displayWeather == true) get("#preferenceWeather").checked = true;
     get("#preferenceName").addEventListener("click", () => { checkPreference("name") });
     get("#preferenceDate").addEventListener("click", () => { checkPreference("date") });
     get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
+    if (settings.style.darkenBackground == true) get("#preferenceBackground").checked = true;
     get("#preferenceBackground").addEventListener("click", () => { checkPreference("background") });
 
-    // Buttons : theming
+    // Theming
+    get("#color1").value = settings.style.color1;
+    get("#color2").value = settings.style.color2;
+    get("#color3").value = settings.style.color3;
+    get("#color4").value = settings.style.color4;
     get("#themeConfirm").addEventListener("click", modifyTheme);
+    get("#themeReset").addEventListener("click", () =>  {
+        get("#blankPopup").style.display = "block";
+        get("#popup").style.display = "flex";
+        get("#popupText").innerHTML = _content.popupResetTheme;
+        get("#popupAccept").addEventListener("click", resetTheme);
+        get("#popupCancel").addEventListener("click", () => {
+            get("#popupAccept").removeEventListener("click", resetTheme);
+            get("#blankPopup").style.display = "none";
+            get("#popup").style.display = "none";
+        });
+    });
 
-    // Button : import and export
+    // Import and export
     get("#importData").style.color = getVariableCSS("labelText");
     get("#importConfirm").addEventListener("click", importData);
     get("#exportData").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
         get("#popupText").innerHTML = _content.popupBackup;
-    
+        get("#popupAccept").addEventListener("click", exportData);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", exportData);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
-    
-        get("#popupAccept").addEventListener("click", exportData);
     });
 
-    // Button : logout
+    // Logout
     get("#logout").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
         get("#popupText").innerHTML = _content.popupLogout;
-    
+        get("#popupAccept").addEventListener("click", logout);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", logout);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
-    
-        get("#popupAccept").addEventListener("click", logout);
     });
 }
 
@@ -123,7 +133,10 @@ function managingSubMenu() {
     const subMenuList = get(".listSettingsTitle");
 
     // First, hide the button to delete background if there is no background
-    if (settings.style.background == "") get("#backgroundDelete").style.display = "none";
+    if (settings.style.background == "") {
+        get("#backgroundDelete").style.display = "none";
+        get("#darkenBackground").style.display = "none";
+    } else get("#backgroundColor").style.display = "none";
 
     // And then, hide all submenus
     for (let i = 0; i < subMenuList.length; i++) {
@@ -311,7 +324,7 @@ async function requestWeather() {
  **/
 
 function displayTheme() {
-    get("#theme").href = "assets/css/" + settings.style.theme + ".css";
+    get("#css").innerHTML = ":root { --color-1 : " + settings.style.color1 + "; --color-2 : " + settings.style.color2 + "; --color-3 : " + settings.style.color3 + "; --color-4 : " + settings.style.color4 + "; }";
 
     if (settings.style.background != "") {
         if (settings.style.darkenBackground) 
@@ -326,9 +339,25 @@ function displayTheme() {
  **/
 
 function modifyTheme() {
-    settings.style.theme = get("#themeList").selectedOptions[0].value;
+    settings.style.color1 = get("#color1").value;
+    settings.style.color2 = get("#color2").value;
+    settings.style.color3 = get("#color3").value;
+    settings.style.color4 = get("#color4").value;
     saveSettings();
     displayTheme();
+}
+
+/**
+ * Delete the custom user values
+ **/
+
+function resetTheme() {
+    settings.style.color1 = "#FFFFFF";
+    settings.style.color2 = "#F08080",
+    settings.style.color3 = "#000000",
+    settings.style.color4 = "#262931";
+    saveSettings();
+    location.reload();
 }
 
 /**
@@ -430,12 +459,8 @@ function logout() {
 
 function checkVersion() {
     if (settings.core.version != _version)  {
-        settings.style.theme = "redBlack";
         settings.core.version = _version;
-        if (settings.style.css) delete settings.style.css;
         saveSettings();
-        location.reload();
+        if (!settings.style.color1) resetTheme();
     }
-
-    saveSettings();
 }
