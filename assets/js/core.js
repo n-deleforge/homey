@@ -2,7 +2,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const _version = "1.9.9";
+const _version = "1.9.91";
 const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ND</a>";
 const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -25,10 +25,9 @@ const _french = {
     'preferenceWeatherLabel' : "Afficher la météo",
     'preferenceBackgroundLabel' : "Assombir le fond d'écran",
     'themeTitle': "🎨 Couleurs",
-    'color1Label' : "Couleur du texte",
-    'color2Label' : "Couleur d'accent",
-    'color3Label' : "Fond du menu",
-    'color4Label' : "Fond de l'application",
+    'color1Label' : "Couleur principale",
+    'color2Label' : "Couleur accentuée",
+    'color3Label' : "Fond de l'application",
     'themeConfirm': "🔻 Appliquer",
     'themeReset': "❌ Réinitialiser",
     'importTitle': "💾 Restauration",
@@ -71,8 +70,7 @@ const _english = {
     'themeTitle': "🎨 Colors",
     'color1Label' : "Text color",
     'color2Label' : "Accent color",
-    'color3Label' : "Menu color",
-    'color4Label' : "Application color",
+    'color3Label' : "Application color",
     'themeConfirm': "🔻 Confirm",
     'themeReset': "❌ Reset",
     'importTitle': "💾 Restoration",
@@ -123,8 +121,7 @@ if (!getStorage("HOMEY-settings")) {
             'darkenBackground' : false,
             'color1' : "#FFFFFF",
             'color2' : "#F08080",
-            'color3' : "#000000",
-            'color4' : "#262931"
+            'color3' : "#262931"
         }
     }
     setStorage("HOMEY-settings", JSON.stringify(settings));

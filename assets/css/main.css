@@ -2,6 +2,31 @@
 /* ======== VARIABLES */
 
 :root {
+    --menu-background : black;
+    --menu-text : white;
+    --menu-title : white;
+    --menu-title-border : indianred;
+    --menu-link : indianred;
+
+    --buttonLine-border : white;
+    --buttonLine-text : white;
+    --buttonLine-border-hover : indianred;
+
+    --buttonLarge-text : black;
+    --buttonLarge-background : white;
+    --buttonLarge-text-hover : indianred;
+    --buttonLarge-accept : indianred;
+    --buttonLarge-accept-hover : white;
+
+    --label-text : white;
+    --input-text : black;
+    --input-border : white;
+    --input-file-text : black;
+    --input-file-border : white;
+
+    --popup-background : black;
+    --popup-text : white;
+
     --transparency: rgba(0,0,0,0.5);
     --error-text: red;
 }
@@ -27,7 +52,7 @@ body {
     overflow: hidden;
     font-family: open-sans,sans-serif;
     color: var(--color-1);
-    background-color: var(--color-4);
+    background-color: var(--color-3);
 }
 
 p {
@@ -95,7 +120,7 @@ button:active {
 
 #displayName {
     font-weight: 700;
-    color: var(--color-1);
+    color: var(--color-2);
 }
 
 #displayDate {
@@ -138,13 +163,13 @@ button {
     margin: 1vh;
     padding: 1vh;
     border: 0;
-    border-bottom: 2px solid var(--color-1);
-    color: var(--color-1);
+    border-bottom: 2px solid var(--buttonLine-border);
+    color: var(--buttonLine-text);
     background-color: transparent;
 }
 
 .buttonLine:hover {
-    border-bottom: 2px solid var(--color-2);
+    border-bottom: 2px solid var(--buttonLine-border-hover);
 }
 
 .buttonLarge {
@@ -153,20 +178,20 @@ button {
     border: 0;
     border-radius: 0;
     font-size: 1.2em;
-    color: var(--color-3);
-    background-color: var(--color-1);
+    color: var(--buttonLarge-text);
+    background-color: var(--buttonLarge-background);
 }
 
 .buttonLarge:hover {
-    color: var(--color-2);
+    color: var(--buttonLarge-text-hover);
 }
 
 #popupAccept {
-    background-color: var(--color-2) !important;
+    background-color: var(--buttonLarge-accept) !important;
 }
 
 #popupAccept:hover {
-    color: var(--color-1) !important;
+    color: var(--buttonLarge-accept-hover) !important;
 }
 
 .listButton {
@@ -185,7 +210,7 @@ label {
     display: block;
     padding: 1vh;
     font-weight: bold;
-    color: var(--color-1);
+    color: var(--label-text);
 }
 
 input,
@@ -193,11 +218,11 @@ textarea,
 select {
     width: 90%;
     padding: 1vh;
-    border: 2px solid var(--color-3);
+    border: 2px solid var(--input-border);
     border-radius: 10px;
     font-family: serif;
     font-size: 1em;
-    color: var(--color-3);
+    color: var(--input-text);
 }
 
 select {
@@ -212,11 +237,11 @@ select {
 
 input[type=file] {
     border: 0;
-    border-top: 1.5px solid var(--color-1);
-    border-bottom: 1.5px solid var(--color-1);
+    border-top: 1.5px solid var(--input-file-border);
+    border-bottom: 1.5px solid var(--input-file-border);
     border-radius: 0;
     font-family: inherit !important;
-    color: var(--color-1);
+    color: var(--input-file-text);
 }
 
 input[type=color] {
@@ -303,7 +328,6 @@ input[type=checkbox]:checked + label::before {
     position: absolute;
     top: 2vh;
     right: 2vw;
-    color: var(--color-1);
     opacity: 0.2;
 }
 
@@ -313,9 +337,9 @@ input[type=checkbox]:checked + label::before {
 
 #listSettings h1 {
     margin: 4vh 0 0.5vh 0.5vw;
-    border-bottom: 2px solid var(--color-2);
+    border-bottom: 2px solid var(--menu-title-border);
     font-size: 1.5em;
-    color: var(--color-1);
+    color: var(--menu-title);
     cursor: pointer;
     user-select: none;
 }
@@ -350,7 +374,8 @@ input[type=checkbox]:checked + label::before {
     max-width: 20vw;
     min-height: 96vh;
     min-width: 20vw;
-    background-color: var(--color-3);
+    color: var(--menu-text);
+    background-color: var(--menu-background);
 }
 
 #importText {
@@ -361,12 +386,12 @@ input[type=checkbox]:checked + label::before {
     padding-top: 1vh;
     text-align: center;
     font-size: 0.9em;
-    color: var(--color-1);
+    color: var(--menu-text);
 }
 
 #footer a {
     text-decoration: transparent;
-    color: var(--color-2);
+    color: var(--menu-link);
 }
 
 #footer a:hover {
@@ -408,8 +433,8 @@ input[type=checkbox]:checked + label::before {
     flex-direction: column;
     width: 25vw;
     height: 25vh;
-    color: var(--color-1);
-    background-color: var(--color-3);
+    color: var(--popup-text);
+    background-color: var(--popup-background);
 }
 
 #popupContent {

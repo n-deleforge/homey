@@ -65,7 +65,6 @@ function createMenu() {
     get("#color1").value = settings.style.color1;
     get("#color2").value = settings.style.color2;
     get("#color3").value = settings.style.color3;
-    get("#color4").value = settings.style.color4;
     get("#themeConfirm").addEventListener("click", modifyTheme);
     get("#themeReset").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
@@ -324,7 +323,7 @@ async function requestWeather() {
  **/
 
 function displayTheme() {
-    get("#css").innerHTML = ":root { --color-1 : " + settings.style.color1 + "; --color-2 : " + settings.style.color2 + "; --color-3 : " + settings.style.color3 + "; --color-4 : " + settings.style.color4 + "; }";
+    get("#css").innerHTML = ":root { --color-1 : " + settings.style.color1 + "; --color-2 : " + settings.style.color2 + "; --color-3 : " + settings.style.color3 + "; }";
 
     if (settings.style.background != "") {
         if (settings.style.darkenBackground) 
@@ -354,8 +353,7 @@ function modifyTheme() {
 function resetTheme() {
     settings.style.color1 = "#FFFFFF";
     settings.style.color2 = "#F08080",
-    settings.style.color3 = "#000000",
-    settings.style.color4 = "#262931";
+    settings.style.color3 = "#262931";
     saveSettings();
     location.reload();
 }
