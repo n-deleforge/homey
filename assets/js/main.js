@@ -341,7 +341,6 @@ function modifyTheme() {
     settings.style.color1 = get("#color1").value;
     settings.style.color2 = get("#color2").value;
     settings.style.color3 = get("#color3").value;
-    settings.style.color4 = get("#color4").value;
     saveSettings();
     displayTheme();
 }
