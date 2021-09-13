@@ -1,6 +1,6 @@
 # Homey
 
-> Version 1.9.8 :memo:  
+> Version 1.9.9 :memo:  
 > A personal start page for your browser with time, date, weather and other functions.
 > 
 ## Note for self-host
