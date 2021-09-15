@@ -2,7 +2,7 @@
 // ============ CORE VARIABLES
 
 let settings;
-const _version = "1.9.91";
+const _version = "1.9.93";
 const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
 const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ND</a>";
 const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -16,7 +16,7 @@ const _french = {
     'weatherTownLabel': "Ville",
     'weatherConfirm': "🔻 Appliquer",
     'backgroundTitle': "🖼️ Fond d'écran",
-    'backgroundLabel': "Image (JPG, PNG)",
+    'backgroundLabel': "Image (*.jpg, *.png)",
     'backgroundConfirm': "🔻 Appliquer",
     'backgroundDelete': "❌ Supprimer",
     'preferenceTitle' : "⭐ Préférences",
@@ -24,16 +24,18 @@ const _french = {
     'preferenceDateLabel' : "Afficher la date",
     'preferenceWeatherLabel' : "Afficher la météo",
     'preferenceBackgroundLabel' : "Assombir le fond d'écran",
-    'themeTitle': "🎨 Couleurs",
+    'colorTitle': "🎨 Couleurs",
     'color1Label' : "Couleur principale",
     'color2Label' : "Couleur accentuée",
     'color3Label' : "Fond de l'application",
-    'themeConfirm': "🔻 Appliquer",
-    'themeReset': "❌ Réinitialiser",
+    'colorConfirm': "🔻 Appliquer",
+    'colorReset': "❌ Réinitialiser",
+    'positionTitle' : "♻️ Positionnement",
     'importTitle': "💾 Restauration",
-    'importLabel' : "Fichier de sauvegarde",
+    'importLabel' : "Fichier de sauvegarde (*.json)",
     'importConfirm': "🔺 Importer",
-    'otherSettingsTitle' : "🔩 Autres",
+    'otherSettingsTitle' : "🛠️ Options",
+    'switchLanguage' : "🔄 Changer de langue",
     'exportData': "📲 Sauvegarde",
     'logout': "🚫 Déconnexion",
     'footer': "Disponible sur " + _github + " (v " + _version + ") ©  " + _home,
@@ -41,12 +43,12 @@ const _french = {
     'weatherLanguage': "FR",
     'welcomeDay': "Bonjour",
     'welcomeNight': "Bonsoir",
-    'popupTitle' : "Attention !",
+    'popupTitle' : "Information importante",
     'popupAccept' : "Confirmer",
     'popupCancel' : "Annuler",
     'popupLogout' : "Cette action va entrainer la suppression de toutes les données et la réinitialisation de l'application.",
     'popupBackup' : "Cette action va enregistrer un fichier 'homey.json' sur votre appareil, qui contient toutes vos données.",
-    'popupResetTheme' : "Cette action va réinitialiser les couleurs initial de l'application",
+    'popupResetColor' : "Cette action va réinitialiser les couleurs initial de l'application",
     'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
 
@@ -59,7 +61,7 @@ const _english = {
     'weatherTownLabel': "Town",
     'weatherConfirm': "🔻 Confirm",
     'backgroundTitle': "🖼️ Wallpaper",
-    'backgroundLabel': "Picture (JPG, PNG)",
+    'backgroundLabel': "Picture (*.jpg, *.png)",
     'backgroundConfirm': "🔻 Confirm",
     'backgroundDelete': "❌ Delete",
     'preferenceTitle' : "⭐ Preferences",
@@ -67,16 +69,18 @@ const _english = {
     'preferenceDateLabel' : "Display the date",
     'preferenceWeatherLabel' : "Display the weather",
     'preferenceBackgroundLabel' : "Darken the wallpaper",
-    'themeTitle': "🎨 Colors",
+    'colorTitle': "🎨 Colors",
     'color1Label' : "Text color",
     'color2Label' : "Accent color",
     'color3Label' : "Application color",
-    'themeConfirm': "🔻 Confirm",
-    'themeReset': "❌ Reset",
+    'colorConfirm': "🔻 Confirm",
+    'colorReset': "❌ Reset",
+    'positionTitle' : "♻️ Positioning",
     'importTitle': "💾 Restoration",
-    'importLabel' : "Save file",
+    'importLabel' : "Save file (*.json)",
     'importConfirm': "🔺 Import",
-    'otherSettingsTitle' : "🔩 Others",
+    'otherSettingsTitle' : "🛠️ Options",
+    'switchLanguage' : "🔄 Switch language",
     'exportData': "📲 Save",
     'logout': "🚫 Logout",
     'footer': "Available on " + _github + " (v " + _version + ") © " + _home,
@@ -84,14 +88,21 @@ const _english = {
     'weatherLanguage': "EN",
     'welcomeDay': "Good morning",
     'welcomeNight': "Good evening",
-    'popupTitle' : "Warning !",
+    'popupTitle' : "Important information",
     'popupAccept' : "Confirm",
     'popupCancel' : "Cancel",
     'popupLogout' : "This action will delete all the data of the application.",
     'popupBackup' : "This action is gonna save a file 'homey.json' on your device, which contain all your data.",
-    'popupResetCSS' : "This action will reset the initial CSS of the application.",
+    'popupResetColor' : "This action will reset the initial colors of the application.",
     'popupBackground' :  "This action will delete your custom wallpaper.",
 };
+
+const _defaultValues = {
+    'language' : "EN",
+    'color1' : "#FFFFFF",
+    'color2' : "#F08080",
+    'color3' : "#262931"
+}
 
 // =================================================
 // ============ CORE INITIALISATION
@@ -103,12 +114,12 @@ if (_mobile) get("#container").style.minHeight = window.innerHeight + 'px';
 if (!getStorage("HOMEY-settings")) {
     settings = {
         'core': {
-            'start': false,
             'version': _version,
+            'language' : _defaultValues.language,
         },
         'profile': {
             'name': '',
-            'displayName': false,
+            'displayName': true,
             'displayDate': true,
             'displayWeather': false,
         },
@@ -119,9 +130,9 @@ if (!getStorage("HOMEY-settings")) {
         'style' : {
             'background': '',
             'darkenBackground' : false,
-            'color1' : "#FFFFFF",
-            'color2' : "#F08080",
-            'color3' : "#262931"
+            'color1' : _defaultValues.color1,
+            'color2' : _defaultValues.color2,
+            'color3' : _defaultValues.color3,
         }
     }
     setStorage("HOMEY-settings", JSON.stringify(settings));
@@ -129,7 +140,7 @@ if (!getStorage("HOMEY-settings")) {
 else settings = JSON.parse(getStorage("HOMEY-settings"));
 
 // Determine the language of the application
-const _content = (navigator.language == "fr" || navigator.language == "fr-FR") ? _french : _english;
+const _content = (settings.core.language == "FR") ? _french : _english;
 let names = Object.keys(_content); let values = Object.values(_content);
 
 for (let i = 0; i < names.length; i++) {

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOMEY</title>
     <style id="css"></style>
-    <link rel="stylesheet" href="assets/css/main.min.css?v=1.9.9.1">
+    <link rel="stylesheet" href="assets/css/main.min.css?v=1.9.93">
     <link rel="icon" href="assets/image/favicon.ico">
 </head>
 
@@ -39,7 +39,7 @@
                             <input type="text" id="newName" pattern="([a-zA-ZÀ-Ý -]){2,15}">
                         </div>
 
-                        <div class="formButton">
+                        <div class="listButton">
                             <button type="submit" class="buttonLine" id="profileConfirm" onclick="return false"></button> 
                         </div>
                     </form>
@@ -58,7 +58,7 @@
                             <input type="text" id="weatherTownValue">
                         </div>
 
-                        <div class="formButton">
+                        <div class="listButton">
                             <button type="submit" class="buttonLine" id="weatherConfirm" onclick="return false"></button>
                         </div>
                     </form>
@@ -74,19 +74,23 @@
                     </div>
                 <!-- // PREFERENCES -->
 
-                <!-- THEMING -->
-                <h1 class="listSettingsTitle" id="themeTitle"></h1>
+                <!-- COLORS -->
+                <h1 class="listSettingsTitle" id="colorTitle"></h1>
                     <div id="colorList">
-                        <div><label id="color1Label" for='"color1"'></label><input type="color" id="color1"></div>
-                        <div><label id="color2Label" for='"color2"'></label><input type="color" id="color2"></div>
-                        <div id="backgroundColor"><label id="color3Label" for='"color3"'></label><input type="color" id="color3"></div>
+                        <div class="colorAlign"><label id="color1Label" for='"color1"'></label><input type="color" id="color1"></div>
+                        <div class="colorAlign"><label id="color2Label" for='"color2"'></label><input type="color" id="color2"></div>
+                        <div class="colorAlign" id="backgroundColor"><label id="color3Label" for='"color3"'></label><input type="color" id="color3"></div>
 
-                        <div class="formButton">
-                            <button type="submit" class="buttonLine" id="themeConfirm" onclick="return false"></button>
-                            <button type="submit" class="buttonLine" id="themeReset" onclick="return false"></button>
+                        <div class="listButton">
+                            <button type="submit" class="buttonLine" id="colorConfirm" onclick="return false"></button>
+                            <button type="submit" class="buttonLine" id="colorReset" onclick="return false"></button>
                         </div>
                     </div>
-                <!-- // THEMING -->
+                <!-- // COLORS -->
+
+                <!-- POSITION -->
+                <!-- <h1 class="listSettingsTitle" id="positionTitle"></h1> -->
+                <!-- // POSITION -->
 
                 <!-- BACKGROUND -->
                 <h1 class="listSettingsTitle" id="backgroundTitle"></h1>
@@ -96,7 +100,7 @@
                             <input type="file" id="backgroundValue" accept="image/png, image/jpeg">
                         </div>
 
-                        <div class="formButton">
+                        <div class="listButton">
                             <button type="submit" class="buttonLine" id="backgroundConfirm" onclick="return false"></button>
                             <button class="buttonLine" id="backgroundDelete" onclick="return false"></button>
                         </div>
@@ -118,7 +122,8 @@
 
                 <!-- OTHER -->
                 <h1 class="listSettingsTitle" id="otherSettingsTitle"></h1>
-                    <div class="listButtonCenter">
+                    <div class="listButton">
+                        <button class="buttonLine" id="switchLanguage"></button>
                         <button class="buttonLine" id="exportData"></button>
                         <button class="buttonLine" id="logout"></button>
                     </div>
@@ -147,7 +152,7 @@
     </div>
 
     <!-- <script src="path/to/LittleJS"></script> -->
-    <script src="assets/js/core.min.js?v=1.9.9.1"></script>
-    <script src="assets/js/main.min.js?v=1.9.9.1"></script>
+    <script src="assets/js/core.min.js?v=1.9.93"></script>
+    <script src="assets/js/main.min.js?v=1.9.93"></script>
 </body>
 </html>

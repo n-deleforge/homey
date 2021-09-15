@@ -61,25 +61,28 @@ function createMenu() {
     if (settings.style.darkenBackground == true) get("#preferenceBackground").checked = true;
     get("#preferenceBackground").addEventListener("click", () => { checkPreference("background") });
 
-    // Theming
+    // Colors
     get("#color1").value = settings.style.color1;
     get("#color2").value = settings.style.color2;
     get("#color3").value = settings.style.color3;
-    get("#themeConfirm").addEventListener("click", modifyTheme);
-    get("#themeReset").addEventListener("click", () =>  {
+    get("#colorConfirm").addEventListener("click", modifyTheme);
+    get("#colorReset").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _content.popupResetTheme;
+        get("#popupText").innerHTML = _content.popupResetColor;
         get("#popupAccept").addEventListener("click", resetTheme);
         get("#popupCancel").addEventListener("click", () => {
-            get("#popupAccept").removeEventListener("click", resetTheme);
+            get("#popupAccept").removeEventListener("click", resetColor);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
     });
 
+    // Switch Language
+    get("#switchLanguage").addEventListener("click", switchLanguage);
+
     // Import and export
-    get("#importData").style.color = getVariableCSS("labelText");
+    get("#importData").style.color = getVariableCSS("label-text");
     get("#importConfirm").addEventListener("click", importData);
     get("#exportData").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
@@ -131,7 +134,7 @@ function managingSubMenu() {
     let subMenuOpened = false;
     const subMenuList = get(".listSettingsTitle");
 
-    // First, hide the button to delete background if there is no background
+    // First, if there is not background, hide all options about it
     if (settings.style.background == "") {
         get("#backgroundDelete").style.display = "none";
         get("#darkenBackground").style.display = "none";
@@ -167,11 +170,11 @@ function managingSubMenu() {
  **/
 
 function resetMenu() {
-    get("#profileLabel").style.color = getVariableCSS("labelText");
-    get("#weatherAPILabel").style.color = getVariableCSS("labelText");
-    get("#weatherTownLabel").style.color = getVariableCSS("labelText");
-    get("#backgroundLabel").style.color = getVariableCSS("labelText");
-    get("#importLabel").style.color = getVariableCSS("labelText");
+    get("#profileLabel").style.color = getVariableCSS("label-text");
+    get("#weatherAPILabel").style.color = getVariableCSS("label-text");
+    get("#weatherTownLabel").style.color = getVariableCSS("label-text");
+    get("#backgroundLabel").style.color = getVariableCSS("label-text");
+    get("#importLabel").style.color = getVariableCSS("label-text");
 }
 
 // =================================================
@@ -204,10 +207,10 @@ function displayApp() {
 
  function changeProfile() {
     if (get("#newName").checkValidity() && get("#newName").value != "") {
-        get("#profileLabel").style.color = getVariableCSS("labelText");
+        get("#profileLabel").style.color = getVariableCSS("label-text");
         settings.profile.name = get("#newName").value;
         saveSettings();
-    } else get("#profileLabel").style.color = getVariableCSS("errorText");
+    } else get("#profileLabel").style.color = getVariableCSS("error-text");
 }
 
 /**
@@ -216,15 +219,15 @@ function displayApp() {
 
 function changeWeather() {
     if (get('#weatherAPIValue').value != "" && get('#weatherTownValue').value != "") {
-        get("#weatherAPILabel").style.color = getVariableCSS("labelText");
-        get("#weatherTownLabel").style.color = getVariableCSS("labelText");
+        get("#weatherAPILabel").style.color = getVariableCSS("label-text");
+        get("#weatherTownLabel").style.color = getVariableCSS("label-text");
         settings.weather.api = get('#weatherAPIValue').value;
         settings.weather.town = get('#weatherTownValue').value;
         saveSettings();
         displayWeather();
     } else {
-        get("#weatherAPILabel").style.color = getVariableCSS("errorText");
-        get("#weatherTownLabel").style.color = getVariableCSS("errorText");
+        get("#weatherAPILabel").style.color = getVariableCSS("error-text");
+        get("#weatherTownLabel").style.color = getVariableCSS("error-text");
     }
 }
 
@@ -282,11 +285,11 @@ async function requestWeather() {
 
 /**
  * Check the preferences and modify the display
- * @param {string} value all, name, date or weather
+ * @param {string} el element to check
  **/
 
- function checkPreference(value) {
-    switch(value) {
+ function checkPreference(el) {
+    switch(el) {
         case "all" :
             checkPreference("name");
             checkPreference("date");
@@ -326,10 +329,10 @@ function displayTheme() {
     get("#css").innerHTML = ":root { --color-1 : " + settings.style.color1 + "; --color-2 : " + settings.style.color2 + "; --color-3 : " + settings.style.color3 + "; }";
 
     if (settings.style.background != "") {
-        if (settings.style.darkenBackground) 
-            get("#app").style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
-        else 
-            get("#app").style.backgroundImage = "url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+        const background = "url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+        const linearGradient = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),"
+
+        get("#app").style.backgroundImage = (settings.style.darkenBackground) ? linearGradient + background : background;
     }
 }
 
@@ -350,11 +353,11 @@ function modifyTheme() {
  **/
 
 function resetTheme() {
-    settings.style.color1 = "#FFFFFF";
-    settings.style.color2 = "#F08080",
-    settings.style.color3 = "#262931";
+    settings.style.color1 = _defaultValues.color1;
+    settings.style.color2 = _defaultValues.color2;
+    settings.style.color3 = _defaultValues.color3;
     saveSettings();
-    location.reload();
+    displayTheme();
 }
 
 /**
@@ -379,8 +382,8 @@ function modifyBackground() {
                 saveSettings();
                 location.reload();
             }
-        } else get("#backgroundLabel").style.color = getVariableCSS("errorText");   
-    } else get("#backgroundLabel").style.color = getVariableCSS("errorText");
+        } else get("#backgroundLabel").style.color = getVariableCSS("error-text");   
+    } else get("#backgroundLabel").style.color = getVariableCSS("error-text");
 }
 
 /**
@@ -426,8 +429,18 @@ function importData() {
                 saveSettings();
                 location.reload();
             }
-        } else get("#importLabel").style.color = getVariableCSS("errorText");
-    } else get("#importLabel").style.color = getVariableCSS("errorText");
+        } else get("#importLabel").style.color = getVariableCSS("error-text");
+    } else get("#importLabel").style.color = getVariableCSS("error-text");
+}
+
+/**
+ * Switch the app language between French and English
+ **/
+
+function switchLanguage() {
+    settings.core.language = (settings.core.language == "FR") ? "EN" : "FR";
+    saveSettings();
+    location.reload();
 }
 
 /**
@@ -455,7 +468,10 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (settings.core.version != _version)  {
+    if (settings.core.version != _version) {
+        if (!settings.core.language) settings.core.language = _defaultValues.language;
+        if (settings.core.start) delete settings.core.start;
+        if (settings.style.theme) delete settings.style.theme;
         settings.core.version = _version;
         saveSettings();
         if (!settings.style.color1) resetTheme();
