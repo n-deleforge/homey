@@ -18,8 +18,8 @@
 
 - Display the hour and the date
 - Display the weather (needs OpenWeather API key)
-- Display your name
 - Display your favorite background
+- Change the colors of the application
 - Your preferences and settings can be saved and restored
 - Etc.
 
