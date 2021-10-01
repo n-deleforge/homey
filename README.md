@@ -25,7 +25,7 @@
 
 # Quick start
 
-You can try the application directly in your browser [here](https://nicolas-deleforge.fr/apps/homey/).  
+You can try the application directly in your browser [here](https://nicolas-deleforge.fr/homey/).  
 
 If you want to selfhost **Homey** :
 - Clone the repository.
