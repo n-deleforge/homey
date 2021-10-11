@@ -1,13 +1,12 @@
 // =================================================
 // ============ CORE VARIABLES
 
+const VERSION = "1.9.93";
+const GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
+const MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 let settings;
-const _version = "1.9.93";
-const _github = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const _home = "<a href=\"https://nicolas-deleforge.fr\" target=\"_blank\">ND</a>";
-const _mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-const _french = {
+const FRENCH = {
     'profileTitle': "🙂 Profil",
     'profileLabel': "Prénom",
     'profileConfirm': "🔻 Appliquer",
@@ -38,7 +37,7 @@ const _french = {
     'switchLanguage' : "🔄 Changer de langue",
     'exportData': "📲 Sauvegarde",
     'logout': "🚫 Déconnexion",
-    'footer': "Disponible sur " + _github + " (v " + _version + ") ©  " + _home,
+    'footer': "Disponible sur " + GITHUB + " (v " + VERSION + ") ©  2020",
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
     'welcomeDay': "Bonjour",
@@ -52,7 +51,7 @@ const _french = {
     'popupBackground' : "Cette action va supprimer votre fond d'écran personnalisé.",
 };
 
-const _english = {
+const ENGLISH = {
     'profileTitle': "🙂 Profile",
     'profileLabel': "Name",
     'profileConfirm': "🔻 Confirm",
@@ -83,7 +82,7 @@ const _english = {
     'switchLanguage' : "🔄 Switch language",
     'exportData': "📲 Save",
     'logout': "🚫 Logout",
-    'footer': "Available on " + _github + " (v " + _version + ") © " + _home,
+    'footer': "Available on " + GITHUB + " (v " + VERSION + ") © 2020",
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
     'welcomeDay': "Good morning",
@@ -97,7 +96,7 @@ const _english = {
     'popupBackground' :  "This action will delete your custom wallpaper.",
 };
 
-const _defaultValues = {
+const DEFAULT_VALUES = {
     'language' : "EN",
     'color1' : "#FFFFFF",
     'color2' : "#F08080",
@@ -108,14 +107,14 @@ const _defaultValues = {
 // ============ CORE INITIALISATION
 
 // Correct the bug with viewport on mobile
-if (_mobile) get("#container").style.minHeight = window.innerHeight + 'px';
+if (MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
 
 // Create the settings data or parse them if it already exists
 if (!getStorage("HOMEY-settings")) {
     settings = {
         'core': {
-            'version': _version,
-            'language' : _defaultValues.language,
+            'version': VERSION,
+            'language' : DEFAULT_VALUES.language,
         },
         'profile': {
             'name': '',
@@ -130,9 +129,9 @@ if (!getStorage("HOMEY-settings")) {
         'style' : {
             'background': '',
             'darkenBackground' : false,
-            'color1' : _defaultValues.color1,
-            'color2' : _defaultValues.color2,
-            'color3' : _defaultValues.color3,
+            'color1' : DEFAULT_VALUES.color1,
+            'color2' : DEFAULT_VALUES.color2,
+            'color3' : DEFAULT_VALUES.color3,
         }
     }
     setStorage("HOMEY-settings", JSON.stringify(settings));
@@ -140,8 +139,9 @@ if (!getStorage("HOMEY-settings")) {
 else settings = JSON.parse(getStorage("HOMEY-settings"));
 
 // Determine the language of the application
-const _content = (settings.core.language == "FR") ? _french : _english;
-let names = Object.keys(_content); let values = Object.values(_content);
+const CONTENT = (settings.core.language == "FR") ? FRENCH : ENGLISH;
+let names = Object.keys(CONTENT); 
+let values = Object.values(CONTENT);
 
 for (let i = 0; i < names.length; i++) {
     if (get("#" + names[i])) get("#" + names[i]).innerHTML = values[i];

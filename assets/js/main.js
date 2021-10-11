@@ -42,7 +42,7 @@ function createMenu() {
     get("#backgroundDelete").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _content.popupBackground;
+        get("#popupText").innerHTML = CONTENT.popupBackground;
         get("#popupAccept").addEventListener("click", resetBackground);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", resetBackground);
@@ -69,7 +69,7 @@ function createMenu() {
     get("#colorReset").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _content.popupResetColor;
+        get("#popupText").innerHTML = CONTENT.popupResetColor;
         get("#popupAccept").addEventListener("click", resetTheme);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", resetColor);
@@ -87,7 +87,7 @@ function createMenu() {
     get("#exportData").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _content.popupBackup;
+        get("#popupText").innerHTML = CONTENT.popupBackup;
         get("#popupAccept").addEventListener("click", exportData);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", exportData);
@@ -100,7 +100,7 @@ function createMenu() {
     get("#logout").addEventListener("click", () => {
         get("#blankPopup").style.display = "block";
         get("#popup").style.display = "flex";
-        get("#popupText").innerHTML = _content.popupLogout;
+        get("#popupText").innerHTML = CONTENT.popupLogout;
         get("#popupAccept").addEventListener("click", logout);
         get("#popupCancel").addEventListener("click", () => {
             get("#popupAccept").removeEventListener("click", logout);
@@ -187,13 +187,13 @@ function resetMenu() {
 function displayApp() {
     // Time and date
     const timestamp = new Date();
-    let date = timestamp.toLocaleString(_content.dateLanguage, { weekday: "long", month: "long", day: "numeric" }); 
+    let date = timestamp.toLocaleString(CONTENT.dateLanguage, { weekday: "long", month: "long", day: "numeric" }); 
     let hours = timestamp.getHours();
     let minutes = timestamp.getMinutes();
     if (hours < 10) hours = '0' + hours;  if (minutes < 10) minutes = '0' + minutes;
 
     // Welcome
-    const welcome1 = timestamp.getHours() < 7 || timestamp.getHours() > 19 ? _content.welcomeNight : _content.welcomeDay;
+    const welcome1 = timestamp.getHours() < 7 || timestamp.getHours() > 19 ? CONTENT.welcomeNight : CONTENT.welcomeDay;
     const welcome2 = settings.profile.name != "" ? ' <span id="displayName">' + settings.profile.name + '</span>' : "";
 
     get("#displayTime").innerHTML = hours + ":" + minutes;
@@ -248,7 +248,7 @@ function displayWeather() {
  **/
 
 async function requestWeather() {
-    const request = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + _content.weatherLanguage + '&units=metric');
+    const request = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + CONTENT.weatherLanguage + '&units=metric');
 
     await fetch(request)
         .then((response) => response.json())
@@ -353,9 +353,9 @@ function modifyTheme() {
  **/
 
 function resetTheme() {
-    settings.style.color1 = _defaultValues.color1;
-    settings.style.color2 = _defaultValues.color2;
-    settings.style.color3 = _defaultValues.color3;
+    settings.style.color1 = DEFAULT_VALUES.color1;
+    settings.style.color2 = DEFAULT_VALUES.color2;
+    settings.style.color3 = DEFAULT_VALUES.color3;
     saveSettings();
     displayTheme();
 }
@@ -468,11 +468,11 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (settings.core.version != _version) {
-        if (!settings.core.language) settings.core.language = _defaultValues.language;
+    if (settings.core.version != VERSION) {
+        if (!settings.core.language) settings.core.language = DEFAULT_VALUES.language;
         if (settings.core.start) delete settings.core.start;
         if (settings.style.theme) delete settings.style.theme;
-        settings.core.version = _version;
+        settings.core.version = VERSION;
         saveSettings();
         if (!settings.style.color1) resetTheme();
     }
