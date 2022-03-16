@@ -29,12 +29,12 @@ function createMenu() {
     })
 
     // Profle
-    get("#newName").value = settings.profile.name;
+    get("#newName").value = _settings.profile.name;
     get("#profileConfirm").addEventListener("click", changeProfile);
 
     // Weather
-    get('#weatherAPIValue').value = settings.weather.api;
-    get('#weatherTownValue').value = settings.weather.town;
+    get('#weatherAPIValue').value = _settings.weather.api;
+    get('#weatherTownValue').value = _settings.weather.town;
     get("#weatherConfirm").addEventListener("click", changeWeather);
 
     // Background
@@ -52,19 +52,19 @@ function createMenu() {
     });
 
     // Preferences
-    if (settings.profile.displayName == true) get("#preferenceName").checked = true;
-    if (settings.profile.displayDate == true) get("#preferenceDate").checked = true;
-    if (settings.profile.displayWeather == true) get("#preferenceWeather").checked = true;
+    if (_settings.profile.displayName == true) get("#preferenceName").checked = true;
+    if (_settings.profile.displayDate == true) get("#preferenceDate").checked = true;
+    if (_settings.profile.displayWeather == true) get("#preferenceWeather").checked = true;
     get("#preferenceName").addEventListener("click", () => { checkPreference("name") });
     get("#preferenceDate").addEventListener("click", () => { checkPreference("date") });
     get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
-    if (settings.style.darkenBackground == true) get("#preferenceBackground").checked = true;
+    if (_settings.style.darkenBackground == true) get("#preferenceBackground").checked = true;
     get("#preferenceBackground").addEventListener("click", () => { checkPreference("background") });
 
     // Colors
-    get("#color1").value = settings.style.color1;
-    get("#color2").value = settings.style.color2;
-    get("#color3").value = settings.style.color3;
+    get("#color1").value = _settings.style.color1;
+    get("#color2").value = _settings.style.color2;
+    get("#color3").value = _settings.style.color3;
     get("#colorConfirm").addEventListener("click", modifyTheme);
     get("#colorReset").addEventListener("click", () =>  {
         get("#blankPopup").style.display = "block";
@@ -77,9 +77,6 @@ function createMenu() {
             get("#popup").style.display = "none";
         });
     });
-
-    // Switch Language
-    get("#switchLanguage").addEventListener("click", switchLanguage);
 
     // Import and export
     get("#importData").style.color = getVariableCSS("label-text");
@@ -135,7 +132,7 @@ function managingSubMenu() {
     const subMenuList = get(".listSettingsTitle");
 
     // First, if there is not background, hide all options about it
-    if (settings.style.background == "") {
+    if (_settings.style.background == "") {
         get("#backgroundDelete").style.display = "none";
         get("#darkenBackground").style.display = "none";
     } else get("#backgroundColor").style.display = "none";
@@ -194,7 +191,7 @@ function displayApp() {
 
     // Welcome
     const welcome1 = timestamp.getHours() < 7 || timestamp.getHours() > 19 ? CONTENT.welcomeNight : CONTENT.welcomeDay;
-    const welcome2 = settings.profile.name != "" ? ' <span id="displayName">' + settings.profile.name + '</span>' : "";
+    const welcome2 = _settings.profile.name != "" ? ' <span id="displayName">' + _settings.profile.name + '</span>' : "";
 
     get("#displayTime").innerHTML = hours + ":" + minutes;
     get("#displayDate").innerHTML = ucFirst(date.split(" ")[0]) + " " + date.split(" ")[1] + " " + ucFirst(date.split(" ")[2]);
@@ -208,7 +205,7 @@ function displayApp() {
  function changeProfile() {
     if (get("#newName").checkValidity() && get("#newName").value != "") {
         get("#profileLabel").style.color = getVariableCSS("label-text");
-        settings.profile.name = get("#newName").value;
+        _settings.profile.name = get("#newName").value;
         saveSettings();
     } else get("#profileLabel").style.color = getVariableCSS("error-text");
 }
@@ -221,8 +218,8 @@ function changeWeather() {
     if (get('#weatherAPIValue').value != "" && get('#weatherTownValue').value != "") {
         get("#weatherAPILabel").style.color = getVariableCSS("label-text");
         get("#weatherTownLabel").style.color = getVariableCSS("label-text");
-        settings.weather.api = get('#weatherAPIValue').value;
-        settings.weather.town = get('#weatherTownValue').value;
+        _settings.weather.api = get('#weatherAPIValue').value;
+        _settings.weather.town = get('#weatherTownValue').value;
         saveSettings();
         displayWeather();
     } else {
@@ -236,7 +233,7 @@ function changeWeather() {
  **/
 
 function displayWeather() {
-    if (settings.profile.displayWeather && settings.weather.api != "" && settings.weather.town != "") {
+    if (_settings.profile.displayWeather && _settings.weather.api != "" && _settings.weather.town != "") {
         requestWeather();
         setInterval(requestWeather, 1800000); // Every 30 minutes
         get('#displayWeather').style.display = "block";
@@ -248,7 +245,7 @@ function displayWeather() {
  **/
 
 async function requestWeather() {
-    const request = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + settings.weather.town + '&appid=' + settings.weather.api + '&lang=' + CONTENT.weatherLanguage + '&units=metric');
+    const request = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + _settings.weather.town + '&appid=' + _settings.weather.api + '&lang=' + CONTENT.weatherLanguage + '&units=metric');
 
     await fetch(request)
         .then((response) => response.json())
@@ -298,22 +295,22 @@ async function requestWeather() {
             break;
 
         case "name" :
-            settings.profile.displayName = (get("#preferenceName").checked == true) ? true : false;
-            get("#displayWelcome").style.display = (settings.profile.displayName) ? "block" : "none";
+            _settings.profile.displayName = (get("#preferenceName").checked == true) ? true : false;
+            get("#displayWelcome").style.display = (_settings.profile.displayName) ? "block" : "none";
             break;
 
         case "date" :
-            settings.profile.displayDate = (get("#preferenceDate").checked == true) ? true : false;
-            get("#displayDate").style.display = (settings.profile.displayDate) ? "block" : "none";
+            _settings.profile.displayDate = (get("#preferenceDate").checked == true) ? true : false;
+            get("#displayDate").style.display = (_settings.profile.displayDate) ? "block" : "none";
             break;
 
         case "weather" :
-            settings.profile.displayWeather = (get("#preferenceWeather").checked == true) ? true : false;
+            _settings.profile.displayWeather = (get("#preferenceWeather").checked == true) ? true : false;
             displayWeather();
             break;
 
         case "background" :
-            settings.style.darkenBackground = (get("#preferenceBackground").checked == true) ? true : false;
+            _settings.style.darkenBackground = (get("#preferenceBackground").checked == true) ? true : false;
             displayTheme();
             break;
     }
@@ -326,13 +323,13 @@ async function requestWeather() {
  **/
 
 function displayTheme() {
-    get("#css").innerHTML = ":root { --color-1 : " + settings.style.color1 + "; --color-2 : " + settings.style.color2 + "; --color-3 : " + settings.style.color3 + "; }";
+    get("#css").innerHTML = ":root { --color-1 : " + _settings.style.color1 + "; --color-2 : " + _settings.style.color2 + "; --color-3 : " + _settings.style.color3 + "; }";
 
-    if (settings.style.background != "") {
-        const background = "url(" + settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
+    if (_settings.style.background != "") {
+        const background = "url(" + _settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
         const linearGradient = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),"
 
-        get("#app").style.backgroundImage = (settings.style.darkenBackground) ? linearGradient + background : background;
+        get("#app").style.backgroundImage = (_settings.style.darkenBackground) ? linearGradient + background : background;
     }
 }
 
@@ -341,9 +338,9 @@ function displayTheme() {
  **/
 
 function modifyTheme() {
-    settings.style.color1 = get("#color1").value;
-    settings.style.color2 = get("#color2").value;
-    settings.style.color3 = get("#color3").value;
+    _settings.style.color1 = get("#color1").value;
+    _settings.style.color2 = get("#color2").value;
+    _settings.style.color3 = get("#color3").value;
     saveSettings();
     displayTheme();
 }
@@ -353,9 +350,9 @@ function modifyTheme() {
  **/
 
 function resetTheme() {
-    settings.style.color1 = DEFAULT_VALUES.color1;
-    settings.style.color2 = DEFAULT_VALUES.color2;
-    settings.style.color3 = DEFAULT_VALUES.color3;
+    _settings.style.color1 = DEFAULT_VALUES.color1;
+    _settings.style.color2 = DEFAULT_VALUES.color2;
+    _settings.style.color3 = DEFAULT_VALUES.color3;
     saveSettings();
     displayTheme();
 }
@@ -377,7 +374,7 @@ function modifyBackground() {
         reader.readAsDataURL(input.files[0]);
             reader.onload = (e) => {
                 let importData = e.target.result;
-                settings.style.background = importData;
+                _settings.style.background = importData;
                 input.value = null
                 saveSettings();
                 location.reload();
@@ -391,7 +388,7 @@ function modifyBackground() {
  **/
 
 function resetBackground() {
-    settings.style.background = "";
+    _settings.style.background = "";
     saveSettings();
     location.reload();
 }
@@ -404,7 +401,7 @@ function resetBackground() {
  **/
 
 function saveSettings() {
-    setStorage("HOMEY-settings", JSON.stringify(settings));
+    setStorage("HOMEY-settings", JSON.stringify(_settings));
 }
 
 /**
@@ -424,7 +421,7 @@ function importData() {
         reader.readAsText(input.files[0]);
             reader.onload = (e) => {
                 let importData = e.target.result;
-                settings = JSON.parse(importData);
+                _settings = JSON.parse(importData);
 
                 saveSettings();
                 location.reload();
@@ -434,21 +431,11 @@ function importData() {
 }
 
 /**
- * Switch the app language between French and English
- **/
-
-function switchLanguage() {
-    settings.core.language = (settings.core.language == "FR") ? "EN" : "FR";
-    saveSettings();
-    location.reload();
-}
-
-/**
  * Create a file with localstorage data
  **/
 
 function exportData() {
-    download(JSON.stringify(settings), "homey.json"); 
+    download(JSON.stringify(_settings), "homey.json"); 
     get("#popupAccept").removeEventListener("click", exportData);
     get("#blankPopup").style.display = "none";
     get("#popup").style.display = "none";
@@ -468,12 +455,12 @@ function logout() {
  **/
 
 function checkVersion() {
-    if (settings.core.version != VERSION) {
-        if (!settings.core.language) settings.core.language = DEFAULT_VALUES.language;
-        if (settings.core.start) delete settings.core.start;
-        if (settings.style.theme) delete settings.style.theme;
-        settings.core.version = VERSION;
+    if (_settings.core.version != VERSION) {
+        if (!_settings.core.language) _settings.core.language = DEFAULT_VALUES.language;
+        if (_settings.core.start) delete _settings.core.start;
+        if (_settings.style.theme) delete _settings.style.theme;
+        _settings.core.version = VERSION;
         saveSettings();
-        if (!settings.style.color1) resetTheme();
+        if (!_settings.style.color1) resetTheme();
     }
 }

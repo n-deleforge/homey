@@ -3,8 +3,8 @@
 
 const VERSION = "1.9.93";
 const GITHUB = "<a href=\"https://github.com/n-deleforge/homey\" target=\"_blank\">GitHub</a>";
-const MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-let settings;
+const FOOTER = "V. " + VERSION + " | © 2020-22 | " + GITHUB;
+let _settings;
 
 const FRENCH = {
     'profileTitle': "🙂 Profil",
@@ -37,7 +37,7 @@ const FRENCH = {
     'switchLanguage' : "🔄 Changer de langue",
     'exportData': "📲 Sauvegarde",
     'logout': "🚫 Déconnexion",
-    'footer': "Disponible sur " + GITHUB + " (v " + VERSION + ") ©  2020",
+    'footer': FOOTER,
     'dateLanguage': "fr-FR",
     'weatherLanguage': "FR",
     'welcomeDay': "Bonjour",
@@ -82,7 +82,7 @@ const ENGLISH = {
     'switchLanguage' : "🔄 Switch language",
     'exportData': "📲 Save",
     'logout': "🚫 Logout",
-    'footer': "Available on " + GITHUB + " (v " + VERSION + ") © 2020",
+    'footer': FOOTER,
     'dateLanguage': "en-EN",
     'weatherLanguage': "EN",
     'welcomeDay': "Good morning",
@@ -97,7 +97,6 @@ const ENGLISH = {
 };
 
 const DEFAULT_VALUES = {
-    'language' : "EN",
     'color1' : "#FFFFFF",
     'color2' : "#F08080",
     'color3' : "#262931"
@@ -106,15 +105,12 @@ const DEFAULT_VALUES = {
 // =================================================
 // ============ CORE INITIALISATION
 
-// Correct the bug with viewport on mobile
-if (MOBILE) get("#container").style.minHeight = window.innerHeight + 'px';
-
 // Create the settings data or parse them if it already exists
 if (!getStorage("HOMEY-settings")) {
-    settings = {
+    _settings = {
         'core': {
             'version': VERSION,
-            'language' : DEFAULT_VALUES.language,
+            'language' : "EN",
         },
         'profile': {
             'name': '',
@@ -134,15 +130,26 @@ if (!getStorage("HOMEY-settings")) {
             'color3' : DEFAULT_VALUES.color3,
         }
     }
-    setStorage("HOMEY-settings", JSON.stringify(settings));
+    setStorage("HOMEY-settings", JSON.stringify(_settings));
 }
-else settings = JSON.parse(getStorage("HOMEY-settings"));
+else _settings = JSON.parse(getStorage("HOMEY-settings"));
 
-// Determine the language of the application
-const CONTENT = (settings.core.language == "FR") ? FRENCH : ENGLISH;
-let names = Object.keys(CONTENT); 
-let values = Object.values(CONTENT);
+// Setup language data
+const CONTENT = (_settings.core.language == "FR") ? FRENCH : ENGLISH;
+let _names = Object.keys(CONTENT);
+let _values = Object.values(CONTENT);
 
-for (let i = 0; i < names.length; i++) {
-    if (get("#" + names[i])) get("#" + names[i]).innerHTML = values[i];
+for (let i = 0; i < _names.length; i++) {
+    if (get("#" + _names[i])) {
+        get("#" + _names[i]).innerHTML = _values[i];
+    }
+}
+
+// Able to switch between French and English
+if (get("#switchLanguage")) {
+    get("#switchLanguage").addEventListener("click", () => {
+        _settings.core.language = (_settings.core.language == "FR") ? "EN" : "FR";
+        saveSettings();
+        location.reload();
+    });
 }
