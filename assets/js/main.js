@@ -1,7 +1,6 @@
 // =================================================
 // ============ MAIN
 
-checkVersion();
 displayTheme();
 createMenu();
 managingSubMenu();
@@ -52,13 +51,21 @@ function createMenu() {
     });
 
     // Preferences
-    if (_settings.profile.displayName == true) get("#preferenceName").checked = true;
-    if (_settings.profile.displayDate == true) get("#preferenceDate").checked = true;
-    if (_settings.profile.displayWeather == true) get("#preferenceWeather").checked = true;
+    if (_settings.profile.displayName == true) {
+        get("#preferenceName").checked = true;
+    }
+    if (_settings.profile.displayDate == true) {
+        get("#preferenceDate").checked = true;
+    }
+    if (_settings.profile.displayWeather == true) {
+        get("#preferenceWeather").checked = true;
+    }
+    if (_settings.style.darkenBackground == true) {
+        get("#preferenceBackground").checked = true;
+    }
     get("#preferenceName").addEventListener("click", () => { checkPreference("name") });
     get("#preferenceDate").addEventListener("click", () => { checkPreference("date") });
     get("#preferenceWeather").addEventListener("click", () => { checkPreference("weather") });
-    if (_settings.style.darkenBackground == true) get("#preferenceBackground").checked = true;
     get("#preferenceBackground").addEventListener("click", () => { checkPreference("background") });
 
     // Colors
@@ -72,7 +79,7 @@ function createMenu() {
         get("#popupText").innerHTML = CONTENT.popupResetColor;
         get("#popupAccept").addEventListener("click", resetTheme);
         get("#popupCancel").addEventListener("click", () => {
-            get("#popupAccept").removeEventListener("click", resetColor);
+            get("#popupAccept").removeEventListener("click", resetTheme);
             get("#blankPopup").style.display = "none";
             get("#popup").style.display = "none";
         });
@@ -113,7 +120,10 @@ function createMenu() {
 
 function closeMenu() {
     // Hide all submenu at closing
-    for (let i = 0; i < get(".listSettingsTitle").length; i++) get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
+    const allSubMenu = get(".listSettingsTitle");
+    allSubMenu.forEach((submenu, index) => {
+        get(".listSettingsTitle")[index].nextElementSibling.style.display = "none";
+    });
 
     // Hide the menu
     get("#displaySettings").style.display = "block";
@@ -135,31 +145,45 @@ function managingSubMenu() {
     if (_settings.style.background == "") {
         get("#backgroundDelete").style.display = "none";
         get("#darkenBackground").style.display = "none";
-    } else get("#backgroundColor").style.display = "none";
+    } 
+    else {
+        get("#backgroundColor").style.display = "none";
+    }
 
     // And then, hide all submenus
-    for (let i = 0; i < subMenuList.length; i++) {
-        get(".listSettingsTitle")[i].nextElementSibling.style.display = "none";
+    subMenuList.forEach((subMenu, index) => {
+        get(".listSettingsTitle")[index].nextElementSibling.style.display = "none";
 
         // Add an event on all submenu titles
-        subMenuList[i].addEventListener("click", () => {
+        subMenu.addEventListener("click", () => {
             resetMenu();
 
             // Opening
-            if (subMenuList[i].nextElementSibling.style.display == "none") {
+            if (subMenu.nextElementSibling.style.display == "none") {
                 // If one submenu is opened, close all the submenus
-                if (subMenuOpened) for (let j = 0; j < subMenuList.length; j++) subMenuList[j].nextElementSibling.style.display = "none";
+                if (subMenuOpened) {
+                    subMenuList.forEach(subMenu => {
+                        subMenu.nextElementSibling.style.display = "none";
+                    })
+                }
                 
                 // And open the one which is choosen (expect for the backup menu which is a flex)
-                if (i == subMenuList.length -1) subMenuList[i].nextElementSibling.style.display = "flex";
-                else subMenuList[i].nextElementSibling.style.display = "block";
+                if (index == subMenuList.length -1) {
+                    subMenu.nextElementSibling.style.display = "flex";
+                }
+                else {
+                    subMenu.nextElementSibling.style.display = "block";
+                }
+
                 subMenuOpened = true;
             } 
             
             // Closing
-            else subMenuList[i].nextElementSibling.style.display = "none";
+            else {
+                subMenu.nextElementSibling.style.display = "none";
+            }
         });
-    }
+    });
 }
 
 /**
@@ -185,9 +209,13 @@ function displayApp() {
     // Time and date
     const timestamp = new Date();
     let date = timestamp.toLocaleString(CONTENT.dateLanguage, { weekday: "long", month: "long", day: "numeric" }); 
-    let hours = timestamp.getHours();
-    let minutes = timestamp.getMinutes();
-    if (hours < 10) hours = '0' + hours;  if (minutes < 10) minutes = '0' + minutes;
+    let hours = timestamp.getHours(), minutes = timestamp.getMinutes();
+    if (hours < 10) {
+        hours = '0' + hours;
+    } 
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
 
     // Welcome
     const welcome1 = timestamp.getHours() < 7 || timestamp.getHours() > 19 ? CONTENT.welcomeNight : CONTENT.welcomeDay;
@@ -207,7 +235,10 @@ function displayApp() {
         get("#profileLabel").style.color = getVariableCSS("label-text");
         _settings.profile.name = get("#newName").value;
         saveSettings();
-    } else get("#profileLabel").style.color = getVariableCSS("error-text");
+    } 
+    else {
+        get("#profileLabel").style.color = getVariableCSS("error-text");
+    }
 }
 
 /**
@@ -222,7 +253,8 @@ function changeWeather() {
         _settings.weather.town = get('#weatherTownValue').value;
         saveSettings();
         displayWeather();
-    } else {
+    } 
+    else {
         get("#weatherAPILabel").style.color = getVariableCSS("error-text");
         get("#weatherTownLabel").style.color = getVariableCSS("error-text");
     }
@@ -237,7 +269,10 @@ function displayWeather() {
         requestWeather();
         setInterval(requestWeather, 1800000); // Every 30 minutes
         get('#displayWeather').style.display = "block";
-    } else get('#displayWeather').style.display = "none";
+    } 
+    else {
+        get('#displayWeather').style.display = "none";
+    }
 }
 
 /**
@@ -249,9 +284,13 @@ async function requestWeather() {
 
     await fetch(request)
         .then((response) => response.json())
+
         .then((weather) => {
-            let timestamp = new Date(); let logo;
-            if (timestamp.getHours() < 7 || timestamp.getHours() > 19) logo = "🌙";
+            let timestamp = new Date(), logo;
+
+            if (timestamp.getHours() < 7 || timestamp.getHours() > 19) {
+                logo = "🌙";
+            }
             else {
                 switch (weather.weather[0].main) {
                     case 'Clear': logo = "☀️"; break;
@@ -329,7 +368,12 @@ function displayTheme() {
         const background = "url(" + _settings.style.background.replace(/(\r\n|\n|\r)/gm, "") + ")";
         const linearGradient = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),"
 
-        get("#app").style.backgroundImage = (_settings.style.darkenBackground) ? linearGradient + background : background;
+        if (_settings.style.darkenBackground) {
+            get("#app").style.backgroundImage = linearGradient + background;
+        }
+        else {
+            get("#app").style.backgroundImage = background;
+        }
     }
 }
 
@@ -353,8 +397,13 @@ function resetTheme() {
     _settings.style.color1 = DEFAULT_VALUES.color1;
     _settings.style.color2 = DEFAULT_VALUES.color2;
     _settings.style.color3 = DEFAULT_VALUES.color3;
+    get("#color1").value = DEFAULT_VALUES.color1;
+    get("#color2").value = DEFAULT_VALUES.color2;
+    get("#color3").value = DEFAULT_VALUES.color3;
     saveSettings();
     displayTheme();
+    get("#blankPopup").style.display = "none";
+    get("#popup").style.display = "none";
 }
 
 /**
@@ -379,8 +428,12 @@ function modifyBackground() {
                 saveSettings();
                 location.reload();
             }
-        } else get("#backgroundLabel").style.color = getVariableCSS("error-text");   
-    } else get("#backgroundLabel").style.color = getVariableCSS("error-text");
+        } else {
+            get("#backgroundLabel").style.color = getVariableCSS("error-text");
+        }
+    } else {
+        get("#backgroundLabel").style.color = getVariableCSS("error-text");
+    }
 }
 
 /**
@@ -426,8 +479,12 @@ function importData() {
                 saveSettings();
                 location.reload();
             }
-        } else get("#importLabel").style.color = getVariableCSS("error-text");
-    } else get("#importLabel").style.color = getVariableCSS("error-text");
+        } else {
+            get("#importLabel").style.color = getVariableCSS("error-text");
+        }
+    } else {
+        get("#importLabel").style.color = getVariableCSS("error-text");
+    }
 }
 
 /**
@@ -448,19 +505,4 @@ function exportData() {
 function logout() {
     remStorage("HOMEY-settings");
     location.reload();
-}
-
-/**
- * Check and update the version of the application
- **/
-
-function checkVersion() {
-    if (_settings.core.version != VERSION) {
-        if (!_settings.core.language) _settings.core.language = DEFAULT_VALUES.language;
-        if (_settings.core.start) delete _settings.core.start;
-        if (_settings.style.theme) delete _settings.style.theme;
-        _settings.core.version = VERSION;
-        saveSettings();
-        if (!_settings.style.color1) resetTheme();
-    }
 }

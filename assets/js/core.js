@@ -132,18 +132,17 @@ if (!getStorage("HOMEY-settings")) {
     }
     setStorage("HOMEY-settings", JSON.stringify(_settings));
 }
-else _settings = JSON.parse(getStorage("HOMEY-settings"));
-
-// Setup language data
-const CONTENT = (_settings.core.language == "FR") ? FRENCH : ENGLISH;
-let _names = Object.keys(CONTENT);
-let _values = Object.values(CONTENT);
-
-for (let i = 0; i < _names.length; i++) {
-    if (get("#" + _names[i])) {
-        get("#" + _names[i]).innerHTML = _values[i];
-    }
+else {
+    _settings = JSON.parse(getStorage("HOMEY-settings"));
 }
+
+// Setup content according language
+const CONTENT = (_settings.core.language == "FR") ? FRENCH : ENGLISH;
+Object.keys(CONTENT).forEach(key => {
+    if (get("#" + key)) {
+        get("#" + key).innerHTML = CONTENT[key];
+    }
+});
 
 // Able to switch between French and English
 if (get("#switchLanguage")) {
