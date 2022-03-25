@@ -16,9 +16,9 @@
 
 # Features
 
-- Display the hour, the date and the weather (needs OpenWeather API Key)
-- Display your favorite background and change the colors of the application
-- Preferences and settings can be saved and restored
+- Display the hour, the date and the weather (needs OpenWeather API Key).
+- Display your favorite background and change the colors of the application.
+- Preferences and settings can be saved and restored.
 
 # Quick start
 
