@@ -6,7 +6,6 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/n-deleforge/homey?style=for-the-badge)
 [![GitHub forks](https://img.shields.io/github/forks/n-deleforge/homey?style=for-the-badge)](https://github.com/n-deleforge/homey/network)
 [![GitHub stars](https://img.shields.io/github/stars/n-deleforge/homey?style=for-the-badge)](https://github.com/n-deleforge/homey/stargazers)
-[![Paypal](https://img.shields.io/badge/DONATE-PAYPAL.ME-lightgrey?style=for-the-badge)](https://www.paypal.com/paypalme/nicolasdeleforge)
 
 </div>
 
